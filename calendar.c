@@ -1,3 +1,10 @@
+/*
+ * Name: Iain Workman
+ * NSID: ipw969
+ * Student No.: 11139430
+ */
+
+
 #include "calendar.h"
 
 int CalendarAdd(char* username, CalendarEntry entry) {

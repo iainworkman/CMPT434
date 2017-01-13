@@ -1,3 +1,9 @@
+/*
+ * Name: Iain Workman
+ * NSID: ipw969
+ * Student No.: 11139430
+ */
+
 #ifndef _CALENDAR_H_
 #define _CALENDAR_H_
 
