@@ -11,11 +11,21 @@ UNAME_M=$(shell uname -m)
 
 ARCH=_$(UNAME_M)
 
-all: list
+all: list libcalendar$(ARCH).a
+
+####################
+# Calendar
+####################
+
+libcalendar$(ARCH).a: calendar.o
+	ar rcs $@ $^
+
+calendar$(ARCH).o: calendar.c
+	$(CC) $(CFLAGS) -c calendar.c -o $@
 
 ####################
 # List
-###################
+####################
 list: liblist$(ARCH).a
 
 liblist$(ARCH).a: 	list_adders$(ARCH).o \
