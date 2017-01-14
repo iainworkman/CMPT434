@@ -39,6 +39,8 @@ int main(int argc, char** argv) {
 	if(!calendar || ListCount(calendar->entries) == 0) {
 		printf("Failed to return calendar\n");
 		return 1;
+	} else {
+		PrintCalendar(calendar);
 	}
 
 	return 0;

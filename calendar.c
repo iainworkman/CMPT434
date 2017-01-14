@@ -274,7 +274,23 @@ Calendar* CalendarGetEntries(CalendarEntry* entry, char* username) {
 }
 
 void PrintCalendar(Calendar* calendar) {
+	if(!calendar) {
+		return;
+	}
 
+	if(ListCount(calendar->entries) == 0) {
+		printf("Empty Calendar\n");
+	}
+
+	printf("--------------------------------------\n");
+	printf("| %s's Calendar\n", calendar->username);
+
+	ListFirst(calendar->entries);
+
+	do {
+		PrintEntry(ListCurr(calendar->entries));
+
+	} while(ListNext(calendar->entries));
 }
 
 void PrintEntry(CalendarEntry* entry) {
@@ -283,29 +299,29 @@ void PrintEntry(CalendarEntry* entry) {
 		return;
 	}
 
-	printf("####################\n");
+	printf("--------------------------------------\n");
 
-	printf("# Name %s\n", entry->name);
+	printf("Name: \t%s\n", entry->name);
 	if(!entry->date.empty) {
-		printf("# Date: %d/%d/%d\n", 
+		printf("Date: \t%02d/%02d/%02d\n", 
 						entry->date.year, 
 						entry->date.month, 
 						entry->date.day);
 	}
 
 	if(!entry->start_time.empty) {
-		printf("# Start: %d:%d\n",
+		printf("Start: \t%02d:%02d\n",
 						entry->start_time.hour,
 						entry->start_time.minute);
 	}
 
 	if(!entry->end_time.empty) {
-		printf("# End: %d:%d\n",
+		printf("End: \t%02d:%02d\n",
 						entry->end_time.hour,
 						entry->end_time.minute);
 	}
 
-	printf("####################\n");
+	printf("--------------------------------------\n");
 }
 
 int CompareEntries(CalendarEntry* first, CalendarEntry* second) {
