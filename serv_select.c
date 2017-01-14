@@ -108,6 +108,8 @@ int main(int argc, char** argv) {
 					bytes_read = recv(i_fd, &buffer, sizeof buffer, 0);
 					if (bytes_read == 0) {
 						printf("Connection closed!\n");
+						close(i_fd);
+						FD_CLR(i_fd, &master_fds);
 					} else if (bytes_read < 0) {
 						fprintf(stderr, "Failed receiving data\n");
 						close(i_fd);
