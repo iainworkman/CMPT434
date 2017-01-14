@@ -5,22 +5,41 @@
  */
 
 #include "calendar.h"
+
 #include <stdio.h>
+#include <string.h>
 
 int main(int argc, char** argv) {
 
-	int rv = 0;
-	Time time;
+	CalendarEntry test_entry;
+	CalendarEntry fetch_spec;
+	Calendar* calendar = 0;
+	if(CalendarInit() != 0) {
 
-	rv = ParseTime("1002", &time);
+		return 1;
+	}	
 
-	if(rv == -1) {
-		printf("Could not parse time\n");
-	} else {
+	ParseDate("160114", &test_entry.date);
+	ParseTime("1600", &test_entry.start_time);
+	ParseTime("1630", &test_entry.end_time);
+	strcpy(test_entry.name, "Appointment");
 
-		printf("%d %d\n", time.hour, time.minute);
+	if(CalendarAdd(&test_entry, "Iain") != 0) {
+
+		printf("Failed to add entry\n");
+		return 1;
 	}
-	
+
+	fetch_spec.date.empty = 1;
+	fetch_spec.start_time.empty = 1;
+	fetch_spec.end_time.empty = 1;
+
+	calendar = CalendarGetEntries(&fetch_spec, "Iain");
+
+	if(!calendar || ListCount(calendar->entries) == 0) {
+		printf("Failed to return calendar\n");
+		return 1;
+	}
 
 	return 0;
 }

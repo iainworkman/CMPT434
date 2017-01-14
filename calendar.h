@@ -12,7 +12,8 @@
 #define MAX_NAME_LENGTH 255
 #define MAX_USERNAME_LENGTH 255
 
-#define ERR_NOINIT 23445
+#define ERR_NOINIT 23445				/* System not properly initialized */
+#define ERR_NOCALENDAR 23446		/* Unable to find/create user's calendar */
 
 /* A Date (year, month and day) */
 typedef struct Date {
@@ -29,6 +30,14 @@ typedef struct Time {
 	int empty;
 } Time;
 
+/* 
+ * A Calendar belonging to a user with a specific username
+ */
+typedef struct Calendar {
+	LIST* entries;
+	char username[MAX_USERNAME_LENGTH];
+} Calendar;
+
 /*
  * A single calendar entry
  */
@@ -37,7 +46,6 @@ typedef struct CalendarEntry {
 	Time start_time;
 	Time end_time;
 	char name[MAX_NAME_LENGTH];
-	char username[MAX_USERNAME_LENGTH];
 
 } CalendarEntry;
 
@@ -51,20 +59,22 @@ int CalendarInit();
  * Adds an entry based on the provided calendar entry
  * @returns 0 on success, error code on failure
  */
-int CalendarAdd(CalendarEntry* entry);
+int CalendarAdd(CalendarEntry* entry, char* username);
 
 /*
  * Removes an entry based on the provided calendar entry
  * @returns 0 on success, error code on failure
  */
-int CalendarRemove(CalendarEntry* entry);
+int CalendarRemove(CalendarEntry* entry, char* username);
 
 /*
  * Updates the entry in the calendar which matches the provided entry 
  * to the values specified in new_entry.
  * @returns 0 on success, error code on failure
  */
-int CalendarUpdate(CalendarEntry* entry, CalendarEntry* new_entry);
+int CalendarUpdate(CalendarEntry* entry, 
+									 CalendarEntry* new_entry,
+									 char* username);
 
 /*
  * Gets a list of entries which match the details provided by entry 
@@ -78,7 +88,25 @@ int CalendarUpdate(CalendarEntry* entry, CalendarEntry* new_entry);
  * NOTE: The resources for the returned LIST* are the responsibility of the
  * caller.
  */
-LIST* CalendarGetEntries(CalendarEntry* entry);
+Calendar* CalendarGetEntries(CalendarEntry* entry, char* username);
+
+/*
+ * Outputs an entire calendar to stdout
+ */
+void PrintCalendar(Calendar* calendar);
+
+/*
+ * Outputs an entry to stdout
+ */
+void PrintEntry(CalendarEntry* entry);
+
+/*
+ * Compares two entries. 
+ * @returns -1 if first is before second
+ * 				  0 if first and second occurr on the same day
+ *				  1 if first is after second	
+ */
+int CompareEntries(CalendarEntry* first, CalendarEntry* second);
 
 /*
  * Parses a string into a date. The resultant date is placed in date.

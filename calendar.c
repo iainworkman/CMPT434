@@ -4,14 +4,14 @@
  * Student No.: 11139430
  */
 
-
 #include "calendar.h"
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /* Data */
-LIST* calendar = 0;
+LIST* calendars = 0;
 
 /* Private Functions */
 int EntryComparator(void* first_entry, void* second_entry) {
@@ -27,23 +27,19 @@ int EntryComparator(void* first_entry, void* second_entry) {
 	second = (CalendarEntry*)second_entry;
 
 	if(second->date.empty == 1) {
-		/* Only check the username */
-		if(strcmp(first->username, second->username) == 0) {
-			return 1;
-		}
+		/* Matches all */
+		return 1;
 	} else if(second->start_time.empty == 1) {
-		/* Only check the username and date */
-		if(strcmp(first->username, second->username) == 0 &&
-				first->date.year == second->date.year &&
+		/* Only check the date */
+		if(first->date.year == second->date.year &&
 				first->date.month == second->date.month &&
 				first->date.day == second->date.day) {
 		
 			return 1;
 		}
 	} else {
-		/* Check username, date and start time */
-		if(strcmp(first->username, second->username) == 0 &&
-				first->date.year == second->date.year &&
+		/* Check the date and start time */
+		if(first->date.year == second->date.year &&
 				first->date.month == second->date.month &&
 				first->date.day == second->date.day &&
 				first->start_time.hour == second->start_time.hour &&
@@ -58,84 +54,263 @@ int EntryComparator(void* first_entry, void* second_entry) {
 			
 }
 
+/*
+ * Finds the calendar belonging to the specified user. If none is found
+ * one is created.
+ * @returns A calendar belonging to the specified user, or NULL if one
+ * could not be initialized.
+ */
+Calendar* FindCalendar(char* username) {
+	Calendar* current_calendar = 0;
+	
+	if(!calendars) {
+		return 0;
+	}
+
+	current_calendar = ListFirst(calendars);
+
+	while(current_calendar) {
+
+		if(strcmp(current_calendar->username, username) == 0) {
+			ListFirst(calendars);
+			return current_calendar;
+		}
+
+		current_calendar = ListNext(calendars);
+	}	
+
+	ListFirst(calendars);
+
+	if(!current_calendar) {
+		current_calendar = malloc(sizeof(Calendar));
+		
+		strcpy(current_calendar->username, username);
+		current_calendar->entries = ListCreate();
+
+		if(!current_calendar->entries) {
+			free(current_calendar);
+			return 0;
+		}
+
+		if(ListAdd(calendars, current_calendar) != 0) {
+			free(current_calendar);
+			return 0;
+		}
+	}
+
+	return current_calendar;
+}
+
 /* Public Function */
 
 int CalendarInit() {
-	calendar = ListCreate();
+	calendars = ListCreate();
 
-	if (!calendar) {
+	if (!calendars) {
 		return -1;
 	} else {
 		return 0;
 	}
 }
 
-int CalendarAdd(CalendarEntry* entry) {
+int CalendarAdd(CalendarEntry* entry, char* username) {
 	
-	if(!calendar) {
+	Calendar* calendar = 0;
+
+	if(!calendars) {
 		return ERR_NOINIT;
 	}
 
-	return ListAdd(calendar, entry);	
+	calendar = FindCalendar(username);
+
+	if(!calendar) {
+		return ERR_NOCALENDAR;
+	}
+	
+	return ListAdd(calendar->entries, entry);	
 
 }
 
-int CalendarRemove(CalendarEntry* entry) {
-	ListFirst(calendar);
+int CalendarRemove(CalendarEntry* entry, char* username) {
+	
+	Calendar* calendar = 0;
+
+	if(!calendars) {
+		return ERR_NOINIT;
+	}
+
+	calendar = FindCalendar(username);
+
+	if(!calendar) {
+		return ERR_NOCALENDAR;
+	}
+
+	ListFirst(calendar->entries);
 
 	CalendarEntry* to_delete = 
-				(CalendarEntry*)ListSearch(calendar, &EntryComparator, entry);
+				(CalendarEntry*)ListSearch(calendar->entries, &EntryComparator, entry);
 
 	if(to_delete == 0) {
-		ListFirst(calendar);
+		ListFirst(calendar->entries);
 		return -1;
 	}
 
-	ListRemove(calendar);
-	ListFirst(calendar);
+	ListRemove(calendar->entries);
+	ListFirst(calendar->entries);
 	
 	free(to_delete);
 
 	return 0;		
 }
 
-int CalendarUpdate(CalendarEntry* entry, CalendarEntry* new_entry) {
-	ListFirst(calendar);
+int CalendarUpdate(CalendarEntry* entry, 
+									 CalendarEntry* new_entry,
+									 char* username) {
+
+	Calendar* calendar = 0;
+
+	if(!calendars) {
+		return ERR_NOINIT;
+	}
+
+	calendar = FindCalendar(username);
+
+	if(!calendar) {
+		return ERR_NOCALENDAR;
+	}
+
+	ListFirst(calendar->entries);
 
 	CalendarEntry* to_update =
-			(CalendarEntry*)ListSearch(calendar, &EntryComparator, entry);
+			(CalendarEntry*)ListSearch(calendar->entries, &EntryComparator, entry);
 
 	if(!to_update) {
-		ListFirst(calendar);
+		ListFirst(calendar->entries);
 		return -1;
 	} 
 
 	strcpy(to_update->name, new_entry->name);
 	to_update->end_time = new_entry->end_time;
 
-	ListFirst(calendar);
+	ListFirst(calendar->entries);
 	return 0;
 }
 
-LIST* CalendarGetEntries(CalendarEntry* entry) {
-	LIST* return_list = ListCreate();
-	CalendarEntry* matched_entry = 0;
-	if(!return_list) {
-		return return_list;
+Calendar* CalendarGetEntries(CalendarEntry* entry, char* username) {
+	
+	Calendar* calendar = 0;
+	Calendar* return_calendar = 0;
+
+	if(!calendars) {
+		return 0;
 	}
 
-	ListFirst(calendar);
+	calendar = FindCalendar(username);
+
+	if(!calendar) {
+		return 0;
+	}
+
+	return_calendar = malloc(sizeof(Calendar));
+	return_calendar->entries = ListCreate();
+
+	if(!return_calendar->entries) {
+		free(return_calendar);
+		return 0;
+	}
+
+	strcpy(return_calendar->username, username);
+
+	CalendarEntry* matched_entry = 0;
+	if(!return_calendar) {
+		return return_calendar;
+	}
+
+	ListFirst(calendar->entries);
 
 	do{
-		matched_entry = ListSearch(calendar, &EntryComparator, entry);
+		matched_entry = ListSearch(calendar->entries, &EntryComparator, entry);
 
 		if(matched_entry) {
-			ListInsert(return_list, matched_entry);
+			ListInsert(return_calendar->entries, matched_entry);
+			if(ListNext(calendar->entries) == 0) {
+				/* We're at the end of the list */
+				break;
+			}
 		}
 	} while(matched_entry);
 
-	ListFirst(calendar);
-	return return_list;
+	ListFirst(calendar->entries);
+	
+	return return_calendar;
+}
+
+void PrintCalendar(Calendar* calendar) {
+
+}
+
+void PrintEntry(CalendarEntry* entry) {
+
+	if(!entry) {
+		return;
+	}
+
+	printf("####################\n");
+
+	printf("# Name %s\n", entry->name);
+	if(!entry->date.empty) {
+		printf("# Date: %d/%d/%d\n", 
+						entry->date.year, 
+						entry->date.month, 
+						entry->date.day);
+	}
+
+	if(!entry->start_time.empty) {
+		printf("# Start: %d:%d\n",
+						entry->start_time.hour,
+						entry->start_time.minute);
+	}
+
+	if(!entry->end_time.empty) {
+		printf("# End: %d:%d\n",
+						entry->end_time.hour,
+						entry->end_time.minute);
+	}
+
+	printf("####################\n");
+}
+
+int CompareEntries(CalendarEntry* first, CalendarEntry* second) {
+	
+	int comparison_value = 0;
+
+	if(!first || !second) {
+		return 0;
+	}
+
+	comparison_value = first->date.year - second->date.year;
+	if(comparison_value != 0) {
+		return comparison_value;
+	}
+
+	comparison_value = first->date.month - second->date.month;
+	if(comparison_value != 0) {
+		return comparison_value;
+	}
+
+	comparison_value = first->date.day - second->date.day;
+	if(comparison_value != 0) {
+		return comparison_value;
+	}
+
+	comparison_value = first->start_time.hour - second->start_time.hour;
+	if(comparison_value != 0) {
+		return comparison_value;
+	}	
+
+	comparison_value = first->start_time.minute - second->start_time.minute;
+	
+	return comparison_value;
 }
 
 int ParseDate(char* string, Date* date) {
