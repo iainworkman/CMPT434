@@ -7,21 +7,19 @@
 
 #include "calendar.h"
 
-int CalendarAdd(char* username, CalendarEntry entry) {
+int CalendarAdd(CalendarEntry entry) {
 	return 0;
 }
 
-int CalendarRemove(char* username, CalendarEntry entry) {
+int CalendarRemove(CalendarEntry entry) {
 	return 0;
 }
 
-int CalendarUpdate(char* username, 
-									 CalendarEntry entry, 
-									 CalendarEntry new_entry) {
+int CalendarUpdate(CalendarEntry entry, CalendarEntry new_entry) {
 
 	return 0;
 }
 
-LIST* CalendarGetEntries(char* username, CalendarEntry entry) {
+LIST* CalendarGetEntries(CalendarEntry entry) {
 	return 0;
 }
