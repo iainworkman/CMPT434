@@ -12,6 +12,17 @@ UNAME_M=$(shell uname -m)
 ARCH=_$(UNAME_M)
 
 all: serv_select serv_proc serv_thread client
+tests: list_test
+
+####################
+# Tests
+####################
+
+list_test: list_test.o libCalendar$(ARCH).a libList$(ARCH).a
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+
+list_test.o: list_test.c
+	$(CC) $(CFLAGS) -c list_test.c -o $@
 ####################
 # Proc Server
 ####################

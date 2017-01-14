@@ -140,7 +140,7 @@ int CalendarAdd(CalendarEntry* entry, char* username) {
 
 	while(current) {
 
-		if(CompareEntries(entry, current) < 1) {
+		if(CompareEntries(current, entry) < 1) {
 			/* new entry is equal to or smaller than current */
 			/* Insert here */
 			return_code = ListInsert(calendar->entries, entry);
