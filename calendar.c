@@ -116,6 +116,8 @@ int CalendarInit() {
 int CalendarAdd(CalendarEntry* entry, char* username) {
 	
 	Calendar* calendar = 0;
+	CalendarEntry* current = 0;	
+  int return_code = 0;
 
 	if(!calendars) {
 		return ERR_NOINIT;
@@ -126,8 +128,34 @@ int CalendarAdd(CalendarEntry* entry, char* username) {
 	if(!calendar) {
 		return ERR_NOCALENDAR;
 	}
+
+	/* Ensure we add into the right place */
+
+	current = ListFirst(calendar->entries);
+
+	if(!current) {
+		/* Empty: Add at start */
+		return ListInsert(calendar->entries, entry);
+	}
+
+	while(current) {
+
+		if(CompareEntries(entry, current) < 1) {
+			/* new entry is equal to or smaller than current */
+			/* Insert here */
+			return_code = ListInsert(calendar->entries, entry);
+			ListFirst(calendar->entries);
+			return return_code;			
+		}
+
+		current = ListNext(calendar->entries);
+	}
 	
-	return ListAdd(calendar->entries, entry);	
+	/* Must have got to end - Insert here */
+	return_code = ListAdd(calendar->entries, entry);
+	ListFirst(calendar->entries);
+
+	return return_code;
 
 }
 
