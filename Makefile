@@ -11,13 +11,49 @@ UNAME_M=$(shell uname -m)
 
 ARCH=_$(UNAME_M)
 
-all: list libcalendar$(ARCH).a
+all: serv_select serv_proc serv_thread client
+####################
+# Proc Server
+####################
+
+serv_proc: serv_proc.o libCalendar$(ARCH).a libList$(ARCH).a
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+
+serv_proc.o: serv_proc.c
+	$(CC) $(CFLAGS) -c serv_proc.c -o $@
+
+####################
+# Threaded Server
+####################
+
+serv_thread: serv_thread.o libCalendar$(ARCH).a libList$(ARCH).a
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+
+serv_thread.o: serv_thread.c
+	$(CC) $(CFLAGS) -c serv_thread.c -o $@
+
+####################
+# Select Server
+####################
+
+serv_select: serv_select.o libCalendar$(ARCH).a libList$(ARCH).a 
+	$(CC) $(CFLAGS)	-I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+
+serv_select.o: serv_select.c
+	$(CC) $(CFLAGS) -c serv_select.c -o $@
+
+####################
+# Client
+####################
+
+client: client.c
+	$(CC) $(CFLAGS) client.c -o $@
 
 ####################
 # Calendar
 ####################
 
-libcalendar$(ARCH).a: calendar.o
+libCalendar$(ARCH).a: calendar.o
 	ar rcs $@ $^
 
 calendar$(ARCH).o: calendar.c
@@ -26,9 +62,8 @@ calendar$(ARCH).o: calendar.c
 ####################
 # List
 ####################
-list: liblist$(ARCH).a
 
-liblist$(ARCH).a: 	list_adders$(ARCH).o \
+libList$(ARCH).a: 	list_adders$(ARCH).o \
 										list_movers$(ARCH).o \
 									 	list_removers$(ARCH).o
 	ar rcs $@ $^ 

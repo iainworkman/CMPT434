@@ -1,3 +1,7 @@
 *.swp
 *.o
 *.a
+client
+serv_proc
+serv_select
+serv_thread
