@@ -15,6 +15,13 @@
 #define ERR_NOINIT 23445				/* System not properly initialized */
 #define ERR_NOCALENDAR 23446		/* Unable to find/create user's calendar */
 
+
+/* Command Codes */
+#define ADD_EVENT 		0
+#define REMOVE_EVENT 	1
+#define UPDATE_EVENT	2
+#define GET_EVENTS		3
+
 /* A Date (year, month and day) */
 typedef struct Date {
 	int year;
@@ -48,6 +55,16 @@ typedef struct CalendarEntry {
 	char name[MAX_NAME_LENGTH];
 
 } CalendarEntry;
+
+/* 
+ * A command to be performed on a user's calendar
+ */
+typedef struct CalendarCommand {
+
+	char username[MAX_USERNAME_LENGTH];
+	CalendarEntry event;
+	int command_code;
+} CalendarCommand;
 
 /*
  * Initializes the calendar system.
@@ -120,4 +137,10 @@ int ParseDate(char* string, Date* date);
  */
 int ParseTime(char* string, Time* time);
 
+/*
+ * Parses an array of strings into a CalendarCommand, placing the
+ * results in the passed command struct.
+ * @returns 0 on success, -1 otherwise.
+ */
+int ParseCommand(int argc, char** argv, CalendarCommand* command);
 #endif //_CALENDAR_H_

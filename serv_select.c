@@ -15,6 +15,8 @@
 #include <netdb.h>
 #include <string.h>
 
+#include "calendar.h"
+
 int main(int argc, char** argv) {
 
 	char* parse_test;
@@ -32,6 +34,7 @@ int main(int argc, char** argv) {
 	int bytes_read;
 	struct sockaddr_storage client_address;
 	socklen_t address_length;
+	CalendarEntry entry;
 
 	if(argc == 1) {
 		printf("No listen port provided\n");
@@ -105,7 +108,7 @@ int main(int argc, char** argv) {
 						printf("Connection made!\n");
 					}
 				} else {
-					bytes_read = recv(i_fd, &buffer, sizeof buffer, 0);
+					bytes_read = recv(i_fd, (char*) &entry, sizeof(CalendarEntry), 0);
 					if (bytes_read == 0) {
 						printf("Connection closed!\n");
 						close(i_fd);
@@ -115,7 +118,7 @@ int main(int argc, char** argv) {
 						close(i_fd);
 						FD_CLR(i_fd, &master_fds);
 					} else {
-						printf("%s\n", buffer);
+						PrintEntry(&entry);
 					}
 				}
 			}

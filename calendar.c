@@ -488,3 +488,112 @@ int ParseTime(char* string, Time* time) {
 	time->empty = 0;
 	return 0;
 }
+
+int ParseCommand(int argc, char** argv, CalendarCommand* command) {
+
+	CalendarCommand temp_command;
+	int parse_success = 0;
+	if(!command) {
+		return -1;
+	} 
+
+	if(argc < 5) {
+		return -1;
+	}
+
+	if(strcmp(argv[4], "add") == 0) {
+		temp_command.command_code = ADD_EVENT;
+
+		if(argc != 9) {
+			return -1;
+		}	
+		
+		parse_success = ParseDate(argv[5], &temp_command.event.date);
+		if(parse_success == -1) {
+			return -1;
+		}	
+
+		parse_success = ParseTime(argv[6], &temp_command.event.start_time);
+		if(parse_success == -1) {
+			return -1;
+		}
+
+		parse_success = ParseTime(argv[7], &temp_command.event.end_time);
+		if(parse_success == -1) {
+			return -1;
+		}
+
+		strcpy(command->event.name, argv[8]);
+	} else if (strcmp(argv[4], "remove") == 0) {
+		temp_command.command_code = REMOVE_EVENT;
+		
+		if(argc != 7) {
+			return -1;
+		}
+
+		parse_success = ParseDate(argv[5], &temp_command.event.date);
+		if(parse_success == -1) {
+			return -1;
+		}
+		
+		parse_success = ParseTime(argv[6], &temp_command.event.start_time);
+		if(parse_success == -1) {
+			return -1;
+		}
+
+	} else if (strcmp(argv[4], "update") == 0) {
+		temp_command.command_code = UPDATE_EVENT;		
+		
+		if(argc != 9) {
+			return -1;
+		}
+
+		parse_success = ParseDate(argv[5], &temp_command.event.date);
+		if(parse_success == -1) {
+   		return -1;
+		}
+
+		parse_success = ParseTime(argv[6], &temp_command.event.start_time);
+		if(parse_success == -1) {
+			return -1;
+		}
+
+		parse_success = ParseTime(argv[7], &temp_command.event.end_time);
+		if(parse_success == -1) {
+			return -1;
+		}
+
+		strcpy(command->event.name, argv[8]);
+
+	} else if (strcmp(argv[4], "get") == 0) {
+		temp_command.command_code = GET_EVENTS;
+		
+		if(argc != 7 && argc != 8) {
+			return -1;
+		}
+
+		parse_success = ParseDate(argv[5], &temp_command.event.date);
+		if(parse_success == -1) {
+			return -1;
+		}
+
+		if(argc == 8) {
+			parse_success = ParseTime(argv[6], &temp_command.event.start_time);
+			if(parse_success == -1) {
+				return -1;
+			}
+		}
+	} else if (strcmp(argv[4], "getall") == 0) {
+		temp_command.command_code = GET_EVENTS;
+
+	} else {
+		/* Unknown Command */
+		return -1;
+	}
+
+	strcpy(command->username, argv[3]);
+	command->event = temp_command.event;
+	command->command_code = temp_command.command_code;
+	
+	return 0;
+}
