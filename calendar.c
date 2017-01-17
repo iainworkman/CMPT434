@@ -387,17 +387,17 @@ int ParseDate(char* string, Date* date) {
 	month_string[2] = '\0';
 
 	/* Convert each part to numbers */
-	year = strtol(year_string, &temp, 0);
+	year = strtol(year_string, &temp, 10);
 	if(year_string == temp || *temp != '\0') {
 		return -1;
 	}
 
-	month = strtol(month_string, &temp, 0);
+	month = strtol(month_string, &temp, 10);
 	if(month_string == temp || *temp != '\0') {
 		return -1;
 	}
 
-	day = strtol(day_string, &temp, 0);
+	day = strtol(day_string, &temp, 10);
 	if(day_string == temp || *temp != '\0') {
 		return -1;
 	}
@@ -463,12 +463,12 @@ int ParseTime(char* string, Time* time) {
 	hour_string[2] = '\0';
 
 	/* Convert each part to numbers */
-	hour = strtol(hour_string, &temp, 0);
+	hour = strtol(hour_string, &temp, 10);
 	if(hour_string == temp || *temp != '\0') {
 		return -1;
 	}
 
-	minute = strtol(minute_string, &temp, 0);
+	minute = strtol(minute_string, &temp, 10);
 	if(minute_string == temp || *temp != '\0') {
 		return -1;
 	}
@@ -501,6 +501,10 @@ int ParseCommand(int argc, char** argv, CalendarCommand* command) {
 		return -1;
 	}
 
+	temp_command.event.date.empty = 1;
+	temp_command.event.start_time.empty = 1;
+	temp_command.event.end_time.empty = 1;
+
 	if(strcmp(argv[4], "add") == 0) {
 		temp_command.command_code = ADD_EVENT;
 
@@ -523,7 +527,6 @@ int ParseCommand(int argc, char** argv, CalendarCommand* command) {
 			return -1;
 		}
 
-		strcpy(command->event.name, argv[8]);
 	} else if (strcmp(argv[4], "remove") == 0) {
 		temp_command.command_code = REMOVE_EVENT;
 		
@@ -563,12 +566,10 @@ int ParseCommand(int argc, char** argv, CalendarCommand* command) {
 			return -1;
 		}
 
-		strcpy(command->event.name, argv[8]);
-
 	} else if (strcmp(argv[4], "get") == 0) {
 		temp_command.command_code = GET_EVENTS;
 		
-		if(argc != 7 && argc != 8) {
+		if(argc != 6 && argc != 7) {
 			return -1;
 		}
 
@@ -577,7 +578,7 @@ int ParseCommand(int argc, char** argv, CalendarCommand* command) {
 			return -1;
 		}
 
-		if(argc == 8) {
+		if(argc == 7) {
 			parse_success = ParseTime(argv[6], &temp_command.event.start_time);
 			if(parse_success == -1) {
 				return -1;
@@ -594,6 +595,12 @@ int ParseCommand(int argc, char** argv, CalendarCommand* command) {
 	strcpy(command->username, argv[3]);
 	command->event = temp_command.event;
 	command->command_code = temp_command.command_code;
-	
+
+	if(command->command_code == ADD_EVENT || 
+			command->command_code == UPDATE_EVENT) {
+
+		strcpy(command->event.name, argv[8]);
+	}	
+
 	return 0;
 }

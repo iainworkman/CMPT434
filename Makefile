@@ -18,47 +18,50 @@ tests: list_test
 # Tests
 ####################
 
-list_test: list_test.o libCalendar$(ARCH).a libList$(ARCH).a
+list_test: list_test$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
 	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
 
-list_test.o: list_test.c
+list_test$(ARCH).o: list_test.c
 	$(CC) $(CFLAGS) -c list_test.c -o $@
 ####################
 # Proc Server
 ####################
 
-serv_proc: serv_proc.o libCalendar$(ARCH).a libList$(ARCH).a
+serv_proc: serv_proc$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
 	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
 
-serv_proc.o: serv_proc.c
+serv_proc$(ARCH).o: serv_proc.c
 	$(CC) $(CFLAGS) -c serv_proc.c -o $@
 
 ####################
 # Threaded Server
 ####################
 
-serv_thread: serv_thread.o libCalendar$(ARCH).a libList$(ARCH).a
+serv_thread: serv_thread$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
 	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
 
-serv_thread.o: serv_thread.c
+serv_thread$(ARCH).o: serv_thread.c
 	$(CC) $(CFLAGS) -c serv_thread.c -o $@
 
 ####################
 # Select Server
 ####################
 
-serv_select: serv_select.o libCalendar$(ARCH).a libList$(ARCH).a 
+serv_select: serv_select$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a 
 	$(CC) $(CFLAGS)	-I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
 
-serv_select.o: serv_select.c
+serv_select$(ARCH).o: serv_select.c
 	$(CC) $(CFLAGS) -c serv_select.c -o $@
 
 ####################
 # Client
 ####################
 
-client: client.c
-	$(CC) $(CFLAGS) client.c -o $@
+client: client$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+
+client$(ARCH).o: client.c
+	$(CC) $(CFLAGS) -c client.c -o $@
 
 ####################
 # Calendar

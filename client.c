@@ -19,14 +19,20 @@ int main(int argc, char** argv) {
 	struct addrinfo hints;
 	struct addrinfo *servinfo; 
 	int socket_fd;
-	CalendarEntry entry;
+	CalendarCommand command;
+	int parse_status;
 
 	/* Parse Arguments */
-	if(argc < 5) {
-		fprintf(stderr, "Insufficient arguments provided\n");
+	parse_status = ParseCommand(argc, argv, &command);
+	if(parse_status == -1) {
+		fprintf(stderr, "Failed to parse provided arguments\n");
 		exit(1);
-	}
+	}	
 
+	printf("%s\n", command.username);
+	printf("%d\n", command.command_code);
+	PrintEntry(&command.event);
+	
 	memset(&hints, 0, sizeof hints); // make sure the struct is empty
 	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
 	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
@@ -43,20 +49,7 @@ int main(int argc, char** argv) {
 
 	connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
 	
-	entry.date.year = 16;
-	entry.date.month = 12;
-	entry.date.day = 10;
-	entry.date.empty = 0;
-
-	entry.start_time.hour = 14;
-	entry.start_time.minute = 10;
-	entry.start_time.empty = 0;
-
-	entry.end_time.empty = 1;
-
-	strcpy(entry.name, "Test Sending an Entry");
-	
-	send(socket_fd, (char*)&entry, sizeof(CalendarEntry), 0);
+	send(socket_fd, (char*)&command, sizeof(CalendarCommand), 0);
 
 	freeaddrinfo(servinfo); // free the linked-list
 
