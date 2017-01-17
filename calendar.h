@@ -143,4 +143,5 @@ int ParseTime(char* string, Time* time);
  * @returns 0 on success, -1 otherwise.
  */
 int ParseCommand(int argc, char** argv, CalendarCommand* command);
+
 #endif //_CALENDAR_H_

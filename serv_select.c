@@ -35,18 +35,24 @@ int main(int argc, char** argv) {
 	struct sockaddr_storage client_address;
 	socklen_t address_length;
 	CalendarCommand command;
+	int command_status;
 
 	if(argc == 1) {
-		printf("No listen port provided\n");
-		return 1;
+		fprintf(stderr, "No listen port provided\n");
+		exit(1);
 	}
 	
 	port = strtol(argv[1], &parse_test, 0);
 	if(port < 30001 || port > 40000 || *parse_test != '\0') {
-		printf("Port is not a valid number (30001 - 40000)\n");
-		return 1;
+		fprintf(stderr, "Port is not a valid number (30001 - 40000)\n");
+		exit(1);
 	}	
 	
+	if(CalendarInit() != 0) {
+		fprintf(stderr, "Failed to initialize Calendar subsystem\n");
+		exit(1);
+	}
+
 	memset(&hints, 0, sizeof hints); // make sure the struct is empty
 	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
 	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
@@ -118,9 +124,18 @@ int main(int argc, char** argv) {
 						close(i_fd);
 						FD_CLR(i_fd, &master_fds);
 					} else {
-						printf("%s\n", command.username);
-						printf("%d\n", command.command_code);
-						PrintEntry(&command.event);
+						if(command.command_code == ADD_EVENT) {
+							command_status = CalendarAdd(&command.event, command.username);
+							PrintCalendar(CalendarGetEntries(&command.event, command.username));
+						} else if (command.command_code == REMOVE_EVENT) {
+							command_status = CalendarRemove(&command.event, command.username);
+
+						} else if (command.command_code == UPDATE_EVENT) {
+						} else if (command.command_code == GET_EVENTS) {
+							
+						}	else {
+
+						}					
 					}
 				}
 			}
