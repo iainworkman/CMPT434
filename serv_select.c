@@ -35,6 +35,9 @@ int main(int argc, char** argv) {
 	struct sockaddr_storage client_address;
 	socklen_t address_length;
 	CalendarCommand command;
+	CalendarEntry* temp_entry;
+	Calendar* get_returns = 0;
+
 	int command_status;
 
 	if(argc == 1) {
@@ -125,14 +128,17 @@ int main(int argc, char** argv) {
 						FD_CLR(i_fd, &master_fds);
 					} else {
 						if(command.command_code == ADD_EVENT) {
-							command_status = CalendarAdd(&command.event, command.username);
+							temp_entry = (CalendarEntry*)malloc(sizeof(CalendarEntry));
+							*temp_entry = command.event;
+							command_status = CalendarAdd(temp_entry, command.username);
 							PrintCalendar(CalendarGetEntries(&command.event, command.username));
 						} else if (command.command_code == REMOVE_EVENT) {
 							command_status = CalendarRemove(&command.event, command.username);
 
 						} else if (command.command_code == UPDATE_EVENT) {
 						} else if (command.command_code == GET_EVENTS) {
-							
+							get_returns = CalendarGetEntries(&command.event, command.username);
+							PrintCalendar(get_returns);
 						}	else {
 
 						}					

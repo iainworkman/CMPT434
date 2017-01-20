@@ -3,6 +3,9 @@
 /* NSID: ral362                NSID: ipw969				*/
 /* Student No.: 11137909       Student No.: 11139430	*/
 /*														*/
+#ifndef _LIST_H_
+#define _LIST_H_
+
 #define MIN_NODES 10000
 #define MIN_LISTS 1000
 
@@ -219,3 +222,5 @@ item for a match.
 @returns: The matched item if one is found, NULL otherwise.
 */
 void *ListSearch(LIST* list, int (*comparator)(void*, void*), void* comparisonArg);
+
+#endif /* _LIST_H_ */
