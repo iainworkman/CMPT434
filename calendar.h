@@ -22,6 +22,13 @@
 #define UPDATE_EVENT	2
 #define GET_EVENTS		3
 
+/* Response Codes */
+#define ERR							0
+#define ADD_SUCCESS			1
+#define REMOVE_SUCCESS	2
+#define UPDATE_SUCCESS	3
+#define GET							4
+#define GET_END
 /* A Date (year, month and day) */
 typedef struct Date {
 	int year;
@@ -65,6 +72,15 @@ typedef struct CalendarCommand {
 	CalendarEntry event;
 	int command_code;
 } CalendarCommand;
+
+/*
+ * A response which a server can return for a calendar command
+ */
+typedef struct CalendarResponse {
+
+	int response_code;
+	CalendarEntry entry;
+} CalendarResponse;
 
 /*
  * Initializes the calendar system.

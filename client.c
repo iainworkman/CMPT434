@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
 	struct addrinfo *servinfo; 
 	int socket_fd;
 	CalendarCommand command;
+	CalendarResponse response;
 	int parse_status;
 
 	/* Parse Arguments */
@@ -50,6 +51,15 @@ int main(int argc, char** argv) {
 	connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
 	
 	send(socket_fd, (char*)&command, sizeof(CalendarCommand), 0);
+	recv(socket_fd, (char*)&response, sizeof(CalendarResponse), 0);
+	
+	if(response.response_code == ERR) {
+		fprintf(stderr, "Error\n");
+	} else if(response.response_code == ADD_SUCCESS) {
+		printf("Entry added successfully\n");
+	} else if(response.response_code == REMOVE_SUCCESS) {
+		printf("Entry removed successfully\n");
+	}
 
 	freeaddrinfo(servinfo); // free the linked-list
 

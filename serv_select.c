@@ -20,7 +20,6 @@
 int main(int argc, char** argv) {
 
 	char* parse_test;
-	char buffer[256];
 	int port;
 	int status;
 	struct addrinfo hints;
@@ -37,8 +36,9 @@ int main(int argc, char** argv) {
 	CalendarCommand command;
 	CalendarEntry* temp_entry;
 	Calendar* get_returns = 0;
-
+	CalendarResponse response;
 	int command_status;
+	int yes=1;
 
 	if(argc == 1) {
 		fprintf(stderr, "No listen port provided\n");
@@ -76,6 +76,7 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 	
+  setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));	
 	if(bind(listen_fd, servinfo->ai_addr, servinfo->ai_addrlen) == -1) {
 
 		fprintf(stderr, "Failed to bind socket to port\n");
@@ -131,10 +132,20 @@ int main(int argc, char** argv) {
 							temp_entry = (CalendarEntry*)malloc(sizeof(CalendarEntry));
 							*temp_entry = command.event;
 							command_status = CalendarAdd(temp_entry, command.username);
-							PrintCalendar(CalendarGetEntries(&command.event, command.username));
+							if(command_status != 0) {
+								response.response_code = ERR;	
+							} else {
+								response.response_code = ADD_SUCCESS;
+							}
+							send(i_fd, (char*)&response, sizeof(CalendarResponse),0);
 						} else if (command.command_code == REMOVE_EVENT) {
 							command_status = CalendarRemove(&command.event, command.username);
-
+							if(command_status != 0) {
+								response.response_code = ERR;
+							} else {
+								response.response_code = REMOVE_SUCCESS;
+							}
+							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
 						} else if (command.command_code == UPDATE_EVENT) {
 						} else if (command.command_code == GET_EVENTS) {
 							get_returns = CalendarGetEntries(&command.event, command.username);
