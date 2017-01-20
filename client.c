@@ -30,10 +30,6 @@ int main(int argc, char** argv) {
 		exit(1);
 	}	
 
-	printf("%s\n", command.username);
-	printf("%d\n", command.command_code);
-	PrintEntry(&command.event);
-	
 	memset(&hints, 0, sizeof hints); // make sure the struct is empty
 	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
 	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
@@ -53,12 +49,16 @@ int main(int argc, char** argv) {
 	send(socket_fd, (char*)&command, sizeof(CalendarCommand), 0);
 	recv(socket_fd, (char*)&response, sizeof(CalendarResponse), 0);
 	
-	if(response.response_code == ERR) {
-		fprintf(stderr, "Error\n");
-	} else if(response.response_code == ADD_SUCCESS) {
+	PrintError(response.response_code);
+	if(response.response_code == ADD_SUCCESS) {
 		printf("Entry added successfully\n");
 	} else if(response.response_code == REMOVE_SUCCESS) {
 		printf("Entry removed successfully\n");
+	} if(response.response_code == GET) {
+		while(response.response_code != GET_END) {
+			recv(socket_fd, (char*)&response, sizeof(CalendarResponse), 0);
+			PrintEntry(&response.entry);
+		}
 	}
 
 	freeaddrinfo(servinfo); // free the linked-list

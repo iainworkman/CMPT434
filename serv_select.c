@@ -114,13 +114,10 @@ int main(int argc, char** argv) {
 						if(incoming_fd > max_fd) {
 							max_fd = incoming_fd;
 						}
-
-						printf("Connection made!\n");
 					}
 				} else {
 					bytes_read = recv(i_fd, (char*)&command, sizeof(CalendarCommand), 0);
 					if (bytes_read == 0) {
-						printf("Connection closed!\n");
 						close(i_fd);
 						FD_CLR(i_fd, &master_fds);
 					} else if (bytes_read < 0) {
@@ -133,7 +130,7 @@ int main(int argc, char** argv) {
 							*temp_entry = command.event;
 							command_status = CalendarAdd(temp_entry, command.username);
 							if(command_status != 0) {
-								response.response_code = ERR;	
+								response.response_code = command_status;	
 							} else {
 								response.response_code = ADD_SUCCESS;
 							}
@@ -141,15 +138,24 @@ int main(int argc, char** argv) {
 						} else if (command.command_code == REMOVE_EVENT) {
 							command_status = CalendarRemove(&command.event, command.username);
 							if(command_status != 0) {
-								response.response_code = ERR;
+								response.response_code = command_status;
 							} else {
 								response.response_code = REMOVE_SUCCESS;
 							}
 							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
 						} else if (command.command_code == UPDATE_EVENT) {
 						} else if (command.command_code == GET_EVENTS) {
+							CalendarEntry* current_entry = 0;
 							get_returns = CalendarGetEntries(&command.event, command.username);
-							PrintCalendar(get_returns);
+							current_entry = ListFirst(get_returns->entries);
+							while(current_entry) {
+								response.response_code = GET;
+								response.entry = *current_entry;
+								send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
+								current_entry = ListNext(get_returns->entries);
+							}
+							response.response_code = GET_END;
+							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);	
 						}	else {
 
 						}					

@@ -324,6 +324,21 @@ void PrintEntry(CalendarEntry* entry) {
 	printf("--------------------------------------\n");
 }
 
+void PrintError(int error_code) {
+	switch (error_code) {
+		case(ERR_UNKNOWN):
+			fprintf(stderr, "An unknown error occurred\n");
+			break;
+		case(ERR_NOINIT):
+			fprintf(stderr, "Calendar system not initialized\n");
+			break;
+		case(ERR_NOCALENDAR):
+			fprintf(stderr, "Could not find calendar for provided user\n");
+			break;
+	}
+	return;
+}
+
 int CompareEntries(CalendarEntry* first, CalendarEntry* second) {
 	
 	int comparison_value = 0;

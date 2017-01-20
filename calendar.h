@@ -12,8 +12,6 @@
 #define MAX_NAME_LENGTH 255
 #define MAX_USERNAME_LENGTH 255
 
-#define ERR_NOINIT 23445				/* System not properly initialized */
-#define ERR_NOCALENDAR 23446		/* Unable to find/create user's calendar */
 
 
 /* Command Codes */
@@ -23,12 +21,15 @@
 #define GET_EVENTS		3
 
 /* Response Codes */
-#define ERR							0
+#define ERR_UNKNOWN			-1
 #define ADD_SUCCESS			1
 #define REMOVE_SUCCESS	2
 #define UPDATE_SUCCESS	3
 #define GET							4
-#define GET_END
+#define GET_END					5
+
+#define ERR_NOINIT			23445
+#define ERR_NOCALENDAR 	23446		/* Unable to find/create user's calendar */
 /* A Date (year, month and day) */
 typedef struct Date {
 	int year;
@@ -82,6 +83,7 @@ typedef struct CalendarResponse {
 	CalendarEntry entry;
 } CalendarResponse;
 
+
 /*
  * Initializes the calendar system.
  * @returns 0 on success, error code on failure
@@ -132,6 +134,11 @@ void PrintCalendar(Calendar* calendar);
  * Outputs an entry to stdout
  */
 void PrintEntry(CalendarEntry* entry);
+
+/*
+ * Prints error message based on error codes
+ */
+void PrintError(int error_code);
 
 /*
  * Compares two entries. 
