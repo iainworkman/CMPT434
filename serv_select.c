@@ -144,6 +144,19 @@ int main(int argc, char** argv) {
 							}
 							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
 						} else if (command.command_code == UPDATE_EVENT) {
+							CalendarEntry locate_entry;
+							locate_entry.date = command.event.date;
+							locate_entry.start_time = command.event.start_time;
+							locate_entry.end_time.empty = 1;
+							command_status = 
+								CalendarUpdate(&locate_entry, &command.event, command.username);
+							
+							if(command_status != 0) {
+								response.response_code = command_status;
+							} else {
+								response.response_code = UPDATE_SUCCESS;
+							}
+							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
 						} else if (command.command_code == GET_EVENTS) {
 							CalendarEntry* current_entry = 0;
 							get_returns = CalendarGetEntries(&command.event, command.username);
