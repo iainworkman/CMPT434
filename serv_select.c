@@ -168,7 +168,9 @@ int main(int argc, char** argv) {
 								current_entry = ListNext(get_returns->entries);
 							}
 							response.response_code = GET_END;
-							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);	
+							send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
+							ListFree(get_returns->entries, NULL);	
+							free(get_returns);
 						}	else {
 
 						}					

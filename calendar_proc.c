@@ -141,10 +141,9 @@ int main(int argc, char** argv) {
 					}
 					
 					response.response_code = GET_END;
-					send(incoming_fd, (char*)&response, sizeof(CalendarResponse), 0);	
-				}	else if (command.command_code == STATUS) {
-					response.response_code = STATUS_UP;
-					send(incoming_fd, (char*)&response, sizeof(CalendarResponse), 0);		
+					send(incoming_fd, (char*)&response, sizeof(CalendarResponse), 0);
+					ListFree(get_returns->entries, NULL);
+					free(get_returns);	
 				}
 			}
 		}

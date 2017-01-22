@@ -18,6 +18,8 @@
 
 #include "calendar.h"
 
+pthread_mutex_t calendar_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 void* child_proc(void* fd) {
 	CalendarCommand command;
 	CalendarResponse response;
@@ -29,30 +31,35 @@ void* child_proc(void* fd) {
 	recv(client_fd, (char*)&command, sizeof(CalendarCommand), 0);
 	if(command.command_code == ADD_EVENT) {                             
   	temp_entry = (CalendarEntry*)malloc(sizeof(CalendarEntry));       
-    *temp_entry = command.event;                                      
-    command_status = CalendarAdd(temp_entry, command.username);       
+    *temp_entry = command.event;
+		pthread_mutex_lock(&calendar_mutex);
+    command_status = CalendarAdd(temp_entry, command.username);
+		pthread_mutex_unlock(&calendar_mutex);
     if(command_status != 0) {                                         
     	response.response_code = command_status;                        
     } else {                                                          
     	response.response_code = ADD_SUCCESS;                           
     }                                                                 
     send(client_fd, (char*)&response, sizeof(CalendarResponse),0);         
-  } else if (command.command_code == REMOVE_EVENT) {                  
+  } else if (command.command_code == REMOVE_EVENT) {
+		pthread_mutex_lock(&calendar_mutex);                  
     command_status = CalendarRemove(&command.event, command.username);
+		pthread_mutex_unlock(&calendar_mutex);
   if(command_status != 0) {                                         
   	response.response_code = command_status;                        
-  } else {                                                          
-  	response.response_code = REMOVE_SUCCESS;                        
-  }                                                                 
+  	} else {                                                          
+  		response.response_code = REMOVE_SUCCESS;                        
+  	}                                                                 
   	send(client_fd, (char*)&response, sizeof(CalendarResponse), 0);        
   } else if (command.command_code == UPDATE_EVENT) {                  
   	CalendarEntry locate_entry;                                       
     locate_entry.date = command.event.date;                           
     locate_entry.start_time = command.event.start_time;               
     locate_entry.end_time.empty = 1;                                  
-    command_status =                                                  
+    pthread_mutex_lock(&calendar_mutex);
+		command_status =                                                  
     	CalendarUpdate(&locate_entry, &command.event, command.username);
-                                                                                
+    pthread_mutex_unlock(&calendar_mutex);                   
    	if(command_status != 0) {                                         
     	response.response_code = command_status;                        
     } else {                                                          
@@ -60,8 +67,10 @@ void* child_proc(void* fd) {
     }                                                                 
     send(client_fd, (char*)&response, sizeof(CalendarResponse), 0); 	
 	} else if (command.command_code == GET_EVENTS) {
-  	CalendarEntry* current_entry = 0;                                 
+  	CalendarEntry* current_entry = 0;     
+		pthread_mutex_lock(&calendar_mutex);                            
     get_returns = CalendarGetEntries(&command.event, command.username);
+		pthread_mutex_unlock(&calendar_mutex);
     current_entry = ListFirst(get_returns->entries);                  
     while(current_entry) {                                            
     	response.response_code = GET;                                   
@@ -70,7 +79,9 @@ void* child_proc(void* fd) {
       current_entry = ListNext(get_returns->entries);                 
     }                                                                 
     response.response_code = GET_END;                                 
-    send(client_fd, (char*)&response, sizeof(CalendarResponse), 0);        
+    send(client_fd, (char*)&response, sizeof(CalendarResponse), 0);
+		ListFree(get_returns->entries, NULL);
+		free(get_returns);
   }
 	pthread_exit(0);
 }
