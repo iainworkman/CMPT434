@@ -26,12 +26,9 @@ int main(int argc, char** argv) {
 	struct addrinfo *servinfo;  // will point to the results
 	int listen_fd = 0;
 	int incoming_fd;
-	int bytes_read;
 	struct sockaddr_storage client_address;
 	socklen_t address_length;
 	CalendarCommand command;
-	CalendarEntry* temp_entry;
-	Calendar* get_returns = 0;
 	CalendarResponse response;
 	int command_status;
 	int yes=1;
@@ -56,7 +53,8 @@ int main(int argc, char** argv) {
 		exit(1);
 	}	else if (calendar_pid == 0) {
 		/* Child process, exec() the calendar */
-		command_status = execvp("./calendar_proc", (char*)0);
+		char *execArgs[] = { "./calendar_proc", NULL };
+		command_status = execvp("./calendar_proc", execArgs);
 		if(command_status == -1) {
 			fprintf(stderr, "Failed to exec calendar function\n");
 			exit(1);
