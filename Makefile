@@ -67,7 +67,7 @@ client$(ARCH).o: client.c
 # Calendar
 ####################
 
-libCalendar$(ARCH).a: calendar.o
+libCalendar$(ARCH).a: calendar$(ARCH).o
 	ar rcs $@ $^
 
 calendar$(ARCH).o: calendar.c

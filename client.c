@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
 	CalendarCommand command;
 	CalendarResponse response;
 	int parse_status;
+	int port;
 
 	/* Parse Arguments */
 	parse_status = ParseCommand(argc, argv, &command);
@@ -30,11 +31,17 @@ int main(int argc, char** argv) {
 		exit(1);
 	}	
 
+	port = strtol(argv[2], 0, 10);
+	if(port < 30001 || port > 40000) {
+		fprintf(stderr, "Port is not valid (30001 - 40000)\n");
+		exit(1);
+	}		
+
 	memset(&hints, 0, sizeof hints); // make sure the struct is empty
 	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
 	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
 
-	if ((status = getaddrinfo("127.0.0.1", "30001", &hints, &servinfo)) != 0) {
+	if ((status = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0) {
     fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
     exit(1);
 	}
@@ -56,8 +63,8 @@ int main(int argc, char** argv) {
 		printf("Entry removed successfully\n");
 	} if(response.response_code == GET) {
 		while(response.response_code != GET_END) {
-			recv(socket_fd, (char*)&response, sizeof(CalendarResponse), 0);
 			PrintEntry(&response.entry);
+			recv(socket_fd, (char*)&response, sizeof(CalendarResponse), 0);
 		}
 	}
 

@@ -220,11 +220,11 @@ int CalendarUpdate(CalendarEntry* entry,
 	/* Remove the located entry so that we can re-add it and it'll end up in the
    * Correct Position.
    */
-	ListRemove(calendar->entries);
+	//ListRemove(calendar->entries);
 	strcpy(to_update->name, new_entry->name);
 	to_update->end_time = new_entry->end_time;
 
-	ListAdd(calendar->entries, to_update);
+	//ListAdd(calendar->entries, to_update);
 	ListFirst(calendar->entries);
 	return 0;
 }

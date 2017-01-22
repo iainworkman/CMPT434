@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 	
 	port = strtol(argv[1], &parse_test, 0);
 	if(port < 30001 || port > 40000 || *parse_test != '\0') {
-		fprintf(stderr, "Port is not a valid number (30001 - 40000)\n");
+		fprintf(stderr, "Port is not valid (30001 - 40000)\n");
 		exit(1);
 	}	
 	
@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
 							while(current_entry) {
 								response.response_code = GET;
 								response.entry = *current_entry;
-								send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
+								bytes_read = send(i_fd, (char*)&response, sizeof(CalendarResponse), 0);
 								current_entry = ListNext(get_returns->entries);
 							}
 							response.response_code = GET_END;
