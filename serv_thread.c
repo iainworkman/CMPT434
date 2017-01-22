@@ -18,8 +18,60 @@
 
 #include "calendar.h"
 
-void child_proc() {
-	printf("In thread\n");
+void* child_proc(void* fd) {
+	CalendarCommand command;
+	CalendarResponse response;
+	CalendarEntry* temp_entry;
+	Calendar* get_returns;
+	int command_status;
+	int client_fd = *((int*)fd);
+	
+	recv(client_fd, (char*)&command, sizeof(CalendarCommand), 0);
+	if(command.command_code == ADD_EVENT) {                             
+  	temp_entry = (CalendarEntry*)malloc(sizeof(CalendarEntry));       
+    *temp_entry = command.event;                                      
+    command_status = CalendarAdd(temp_entry, command.username);       
+    if(command_status != 0) {                                         
+    	response.response_code = command_status;                        
+    } else {                                                          
+    	response.response_code = ADD_SUCCESS;                           
+    }                                                                 
+    send(client_fd, (char*)&response, sizeof(CalendarResponse),0);         
+  } else if (command.command_code == REMOVE_EVENT) {                  
+    command_status = CalendarRemove(&command.event, command.username);
+  if(command_status != 0) {                                         
+  	response.response_code = command_status;                        
+  } else {                                                          
+  	response.response_code = REMOVE_SUCCESS;                        
+  }                                                                 
+  	send(client_fd, (char*)&response, sizeof(CalendarResponse), 0);        
+  } else if (command.command_code == UPDATE_EVENT) {                  
+  	CalendarEntry locate_entry;                                       
+    locate_entry.date = command.event.date;                           
+    locate_entry.start_time = command.event.start_time;               
+    locate_entry.end_time.empty = 1;                                  
+    command_status =                                                  
+    	CalendarUpdate(&locate_entry, &command.event, command.username);
+                                                                                
+   	if(command_status != 0) {                                         
+    	response.response_code = command_status;                        
+    } else {                                                          
+    	response.response_code = UPDATE_SUCCESS;                        
+    }                                                                 
+    send(client_fd, (char*)&response, sizeof(CalendarResponse), 0); 	
+	} else if (command.command_code == GET_EVENTS) {
+  	CalendarEntry* current_entry = 0;                                 
+    get_returns = CalendarGetEntries(&command.event, command.username);
+    current_entry = ListFirst(get_returns->entries);                  
+    while(current_entry) {                                            
+    	response.response_code = GET;                                   
+      response.entry = *current_entry;                                
+      send(client_fd, (char*)&response, sizeof(CalendarResponse), 0);
+      current_entry = ListNext(get_returns->entries);                 
+    }                                                                 
+    response.response_code = GET_END;                                 
+    send(client_fd, (char*)&response, sizeof(CalendarResponse), 0);        
+  }
 	pthread_exit(0);
 }
 
@@ -34,11 +86,7 @@ int main(int argc, char** argv) {
 	int incoming_fd;
 	struct sockaddr_storage client_address;
 	socklen_t address_length;
-	CalendarCommand command;
-	CalendarResponse response;
-	int command_status;
 	int yes=1;
-	int calendar_pid;
 
 	if(argc == 1) {
 		fprintf(stderr, "No listen port provided\n");
@@ -51,6 +99,11 @@ int main(int argc, char** argv) {
 		exit(1);
 	}	
 	
+  if(CalendarInit() != 0) {                                                     
+    fprintf(stderr, "Failed to initialize Calendar subsystem\n");               
+    exit(1);                                                                    
+  }
+
 	memset(&hints, 0, sizeof hints); // make sure the struct is empty
 	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
 	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
@@ -96,7 +149,7 @@ int main(int argc, char** argv) {
 			fprintf(stderr, "Failed to accept incoming connection/n");
 		}	else {
 			pthread_t attributes;
-			pthread_create(&attributes, NULL, &child_proc, NULL);
+			pthread_create(&attributes, NULL, &child_proc, (void*)&incoming_fd);
 		}
 	}
 
