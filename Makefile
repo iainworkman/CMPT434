@@ -27,12 +27,20 @@ list_test$(ARCH).o: list_test.c
 # Proc Server
 ####################
 
-serv_proc: serv_proc$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
-	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+serv_proc: serv_proc$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a \
+					 calendar_proc
+	$(CC) $(CFLAGS) -I. -L. -o $@ \
+				serv_proc$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a \
+				-lList$(ARCH) -lCalendar$(ARCH)
 
 serv_proc$(ARCH).o: serv_proc.c
 	$(CC) $(CFLAGS) -c serv_proc.c -o $@
 
+calendar_proc: calendar_proc$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+
+calendar_proc$(ARCH).o: calendar_proc.c
+	$(CC) $(CFLAGS) -c calendar_proc.c -o $@
 ####################
 # Threaded Server
 ####################
