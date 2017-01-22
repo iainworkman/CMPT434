@@ -46,7 +46,7 @@ calendar_proc$(ARCH).o: calendar_proc.c
 ####################
 
 serv_thread: serv_thread$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
-	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH) -lpthread
 
 serv_thread$(ARCH).o: serv_thread.c
 	$(CC) $(CFLAGS) -c serv_thread.c -o $@
