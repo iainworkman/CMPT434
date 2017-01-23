@@ -1,34 +1,58 @@
-$ ./client localhost 30001 Iain add 170210 0800 1000 Doctor
+####################################################                               
+# Name: Iain Workman                                                               
+# NSID: ipw969                                                                     
+# Student No.: 11139430                                                            
+####################################################  
+
+Tests performed across all three servers to ensure the results were the same. 
+
+
+###############
+# Ensure adding
+###############
+$ ./client 127.0.0.1 30001 Iain add 170210 0800 1000 Doctor
 Entry added successfully
-$ ./client localhost 30001 Iain add 170210 0830 0900 Doctor
+###########################
+# Ensure Conflict detection
+###########################
+$ ./client 127.0.0.1 30001 Iain add 170210 0830 0900 Doctor
 Error: Entry conflicts with an exiting entry
-iain@iain-laptop-mint ~/Projects/CMPT434 $ ./client localhost 30001 Iain getall
+$ ./client 127.0.0.1 30001 Iain getall
 --------------------------------------
 Name: 	Doctor
 Date: 	17/02/10
 Start: 	08:00
 End: 	10:00
 --------------------------------------
-$ ./client localhost 30001 Iain update 170210 0800 1300 Doctor
-$ ./client localhost 30001 Iain getall
+#################
+# Ensure Updates
+#################
+$ ./client 127.0.0.1 30001 Iain update 170210 0800 1300 Doctor
+$ ./client 127.0.0.1 30001 Iain getall
 --------------------------------------
 Name: 	Doctor
 Date: 	17/02/10
 Start: 	08:00
 End: 	13:00
 --------------------------------------
-$ ./client localhost 30001 Other add 170210 0700 0900 Doctor
+#####################################################
+# Ensure Adds to Separate Calendars Based on Username
+#####################################################
+$ ./client 127.0.0.1 30001 Other add 170210 0700 0900 Doctor
 Entry added successfully
-$ ./client localhost 30001 Other getall
+#####################################
+# Ensure Gets from Separate Calendars
+#####################################
+$ ./client 127.0.0.1 30001 Other getall
 --------------------------------------
 Name: 	Doctor
 Date: 	17/02/10
 Start: 	07:00
 End: 	09:00
 --------------------------------------
-$ ./client localhost 30001 Iain add 170401 0830 0900 Birthday
+$ ./client 127.0.0.1 30001 Iain add 170401 0830 0900 Birthday
 Entry added successfully
-$ ./client localhost 30001 Iain getall
+$ ./client 127.0.0.1 30001 Iain getall
 --------------------------------------
 Name: 	Doctor
 Date: 	17/02/10
@@ -41,9 +65,9 @@ Date: 	17/04/01
 Start: 	08:30
 End: 	09:00
 --------------------------------------
-$ ./client localhost 30001 Iain add 170317 0830 0900 Sons_Birthday
+$ ./client 127.0.0.1 30001 Iain add 170317 0830 0900 Sons_Birthday
 Entry added successfully
-$ ./client localhost 30001 Iain getall
+$ ./client 127.0.0.1 30001 Iain getall
 --------------------------------------
 Name: 	Doctor
 Date: 	17/02/10
@@ -62,9 +86,12 @@ Date: 	17/04/01
 Start: 	08:30
 End: 	09:00
 --------------------------------------
-$ ./client localhost 30001 Iain remove 170401 0830
+#################
+# Ensure Remove
+#################
+$ ./client 127.0.0.1 30001 Iain remove 170401 0830
 Entry removed successfully
-$ ./client localhost 30001 Iain getall
+$ ./client 127.0.0.1 30001 Iain getall
 --------------------------------------
 Name: 	Doctor
 Date: 	17/02/10
@@ -77,9 +104,12 @@ Date: 	17/03/17
 Start: 	08:30
 End: 	09:00
 --------------------------------------
-$ ./client localhost 30001 Iain add 170317 1230 1500 Sons_Party 
+$ ./client 127.0.0.1 30001 Iain add 170317 1230 1500 Sons_Party 
 Entry added successfully
-$ ./client localhost 30001 Iain get 170317
+############################
+# Ensure Get for Date
+############################
+$ ./client 127.0.0.1 30001 Iain get 170317
 --------------------------------------
 Name: 	Sons_Birthday
 Date: 	17/03/17
@@ -91,5 +121,38 @@ Name: 	Sons_Party
 Date: 	17/03/17
 Start: 	12:30
 End: 	15:00
+--------------------------------------
+#####################################
+# Ensure clean up...
+#####################################
+$ ./client 127.0.0.1 30001 Iain4 add 170123 1500 1530 TestStay
+Entry added successfully
+$ ./client 127.0.0.1 30001 Iain4 add 170123 1400 1411 TestDelete
+Entry added successfully
+################################################
+# TestDelete should be present (Called @ 14:10)
+################################################
+$ ./client 127.0.0.1 30001 Iain4 getall
+--------------------------------------
+Name:   TestDelete
+Date:   17/01/23
+Start:  14:00
+End:    14:11
+--------------------------------------
+--------------------------------------
+Name:   TestStay
+Date:   17/01/23
+Start:  15:00
+End:    15:30
+--------------------------------------
+#######################################################
+# TestDelete should have been removed (Called @ 14:12)
+#######################################################
+$ ./client 127.0.0.1 30001 Iain4 getall
+--------------------------------------
+Name:   TestStay
+Date:   17/01/23
+Start:  15:00
+End:    15:30
 --------------------------------------
 

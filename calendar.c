@@ -277,7 +277,6 @@ int CalendarRemove(CalendarEntry* entry, char* username) {
 	
 	Calendar* calendar = 0;
 	CalendarEntry* to_delete = 0;
-	CleanAllCalendars();
 	if(!calendars) {
 		return ERR_NOINIT;
 	}
