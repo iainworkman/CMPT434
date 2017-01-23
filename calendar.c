@@ -9,11 +9,59 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 /* Data */
 LIST* calendars = 0;
 
 /* Private Functions */
+void CleanAllCalendars() {
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
+
+	Calendar* current_calendar = ListFirst(calendars);
+	
+	do {
+	
+		CalendarEntry* current_entry = ListFirst(current_calendar->entries);
+		
+		do {
+
+			if(current_entry->date.year < (tm.tm_year-100)) {
+				CalendarRemove(current_entry, current_calendar->username);
+				continue;
+			} else if (current_entry->date.year > (tm.tm_year-100)) {
+				continue;
+			}
+
+			if(current_entry->date.month < tm.tm_mon) {
+				CalendarRemove(current_entry, current_calendar->username);
+				continue;
+			} else if (current_entry->date.month > tm.tm_mon) {
+				continue;
+			}
+
+			if(current_entry->date.day < tm.tm_mday) {
+				CalendarRemove(current_entry, current_calendar->username);
+				continue;
+			} else if (current_entry->date.day > tm.tm_mday) {
+				continue;
+			}
+					
+			if(current_entry->end_time.hour < tm.tm_hour) {				
+				CalendarRemove(current_entry, current_calendar->username);
+				continue;
+			} else if (current_entry->end_time.hour > tm.tm_hour) {
+				continue;
+			}
+
+			if(current_entry->end_time.minute < tm.tm_min) {
+				CalendarRemove(current_entry, current_calendar->username);
+			} 
+		} while((current_entry = ListNext(current_calendar->entries)) != 0);
+	} while((current_calendar = ListNext(calendars)) != 0);
+}
+
 int TimeComparator(Time first, Time second) {
 
 	if(first.hour < second.hour) {
@@ -168,7 +216,8 @@ int CalendarInit() {
 }
 
 int CalendarAdd(CalendarEntry* entry, char* username) {
-	
+
+	CleanAllCalendars();	
 	Calendar* calendar = 0;
 	CalendarEntry* current = 0;	
   int return_code = 0;
@@ -218,6 +267,7 @@ int CalendarAdd(CalendarEntry* entry, char* username) {
 
 int CalendarRemove(CalendarEntry* entry, char* username) {
 	
+	CleanAllCalendars();
 	Calendar* calendar = 0;
 
 	if(!calendars) {
@@ -252,6 +302,7 @@ int CalendarUpdate(CalendarEntry* entry,
 									 CalendarEntry* new_entry,
 									 char* username) {
 
+	CleanAllCalendars();
 	Calendar* calendar = 0;
 
 	if(!calendars) {
@@ -287,7 +338,8 @@ int CalendarUpdate(CalendarEntry* entry,
 }
 
 Calendar* CalendarGetEntries(CalendarEntry* entry, char* username) {
-	
+
+	CleanAllCalendars();	
 	Calendar* calendar = 0;
 	Calendar* return_calendar = 0;
 
