@@ -21,10 +21,18 @@ void CleanAllCalendars() {
 
 	Calendar* current_calendar = ListFirst(calendars);
 	
+	if(!current_calendar) {
+		return;
+	}
+
 	do {
 	
 		CalendarEntry* current_entry = ListFirst(current_calendar->entries);
 		
+		if(!current_entry) {
+			return;
+		}
+
 		do {
 
 			if(current_entry->date.year < (tm.tm_year-100)) {
@@ -34,10 +42,10 @@ void CleanAllCalendars() {
 				continue;
 			}
 
-			if(current_entry->date.month < tm.tm_mon) {
+			if(current_entry->date.month < (tm.tm_mon+1)) {
 				CalendarRemove(current_entry, current_calendar->username);
 				continue;
-			} else if (current_entry->date.month > tm.tm_mon) {
+			} else if (current_entry->date.month > (tm.tm_mon+1)) {
 				continue;
 			}
 
@@ -108,8 +116,8 @@ int ConflictComparator(void* first_entry, void* second_entry) {
 		return 0;
 	}
 
-	if(TimeComparator(first->start_time, second->end_time) == -1 &&
-			TimeComparator(second->end_time, first->start_time) == -1) {
+	if(TimeComparator(first->start_time, second->end_time) == 1 ||
+			TimeComparator(first->end_time, second->start_time) == -1) {
 		return 0;
 	}
 
