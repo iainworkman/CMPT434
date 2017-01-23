@@ -14,6 +14,60 @@
 LIST* calendars = 0;
 
 /* Private Functions */
+int TimeComparator(Time first, Time second) {
+
+	if(first.hour < second.hour) {
+		return -1;
+	}
+
+	if(first.hour > second.hour) {
+		return 1;
+	}
+
+	if(first.minute < second.minute) {
+		return -1;
+	}
+
+	if(first.minute > second.minute) {
+		return 1;
+	}
+
+	return 0;
+}
+
+int ConflictComparator(void* first_entry, void* second_entry) {
+	CalendarEntry* first;
+	CalendarEntry* second;
+
+	if(!first_entry || !second_entry) {
+		return 0;
+	}
+
+	first = (CalendarEntry*)first_entry;
+	second = (CalendarEntry*)second_entry;
+
+	if(first->date.empty || second->date.empty ||
+			first->start_time.empty || second->start_time.empty ||
+			first->end_time.empty || second->end_time.empty) {
+		
+		return 0;
+	}
+
+	if(first->date.year != second->date.year ||
+			first->date.month != second->date.month ||
+			first->date.day != second->date.day) {
+		
+		return 0;
+	}
+
+	if(TimeComparator(first->start_time, second->end_time) == -1 &&
+			TimeComparator(second->end_time, first->start_time) == -1) {
+		return 0;
+	}
+
+	return 1;
+}
+
 int EntryComparator(void* first_entry, void* second_entry) {
 
 	CalendarEntry* first;
@@ -129,6 +183,9 @@ int CalendarAdd(CalendarEntry* entry, char* username) {
 		return ERR_NOCALENDAR;
 	}
 
+	if(ListSearch(calendar->entries, &ConflictComparator, entry) != 0) {
+		return ERR_CONFLICT;
+	}
 	/* Ensure we add into the right place */
 
 	current = ListFirst(calendar->entries);
@@ -339,6 +396,9 @@ void PrintError(int error_code) {
 			break;
 		case(ERR_NOCALENDAR):
 			fprintf(stderr, "Could not find calendar for provided user\n");
+			break;
+		case(ERR_CONFLICT):
+			fprintf(stderr, "Error: Entry conflicts with an exiting entry\n");
 			break;
 	}
 	return;

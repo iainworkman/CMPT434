@@ -32,6 +32,7 @@
 
 #define ERR_NOINIT			23445
 #define ERR_NOCALENDAR 	23446		/* Unable to find/create user's calendar */
+#define ERR_CONFLICT		23447
 /* A Date (year, month and day) */
 typedef struct Date {
 	int year;

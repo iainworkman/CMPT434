@@ -3,5 +3,6 @@
 *.a
 client
 serv_proc
+calendar_proc
 serv_select
 serv_thread
