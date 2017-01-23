@@ -12,17 +12,7 @@ UNAME_M=$(shell uname -m)
 ARCH=_$(UNAME_M)
 
 all: serv_select serv_proc serv_thread client
-tests: list_test
 
-####################
-# Tests
-####################
-
-list_test: list_test$(ARCH).o libCalendar$(ARCH).a libList$(ARCH).a
-	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lCalendar$(ARCH)
-
-list_test$(ARCH).o: list_test.c
-	$(CC) $(CFLAGS) -c list_test.c -o $@
 ####################
 # Proc Server
 ####################
@@ -102,5 +92,5 @@ list_removers$(ARCH).o: list_removers.c
 .PHONY: clean
 
 clean:
-	rm -rf *.o *.a
+	rm -rf *.o *.a serv_select serv_proc calendar_proc serv_thread 
 
