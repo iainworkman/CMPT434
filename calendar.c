@@ -225,11 +225,11 @@ int CalendarInit() {
 
 int CalendarAdd(CalendarEntry* entry, char* username) {
 
-	CleanAllCalendars();	
 	Calendar* calendar = 0;
 	CalendarEntry* current = 0;	
   int return_code = 0;
 
+	CleanAllCalendars();	
 	if(!calendars) {
 		return ERR_NOINIT;
 	}
@@ -275,9 +275,9 @@ int CalendarAdd(CalendarEntry* entry, char* username) {
 
 int CalendarRemove(CalendarEntry* entry, char* username) {
 	
-	CleanAllCalendars();
 	Calendar* calendar = 0;
-
+	CalendarEntry* to_delete = 0;
+	CleanAllCalendars();
 	if(!calendars) {
 		return ERR_NOINIT;
 	}
@@ -290,7 +290,7 @@ int CalendarRemove(CalendarEntry* entry, char* username) {
 
 	ListFirst(calendar->entries);
 
-	CalendarEntry* to_delete = 
+	to_delete = 
 				(CalendarEntry*)ListSearch(calendar->entries, &EntryComparator, entry);
 
 	if(to_delete == 0) {
@@ -310,9 +310,9 @@ int CalendarUpdate(CalendarEntry* entry,
 									 CalendarEntry* new_entry,
 									 char* username) {
 
-	CleanAllCalendars();
 	Calendar* calendar = 0;
-
+	CalendarEntry* to_update = 0;
+	CleanAllCalendars();
 	if(!calendars) {
 		return ERR_NOINIT;
 	}
@@ -325,7 +325,7 @@ int CalendarUpdate(CalendarEntry* entry,
 
 	ListFirst(calendar->entries);
 
-	CalendarEntry* to_update =
+	to_update =
 			(CalendarEntry*)ListSearch(calendar->entries, &EntryComparator, entry);
 
 	if(!to_update) {
@@ -333,24 +333,20 @@ int CalendarUpdate(CalendarEntry* entry,
 		return -1;
 	} 
 
-	/* Remove the located entry so that we can re-add it and it'll end up in the
-   * Correct Position.
-   */
-	//ListRemove(calendar->entries);
 	strcpy(to_update->name, new_entry->name);
 	to_update->end_time = new_entry->end_time;
 
-	//ListAdd(calendar->entries, to_update);
 	ListFirst(calendar->entries);
 	return 0;
 }
 
 Calendar* CalendarGetEntries(CalendarEntry* entry, char* username) {
 
-	CleanAllCalendars();	
 	Calendar* calendar = 0;
 	Calendar* return_calendar = 0;
+	CalendarEntry* matched_entry = 0;
 
+	CleanAllCalendars();	
 	if(!calendars) {
 		return 0;
 	}
@@ -371,7 +367,6 @@ Calendar* CalendarGetEntries(CalendarEntry* entry, char* username) {
 
 	strcpy(return_calendar->username, username);
 
-	CalendarEntry* matched_entry = 0;
 	if(!return_calendar) {
 		return return_calendar;
 	}

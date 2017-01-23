@@ -37,9 +37,9 @@ int main(int argc, char** argv) {
 		exit(1);
 	}		
 
-	memset(&hints, 0, sizeof hints); // make sure the struct is empty
-	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
-	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
+	memset(&hints, 0, sizeof hints);
+	hints.ai_family = AF_UNSPEC;   
+	hints.ai_socktype = SOCK_STREAM;
 
 	if ((status = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0) {
     fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	freeaddrinfo(servinfo); // free the linked-list
+	freeaddrinfo(servinfo);
 
 	return 0;
 }
