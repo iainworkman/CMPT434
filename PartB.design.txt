@@ -4,7 +4,23 @@
 # Student No.: 11139430
 ####################################################
 
-1. Client Design
+1. Calendar Library (calendar.h/.c)
+
+The communication protocol for the calendar is defined in protocol.design.txt
+
+BONUS details:
+The calendar supports conflict detection through the use of:
+	int ConflictComparator()
+
+@ calendar.c:94
+
+The calendar also supports clean up of entries whose end_time is earlier than
+the current system time through the use of:
+	void CleanAllCalendars()
+
+@ calendar.c:18
+
+2. Client Design (client.c)
 
 The client is organized in the following way:
 
@@ -33,3 +49,79 @@ exits.
 				response code the client is done outputting entries.
 
 - The client then closes the file descriptor.
+
+3. Select Server (serv_select.c)
+
+The select() based server is implemented in the following way:
+
+- It attempts to convert the port argument to a numeric value and ensures it
+  is in the valid range of 30001 - 40000. If not the server exits.
+
+- It initializes the calendar subsystem with a call to CalendarInit(). If this
+  fails the server exits.
+
+- It attempts to initialize a listen TCP socket locally. If this fails the 
+	server exits.
+
+- It adds the file descriptor for the listen socket to its master list of file
+  descriptors.
+
+- It then begins to listen on the listen file descriptor.
+
+- The server then enters into a infinite loop performing the following: 
+
+- The server makes a call to select(), passing in a copy of the master list of
+  file descriptors to check.
+
+- After select returns the file descriptors which are ready to read from are
+  iterated across in the following manner:
+			-	If the current fd is the listen file descriptor, a new client
+				connection must have been made. A call to accept is made and the fd
+				for the new connection is added to the list of file descriptors to
+				check for read readyness next time select() is called.
+			-	If the current fd is from an accepted client connection we recv() the
+				date as a command, call the correct calendar library function then
+				send a response back to the client.
+
+- Once the iteration is complete and all pending requests have been processed
+  the server goes back to its select() call.
+
+4. Threaded Server (serv_thread.c)
+
+The threaded server is implemented in the following way:
+
+- It attempts to convert the port argument to a numeric value and ensures it
+  is in the valid range of 30001 - 40000. If not the server exits.
+
+- It initializes the calendar subsystem with a call to CalendarInit(). If this
+  fails the server exits.
+
+- It attempts to initialize a listen TCP socket locally. If this fails the 
+	server exits.
+
+- It begins to listen on the listen file descriptor.
+
+- The server then enters into an infinite loop, performing the following:
+
+- It waits to accept an incoming connection on the listen file descriptor.
+
+- When an incoming connection is made a new thread is created which recv()s
+  the date, interprets the command, returns the response and the exits itself.
+
+- As soon as the thread is created, the server returns to waiting to accept on
+  the listen file descriptor.
+
+4. Process Based Server (serv_proc.c, calendar_proc.c)
+
+In order to circumvent the issue of sharing memory with the list library, with
+all the trouble of its potentially expanding memory footprint (when it runs
+out of nodes or lists) a decision was made to hand the processing of the
+calendar commands off to a separate child process of the server. In this way
+the process based server is actually comprised of three elements;
+		-	The server: Waits for connections, spins up a process to complete the
+			requests for each connection made.
+		- The request processes: Finish receiving the data, interpret the command
+		  wait to send the command to the calendar proc, and forwards whatever
+			response the calendar sends back to the client.
+ 		- calendar proc: receives commands from the request processes, and sends
+ 		  them the response.

@@ -1,7 +1,7 @@
-####################################################                               
-# Name: Iain Workman                                                               
-# NSID: ipw969                                                                     
-# Student No.: 11139430                                                            
+#################################################### 
+# Name: Iain Workman                    
+# NSID: ipw969                               
+# Student No.: 11139430       
 ####################################################  
 
 Tests performed across all three servers to ensure the results were the same. 
