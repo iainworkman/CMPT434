@@ -1,0 +1,98 @@
+####################################################
+# Name: Iain Workman
+# NSID: ipw969
+# Student No.: 11139430
+####################################################
+
+Protocol Design
+
+1. Overview
+In order to facilitate communication between the client and server
+applications a protocol was designed which centres around two struct types - 
+CalendarCommand and CalendarResponse. CalendarCommands are issued by the
+client to the server indicating an action which needs to be performed, and the
+CalendarResponse is then transmitted from the server back to the client in
+order to indicate the success of the requested command and optionally provide
+data if the command was of the 'get' type.
+
+2. Message Types
+2.1 CalendarCommand
+
+The CalendarCommand type is defined in calendar.h as follows:
+--------------------------------------------
+|
+|	typedef struct CalendarCommand {
+|		char username[MAX_USERNAME_LENGTH];
+|		CalendarEntry entry;
+|		int command_code;
+|	} CalendarCommand;
+|
+--------------------------------------------
+
+username ~ The username of the requester who issued the command, and
+whose calendar the command will be run against.
+
+entry ~ The data associated with the command which has been issued. This will
+be interpreted in various ways depending on the command type:
+					-	Add: The entry to be added.
+					-	Update: The date and start_time of the entry will be used to
+						locate the entry which is to be updated. The name and end_time of
+						entry will be used to determine what the entry will be updated to.
+					-	Remove: The entry which is to be removed.
+					-	Get: The search criteria which will be used to match entries. If
+						only a date is provided then all entries on that date will be
+						returned. If a date and start_time is provided the entry which
+						matches that date and start_time is returned. If no date or
+						start_time is provided all entries for the user's calendar will be
+						returned.
+
+command_code ~ An integer code value used to indicate the type of command:
+					-	ADD_EVENT			0
+					- REMOVE_EVENT	1
+					-	UPDATE_EVENT	2
+					-	GET_EVENTS		3
+
+2.2 CalendarResponse
+
+The CalendarResponse type is defined in calendar.h as follows:
+--------------------------------------------
+|
+|	typedef struct CalendarResponse {
+|		int response_code;
+|		CalendarEntry entry;
+|	} CalendarResponse;
+|
+--------------------------------------------
+
+response_code ~ An integer code value used to indicate the response value:
+					-	ERR_UNKNOWN			-1
+					-	ADD_SUCCESS			1
+					-	REMOVE_SUCCESS	2
+					-	UPDATE_SUCCESS	3
+					-	GET							4
+					-	GET_END					5
+					-	ERR_NOINIT			23445
+					-	ERR_NOCALENDAR	23446
+					-	ERR_CONFLICT		23447
+					-	ERR_NOENTRY			23448
+
+entry ~ An entry returned to the user in the case of a get request being
+issued.
+
+In the case of add, remove and update command the client can expect that an
+issued command will follow with a single response indicating either the
+corresponding success code, or an error code indicating the type of error. In
+the case of a get request the client can expect one or more responses. Each
+entry that was located by the server based on the get request will be returned
+with a GET response code and will contain an entry. The final get message will
+carry the GET_END code, and will not carry an entry. Thus if a get request is
+made to the server and the server finds that user's calendar empty, only a
+single GET_END message will be returned.
+
+The calendar library contains the function
+	void PrintError(int error_code);
+
+while will output a descriptive message to stderr based on the provided
+response code. In the case that the provided code is actually a success code
+(1-5) no output will be printed.
+
