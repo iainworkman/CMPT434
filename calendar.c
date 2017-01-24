@@ -295,7 +295,7 @@ int CalendarRemove(CalendarEntry* entry, char* username) {
 
 	if(to_delete == 0) {
 		ListFirst(calendar->entries);
-		return -1;
+		return ERR_NOENTRY;
 	}
 
 	ListRemove(calendar->entries);
@@ -330,7 +330,7 @@ int CalendarUpdate(CalendarEntry* entry,
 
 	if(!to_update) {
 		ListFirst(calendar->entries);
-		return -1;
+		return ERR_NOENTRY;
 	} 
 
 	/* Remove the located entry so that we can re-add it and it'll end up in the
@@ -460,6 +460,8 @@ void PrintError(int error_code) {
 		case(ERR_CONFLICT):
 			fprintf(stderr, "Error: Entry conflicts with an exiting entry\n");
 			break;
+		case(ERR_NOENTRY):
+			fprintf(stderr, "Error: Could not find entry\n");
 	}
 	return;
 }

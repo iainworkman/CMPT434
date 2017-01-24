@@ -19,7 +19,6 @@
 #define REMOVE_EVENT 	1
 #define UPDATE_EVENT	2
 #define GET_EVENTS		3
-#define STATUS				4	
 
 /* Response Codes */
 #define ERR_UNKNOWN			-1
@@ -28,11 +27,11 @@
 #define UPDATE_SUCCESS	3
 #define GET							4
 #define GET_END					5
-#define STATUS_UP				6
 
 #define ERR_NOINIT			23445
 #define ERR_NOCALENDAR 	23446		/* Unable to find/create user's calendar */
 #define ERR_CONFLICT		23447
+#define ERR_NOENTRY			23448
 /* A Date (year, month and day) */
 typedef struct Date {
 	int year;
