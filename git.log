@@ -1,0 +1,279 @@
+commit 9d3cc38fe7feed7cc97312239ed81c1f5a80834c
+Author: Iain Workman <ipw969@tux7.usask.ca>
+Date:   Mon Jan 23 19:54:01 2017 -0600
+
+    Updated test results, added design docs for the other servers, and a brief bit about the bonuses
+
+commit c5f88c8b9942c955fe14ec7c192a21c55f2692d1
+Author: Iain Workman <ipw969@tux7.usask.ca>
+Date:   Mon Jan 23 19:22:05 2017 -0600
+
+    Added client to design doc
+
+commit d1b4bac7062a8410219a73391b11a155cb060437
+Author: Iain Workman <ipw969@tux7.usask.ca>
+Date:   Mon Jan 23 19:09:49 2017 -0600
+
+    Added protocol design doc
+
+commit 44566024d2f636a41a923e06d6bdfb85663beb6e
+Author: Iain Workman <ipw969@tux5.usask.ca>
+Date:   Mon Jan 23 19:08:59 2017 -0600
+
+    Better error checking in client
+
+commit 5b5d39508d65795432f0c85ebc42bdc2d71be4d0
+Merge: 624686c 6e55a47
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Mon Jan 23 19:02:27 2017 -0600
+
+    Merge branch 'A1' into A1
+
+commit 624686cd82db77d2e28a6b026ddb9dc6845ff8aa
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Mon Jan 23 19:02:00 2017 -0600
+
+    Added error when can't find entry
+
+commit 6e55a471adb5915676a46a4f937ab9bb216d3ac1
+Author: Iain Workman <ipw969@drone32.usask.ca>
+Date:   Mon Jan 23 14:23:28 2017 -0600
+
+    Fixed infinite recursion in cleanup:
+    - CalendarRemove no longer performs the clean up when called in order to prevent an infinite recursion
+
+commit b93536f42df4cdcbf32e1bf38f8855ce11d0d4a6
+Author: Iain Workman <ipw969@drone32.usask.ca>
+Date:   Mon Jan 23 13:54:35 2017 -0600
+
+    Changes for tuxworld:
+    - Doesn't accept 'localhost' properly, so have to specify 127.0.0.1 instead.
+    - Has more warnings under -Wall and -pedantic, so had to remove C++ style comments and move some declarations
+
+commit e36ec853699b12d48ed2e1f2210980925f2608b6
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 20:41:23 2017 -0600
+
+    Added some test results
+
+commit f3282ea85c948752e1e278847c9ff62349c7e91e
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 19:44:17 2017 -0600
+
+    removed early calendar tests
+
+commit 4ce75aa59d2082b36039904b7cb98d2934d7242c
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 19:08:26 2017 -0600
+
+    Added auto-cleanup to the calendar library
+
+commit 1fd00aeeb1080cb26adc44c27649b3202eb8b7d6
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 18:02:25 2017 -0600
+
+    Added conflict detection to the calendar library
+
+commit 6e10e2e7930689ba08baa3607df5463abeb588df
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 17:23:09 2017 -0600
+
+    Fixed memory leak in servers:
+    - Altered issuing the get command so it cleans up the returned Calendar and entries
+
+commit 476e63a7cb69329e367cd5ba5f9597eb526face4
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 14:06:22 2017 -0600
+
+    Implemented the thread server
+
+commit b822a5a22105dc70d8b4f560b38494dc42522854
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 13:35:10 2017 -0600
+
+    Stub thread in serv_thread
+
+commit 55fd461609e4de7cbdb510415e6784702fcbcb5f
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 13:22:48 2017 -0600
+
+    Fixed build warnings
+
+commit ebbd8652018668bc812ae47622405b16e4a07fda
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 13:11:08 2017 -0600
+
+    Proc server:
+    - Added a new executable, calendar_proc
+    - Modified serv_proc so that it spins up a calendar_proc, then on each client connect spins up a process which hanles communication with the calendar process
+
+commit 665e3e89dec837baaacf97f34efd65ea07576713
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 22 10:36:50 2017 -0600
+
+    Fixed bug in get:
+    - Client was iterating off by one, which meant the first response was not printed, and the last was printed twice
+
+commit eaf7d89f1b4d0493fee8bdf73b07a75088ebb5de
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 20 21:57:52 2017 -0600
+
+    Implemented proper update in select server
+
+commit ac17d7f1d3fd304db44ccc4c261ea1e56ddb20c5
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 20 13:13:47 2017 -0600
+
+    Get command returns responses to client
+
+commit bedb1e734feb42e31da61ddf581103852bdaa75c
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 20 12:45:13 2017 -0600
+
+    Sending response back to client:
+    - Defined a response type in calendar.h
+    - Altered the select server to send a response back on add and remove
+    - Altered the client to wait for a response after sending a command
+
+commit bafa7aff78460541cac38ef499e6e54214d48d8b
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 20 12:03:19 2017 -0600
+
+    Alloc new event on each add
+
+commit d6c31a09bafea99ed065f2afd1393b65b2899c1a
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Mon Jan 16 19:07:20 2017 -0600
+
+    Got naive adding into the server:
+    - Checks the incoming command and performs said action. Because it is working off one local variable all events stored in the system end up the last one sent.
+    - Still to do: - Sending responses back to the client, including success/error codes and the results of the Get commands
+
+commit 8b4bf3ca586c0a05a5bf1aa101626a8be5c8a47c
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Mon Jan 16 18:45:09 2017 -0600
+
+    Changed select server to receive a command - still just prints it to the screen
+
+commit db0eeb7e25ff00581160c685a11245461faa4104
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Mon Jan 16 18:38:52 2017 -0600
+
+    Parse command in client
+
+commit 5924b8e4d7ceaead243b4e9639d1cbc0478d42c6
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Jan 15 18:14:49 2017 -0600
+
+    Added calendar command:
+    - Created a struct which represents a command to be performed on a calendar.
+    - Added a function which creates a calendar command by parsing argv
+
+commit ae84b2a7702aa26f8bbb28ebcbc02df0fbb0af07
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Jan 14 16:31:47 2017 -0600
+
+    client and select fixes:
+    - Client networking basically works, though it is just a functional stub (connects to localhost on 30001, sends a test string then exits)
+    - Bug fix to select server which wasn't properly cleaning up the socket fd once a connection was lost.
+
+commit e2294027b309f82a2c8c83cf2ef110c2303fadf3
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Jan 14 15:51:27 2017 -0600
+
+    First draft of select server
+
+commit 2a7e2fba3b2e1d90405b07054f776f03ca1832b4
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Jan 14 14:19:55 2017 -0600
+
+    Moved tests for calendar into their own file
+
+commit 3e72a5ec2349b1c884505eb79e21a716561851cc
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Jan 14 14:01:32 2017 -0600
+
+    Implemented print calendar
+
+commit 98d84c93f1583fc65d93c065eed80a2a1e56961c
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Jan 14 13:47:56 2017 -0600
+
+    Insert calendars into order
+
+commit 7e144bf96c8bea5b2f33d05b40aaee7fbbc95cc8
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Jan 14 13:34:19 2017 -0600
+
+    Changes to calendar:
+    - Now store a separate calendar per username
+    - Calendar interface functions now take a username parameter
+    - Added convenience function for getting a calendar based on the username (or creating if it doesn't exist)
+    - Added a couple of convenience functions intended for printing calendars/entires
+
+commit 4261c88407605747d95d57a1c64ae64829237c5a
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 21:29:48 2017 -0600
+
+    Implemented Calendar:
+    - Added definitions for calendar functions.
+    - Altered calendar entry structs to use date/time types
+    - Added structs for date and time
+    - Added functions to parse dates and time from strings
+
+commit 8ae0c5211f5b530d7ebcae180c25ea29f32f1f83
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 18:39:31 2017 -0600
+
+    Added username to CalendarEntry struct
+
+commit cb8bf70bfe8bae3f9c7a3cd43ca178acbdc828a3
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 18:31:08 2017 -0600
+
+    Added executable stubs:
+    - Added .c files for client and servers with empty main function
+    - Updated Makefile to produce executables for client and servers
+
+commit b09673b6efdc7bc011dc5866a47e6db3c15759d4
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 17:37:13 2017 -0600
+
+    Added identifying info to calendar code
+
+commit 627d987bb568bd83ebf1770f118e6975c00283ca
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 17:30:42 2017 -0600
+
+    Added stubs for calendar:
+    - Added .h with Calendar entry struct and interface fnct definitions.
+    - Added .c with calendar interface function stubs.
+    - Updated Makefile to compile an archive file for the calendar.
+
+commit 3c3997999bdd563791d31d2d250d67376f502f13
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 17:29:06 2017 -0600
+
+    Added assignment description
+
+commit a6c7241024ceac53437aa58e12cc2404b625ed40
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Fri Jan 13 17:28:44 2017 -0600
+
+    Removed o/a files:
+    - Deleted all the object and archive compiled files.
+    - Updates the gitignore so they don't make their way back in
+
+commit 26dfa90225d5fd2fa9a4ac3947792298088ef7ea
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Thu Jan 12 22:07:56 2017 -0600
+
+    Added list:
+    - Added list implementation from CMPT332
+    - Added Makefile to build the list
+
+commit fd7cbef1bca6061285acfd809491de4e190b1518
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Thu Jan 12 21:49:00 2017 -0600
+
+    Initial Commit: GitIgnore
