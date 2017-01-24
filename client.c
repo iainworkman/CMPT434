@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
 	hints.ai_socktype = SOCK_STREAM;
 
 	if ((status = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0) {
-    fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
+    fprintf(stderr, "Failed to get address info\n");
     exit(1);
 	}
 
@@ -51,8 +51,16 @@ int main(int argc, char** argv) {
 								servinfo->ai_socktype, 
 								servinfo->ai_protocol);
 
-	connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
+	if(socket_fd == -1) {
+		fprintf(stderr, "Failed to obtain socket\n");
+		exit(1);
+	}
+	status = connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
 	
+	if(status == -1) {
+		fprintf(stderr, "Failed to connect to %s:%s\n", argv[1], argv[2]);
+		exit(1);
+	}
 	send(socket_fd, (char*)&command, sizeof(CalendarCommand), 0);
 	recv(socket_fd, (char*)&response, sizeof(CalendarResponse), 0);
 	
