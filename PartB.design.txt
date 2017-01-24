@@ -1,0 +1,35 @@
+####################################################
+# Name: Iain Workman
+# NSID: ipw969
+# Student No.: 11139430
+####################################################
+
+1. Client Design
+
+The client is organized in the following way:
+
+- It attempts to parse the command line arguments into a CalendarCommand, using
+the calendar library function ParseCommand. If the parse fails the client
+exits.
+
+- It attempts to convert the port to a numeric value and ensures it is in the
+  valid range of 30001 - 40000. If not the client exits
+
+- It attempts to initialize a TCP socket, and uses this socket to attempt a
+  connection to the server. If either of these fail the client exits.
+
+- Once the command has been parsed and the connection opened the client
+  transmits the command as a byte sequence to the server.
+
+- The client then waits to receive a response from the server indicating
+  success/failure of the command.
+
+- Once the response comes from the server the client reacts based on the
+  response code:
+			-	For errors, add, remove or update success messages the server simply
+				outputs a message indicating success, or the type of error.
+			-	For get messages the client prints the returned entry then waits for
+				another response. When a response arrives which contains the GET_END
+				response code the client is done outputting entries.
+
+- The client then closes the file descriptor.

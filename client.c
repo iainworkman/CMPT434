@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "calendar.h"
 
@@ -77,6 +78,6 @@ int main(int argc, char** argv) {
 	}
 
 	freeaddrinfo(servinfo);
-
+	close(socket_fd);
 	return 0;
 }
