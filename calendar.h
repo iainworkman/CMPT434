@@ -169,4 +169,4 @@ int ParseTime(char* string, Time* time);
  */
 int ParseCommand(int argc, char** argv, CalendarCommand* command);
 
-#endif //_CALENDAR_H_
+#endif /*_CALENDAR_H_*/

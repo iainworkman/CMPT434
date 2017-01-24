@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 	int port;
 	int status;
 	struct addrinfo hints;
-	struct addrinfo *servinfo;  // will point to the results
+	struct addrinfo *servinfo; 
 	int listen_fd = 0;
 	fd_set master_fds;
 	fd_set read_fds;
@@ -56,10 +56,10 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 
-	memset(&hints, 0, sizeof hints); // make sure the struct is empty
-	hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
-	hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
-	hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
+	memset(&hints, 0, sizeof hints); 
+	hints.ai_family = AF_UNSPEC;     
+	hints.ai_socktype = SOCK_STREAM; 
+	hints.ai_flags = AI_PASSIVE;     
 
 	if ((status = getaddrinfo(NULL, argv[1], &hints, &servinfo)) != 0) {
     fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
