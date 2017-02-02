@@ -4,6 +4,33 @@
 # Student No.: 11139430
 ####################################################
 
+0. Running the applications
+
+The three servers can be run with the following commands:
+
+./serv_select 30001
+./serv_thread 30001
+./serv_proc 30001
+
+This will run the server on the port 30001. Any value from 30001 - 39999 will
+work. 
+
+To run the client, first make sure a server instance is running, and then use:
+
+./client hostname port myname add 031505 0800 0900 Exam
+./client hostname port myname remove 031505 0800
+./client hostname port myname update 031505 0800 1000 OralExam
+./client hostname port myname get 031505 0800
+./client hostname port myname get 031505
+./client hostname port myname getall
+
+Where hostname is the address or hostname of the machine running the server
+and port is the port number specified when running the server.
+
+NOTE: Specifying a hostname of localhost worked on my own machine, but not on
+tuxworld, for some reason. Substituting localhost wih 127.0.0.1 worked.
+
+
 1. Calendar Library (calendar.h/.c)
 
 The communication protocol for the calendar is defined in protocol.design.txt
