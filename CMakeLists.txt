@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.6)
+project(CMPT434)
+
+set(CMAKE_C_STANDARD 90)
+
+add_custom_target(TARGETS ALL COMMAND make -C ${CMPT434_SOURCE_DIR} CLION_EXE_DIR=${PROJECT_BINARY_DIR})
