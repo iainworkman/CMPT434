@@ -14,6 +14,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <signal.h>
+#include <time.h>
+
+#include "list.h"
 
 #define MAX_BUFFER_SIZE 1024
 
@@ -25,6 +29,12 @@ typedef struct arguments {
     int port_b;
     int port_c;
 } arguments;
+
+typedef struct message {
+    timer_t delay_timer;
+    char data[MAX_BUFFER_SIZE];
+    int size;
+} message;
 
 void printUsage() {
 
@@ -97,6 +107,33 @@ int parseArguments(int argc, char **argv, arguments *result) {
     return 0;
 }
 
+int enqueueMessage(LIST *queue, char *data, int data_length) {
+
+    int return_code;
+    message *msg = malloc(sizeof(message));
+    if (msg == 0) {
+        return -1;
+    }
+    /* Copy data across into the message struct */
+    memcpy(msg->data, data, data_length);
+    msg->size = data_length;
+    /* TODO: Initialize message timer */
+
+    /* TODO: Shut off timer interrupts */
+    return_code = ListAppend(queue, msg);
+    if (return_code == -1) {
+        free(msg);
+    }
+    /* TODO: Re-enable timer interrupts */
+    return return_code;
+}
+
+message *dequeueMessage(LIST *queue) {
+
+    /* TODO: Disable message timer */
+    return (message *) ListFirst(queue);
+}
+
 int main(int argc, char **argv) {
 
     arguments args;
@@ -108,10 +145,24 @@ int main(int argc, char **argv) {
     char buffer[MAX_BUFFER_SIZE];
     int keep_running = 1;
     socklen_t address_length;
+    LIST *port_b_queue;
+    LIST *port_c_queue;
+
+    /* Set the random seed */
+    srand(time(0));
 
     /* Parse Arguments */
     if (parseArguments(argc, argv, &args) == -1) {
         printUsage();
+        return 1;
+    }
+
+    /* Build message queues */
+    port_b_queue = ListCreate();
+    port_c_queue = ListCreate();
+
+    if (port_b_queue == 0 || port_c_queue == 0) {
+        fprintf(stderr, "Could not create message queues\n");
         return 1;
     }
 
@@ -169,19 +220,40 @@ int main(int argc, char **argv) {
             return 1;
         }
 
-        if (ntohs(incoming_address.sin_port) == args.port_c) {
-            printf("port c (%d) sent:\n", ntohs(incoming_address.sin_port));
-            printf("packet:\n");
-            printf("\tlength: %d\n", byte_count);
-            buffer[byte_count] = '\0';
-            printf("\tcontent: %s\n", buffer);
-
-        } else if (ntohs(incoming_address.sin_port) == args.port_b) {
+        if (ntohs(incoming_address.sin_port) == args.port_b) {
             printf("port b (%d) sent:\n", ntohs(incoming_address.sin_port));
             printf("packet:\n");
             printf("\tlength: %d\n", byte_count);
             buffer[byte_count] = '\0';
             printf("\tcontent: %s\n", buffer);
+
+            if (rand() % 100 > args.drop_probability) {
+                if (ListCount(port_b_queue) < args.queue_length) {
+                    enqueueMessage(port_b_queue, buffer, byte_count);
+                } else {
+                    printf("Port B queue full\n");
+                }
+            } else {
+                printf("DROPPED!\n");
+            }
+
+        } else if (ntohs(incoming_address.sin_port) == args.port_c) {
+            printf("port c (%d) sent:\n", ntohs(incoming_address.sin_port));
+            printf("packet:\n");
+            printf("\tlength: %d\n", byte_count);
+            buffer[byte_count] = '\0';
+            printf("\tcontent: %s\n", buffer);
+            int rnd = rand() % 100;
+            printf("%d\n", rnd);
+            if (rnd > args.drop_probability) {
+                if (ListCount(port_c_queue) < args.queue_length) {
+                    enqueueMessage(port_c_queue, buffer, byte_count);
+                } else {
+                    printf("Port C queue full\n");
+                }
+            } else {
+                printf("DROPPED!\n");
+            }
 
         } else {
             fprintf(stderr, "No idea who you are (%d).\n",
