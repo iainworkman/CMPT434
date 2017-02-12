@@ -51,6 +51,9 @@ void printUsage() {
     printf("\t<port_c>\n");
 }
 
+/*
+ * Handler for the timers in the port b message queue
+ */
 static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
     printf("Sending to B\n");
     /* TODO: Disable timer interrupts*/
@@ -62,6 +65,9 @@ static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
     /* TODO: Re-enable timer interrupts */
 }
 
+/*
+ * Handler for the timers in the port c message queue
+ */
 static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
     printf("Sending to C\n");
     /* TODO: Disable timer interrupts*/
@@ -72,6 +78,10 @@ static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
     /* TODO: Actually transmit the message */
     /* TODO: Re-enable timer interrupts */
 }
+
+/*
+ * Helper function for parsing command line arguments
+ */
 int parseArguments(int argc, char **argv, arguments *result) {
 
     int drop_probability = 0;
@@ -132,6 +142,10 @@ int parseArguments(int argc, char **argv, arguments *result) {
     return 0;
 }
 
+/*
+ * Function which adds a message entry to the provided queue which will have a
+ * timer added associated with the provided timer_handler
+ */
 int enqueueMessage(LIST *queue,
                    char *data,
                    int data_length,
@@ -189,6 +203,9 @@ int enqueueMessage(LIST *queue,
     return return_code;
 }
 
+/*
+ * Remove a message from the provided message queue
+ */
 message *dequeueMessage(LIST *queue) {
 
     /* TODO: Disable message timer */
