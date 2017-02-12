@@ -21,6 +21,10 @@
 
 #define MAX_BUFFER_SIZE 1024
 
+LIST *port_b_queue;
+LIST *port_c_queue;
+
+typedef void(*timer_handler)(int sig, siginfo_t *si, void *uc);
 typedef struct arguments {
     int drop_probability;
     int delay;
@@ -47,6 +51,27 @@ void printUsage() {
     printf("\t<port_c>\n");
 }
 
+static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
+    printf("Sending to B\n");
+    /* TODO: Disable timer interrupts*/
+    ListFirst(port_b_queue);
+    message *msg = ListRemove(port_b_queue);
+
+    timer_delete(msg->delay_timer);
+    /* TODO: Actually transmit the message */
+    /* TODO: Re-enable timer interrupts */
+}
+
+static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
+    printf("Sending to C\n");
+    /* TODO: Disable timer interrupts*/
+    ListFirst(port_c_queue);
+    message *msg = ListRemove(port_c_queue);
+
+    timer_delete(msg->delay_timer);
+    /* TODO: Actually transmit the message */
+    /* TODO: Re-enable timer interrupts */
+}
 int parseArguments(int argc, char **argv, arguments *result) {
 
     int drop_probability = 0;
@@ -107,9 +132,18 @@ int parseArguments(int argc, char **argv, arguments *result) {
     return 0;
 }
 
-int enqueueMessage(LIST *queue, char *data, int data_length) {
+int enqueueMessage(LIST *queue,
+                   char *data,
+                   int data_length,
+                   int send_delay,
+                   timer_handler handler) {
 
     int return_code;
+    struct sigevent signal_event;
+    struct itimerspec timer_specs;
+    sigset_t signal_mask;
+    struct sigaction signal_action;
+
     message *msg = malloc(sizeof(message));
     if (msg == 0) {
         return -1;
@@ -117,7 +151,34 @@ int enqueueMessage(LIST *queue, char *data, int data_length) {
     /* Copy data across into the message struct */
     memcpy(msg->data, data, data_length);
     msg->size = data_length;
-    /* TODO: Initialize message timer */
+
+    /* Initialize message timer */
+    signal_action.sa_flags = SA_SIGINFO;
+    signal_action.sa_sigaction = handler;
+    sigemptyset(&signal_action.sa_mask);
+    if (sigaction(SIGRTMIN, &signal_action, NULL) == -1) {
+        free(msg);
+        return -1;
+    }
+
+    signal_event.sigev_notify = SIGEV_SIGNAL;
+    signal_event.sigev_signo = SIGRTMIN;
+    signal_event.sigev_value.sival_ptr = &msg->delay_timer;
+    if (timer_create(CLOCK_REALTIME, &signal_event, &msg->delay_timer) == -1) {
+        free(msg);
+        return -1;
+    }
+
+    timer_specs.it_value.tv_sec = send_delay / 1000;
+    timer_specs.it_value.tv_nsec = send_delay * 1000;
+    timer_specs.it_interval.tv_sec = timer_specs.it_value.tv_sec;
+    timer_specs.it_interval.tv_nsec = timer_specs.it_value.tv_nsec;
+
+    if (timer_settime(msg->delay_timer, 0, &timer_specs, NULL) == -1) {
+        free(msg);
+        return -1;
+    }
+
 
     /* TODO: Shut off timer interrupts */
     return_code = ListAppend(queue, msg);
@@ -145,8 +206,6 @@ int main(int argc, char **argv) {
     char buffer[MAX_BUFFER_SIZE];
     int keep_running = 1;
     socklen_t address_length;
-    LIST *port_b_queue;
-    LIST *port_c_queue;
 
     /* Set the random seed */
     srand(time(0));
@@ -206,8 +265,8 @@ int main(int argc, char **argv) {
 
     /* Start Listening */
     printf("Listening\n");
+    address_length = sizeof incoming_address;
     while (keep_running) {
-        address_length = sizeof incoming_address;
         byte_count = recvfrom(port_a_fd,
                               buffer,
                               MAX_BUFFER_SIZE - 1,
@@ -216,8 +275,7 @@ int main(int argc, char **argv) {
                               &address_length);
 
         if (byte_count == -1) {
-            fprintf(stderr, "Failed during receive\n");
-            return 1;
+            continue;
         }
 
         if (ntohs(incoming_address.sin_port) == args.port_b) {
@@ -229,7 +287,8 @@ int main(int argc, char **argv) {
 
             if (rand() % 100 > args.drop_probability) {
                 if (ListCount(port_b_queue) < args.queue_length) {
-                    enqueueMessage(port_b_queue, buffer, byte_count);
+                    enqueueMessage(port_b_queue, buffer, byte_count, args.delay,
+                                   portBTimerHandler);
                 } else {
                     printf("Port B queue full\n");
                 }
@@ -247,7 +306,8 @@ int main(int argc, char **argv) {
             printf("%d\n", rnd);
             if (rnd > args.drop_probability) {
                 if (ListCount(port_c_queue) < args.queue_length) {
-                    enqueueMessage(port_c_queue, buffer, byte_count);
+                    enqueueMessage(port_c_queue, buffer, byte_count, args.delay,
+                                   portCTimerHandler);
                 } else {
                     printf("Port C queue full\n");
                 }

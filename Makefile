@@ -19,7 +19,7 @@ all: $(TARGETS)
 ####################################
 
 emulator: emulator$(ARCH).o libList$(ARCH).a
-	$(CC) $(CFLAGS) -I. -L. -o $@ emulator$(ARCH).o libList$(ARCH).a -lList$(ARCH)
+	$(CC) $(CFLAGS) -I. -L. -o $@ emulator$(ARCH).o libList$(ARCH).a -lList$(ARCH) -lrt
 
 emulator$(ARCH).o: emulator.c
 	$(CC) $(CFLAGS) -c emulator.c -o $@
