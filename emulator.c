@@ -55,12 +55,41 @@ void printUsage() {
 }
 
 /*
+ * Function for disabling timer interrupts. Can be used to ensure that no timer
+ * is fired while a critical section of code is being executed.
+ */
+void disableTimerInterrupts() {
+    sigset_t signal_mask;
+
+    sigemptyset(&signal_mask);
+    sigaddset(&signal_mask, SIGRTMIN);
+    if (sigprocmask(SIG_SETMASK, &signal_mask, NULL) == -1) {
+        fprintf(stderr, "Error disabling timer interrupts!\n");
+    }
+}
+
+/*
+ * Function for enabling timer interrupts. Is used once a critical section of
+ * code is completed
+ */
+void enableTimerInterrupts() {
+    sigset_t signal_mask;
+
+    sigemptyset(&signal_mask);
+    sigaddset(&signal_mask, SIGRTMIN);
+    if (sigprocmask(SIG_UNBLOCK, &signal_mask, NULL) == -1) {
+        fprintf(stderr, "Error enabling timer interrupts!\n");
+    }
+}
+
+/*
  * Handler for the timers in the port b message queue
  */
 static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
     int bytes_sent = 0;
     printf("Sending to B\n");
-    /* TODO: Disable timer interrupts*/
+
+    disableTimerInterrupts();
     ListFirst(port_b_queue);
     message *msg = ListRemove(port_b_queue);
 
@@ -68,9 +97,10 @@ static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
     bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
                         port_b_info->ai_addr, port_b_info->ai_addrlen);
 
+    timer_delete(msg->delay_timer);
     free(msg);
     printf("%d bytes sent to b\n", bytes_sent);
-    /* TODO: Re-enable timer interrupts */
+    enableTimerInterrupts();
 }
 
 /*
@@ -79,7 +109,7 @@ static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
 static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
     int bytes_sent = 0;
     printf("Sending to B\n");
-    /* TODO: Disable timer interrupts*/
+    disableTimerInterrupts();
     ListFirst(port_b_queue);
     message *msg = ListRemove(port_c_queue);
 
@@ -87,9 +117,10 @@ static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
     bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
                         port_c_info->ai_addr, port_c_info->ai_addrlen);
 
+    timer_delete(msg->delay_timer);
     free(msg);
     printf("%d bytes sent to c\n", bytes_sent);
-    /* TODO: Re-enable timer interrupts */
+    enableTimerInterrupts();
 }
 
 /*
@@ -168,7 +199,6 @@ int enqueueMessage(LIST *queue,
     int return_code;
     struct sigevent signal_event;
     struct itimerspec timer_specs;
-    sigset_t signal_mask;
     struct sigaction signal_action;
 
     message *msg = malloc(sizeof(message));
@@ -207,12 +237,12 @@ int enqueueMessage(LIST *queue,
     }
 
 
-    /* TODO: Shut off timer interrupts */
+    disableTimerInterrupts();
     return_code = ListAppend(queue, msg);
     if (return_code == -1) {
         free(msg);
     }
-    /* TODO: Re-enable timer interrupts */
+    enableTimerInterrupts();
     return return_code;
 }
 
