@@ -23,6 +23,9 @@
 
 LIST *port_b_queue;
 LIST *port_c_queue;
+int port_a_fd;
+struct addrinfo port_b_hints, *port_b_info;
+struct addrinfo port_c_hints, *port_c_info;
 
 typedef void(*timer_handler)(int sig, siginfo_t *si, void *uc);
 typedef struct arguments {
@@ -30,8 +33,8 @@ typedef struct arguments {
     int delay;
     int queue_length;
     char port_a[6];
-    int port_b;
-    int port_c;
+    char port_b[6];
+    char port_c[6];
 } arguments;
 
 typedef struct message {
@@ -55,13 +58,18 @@ void printUsage() {
  * Handler for the timers in the port b message queue
  */
 static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
+    int bytes_sent = 0;
     printf("Sending to B\n");
     /* TODO: Disable timer interrupts*/
     ListFirst(port_b_queue);
     message *msg = ListRemove(port_b_queue);
 
     timer_delete(msg->delay_timer);
-    /* TODO: Actually transmit the message */
+    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
+                        port_b_info->ai_addr, port_b_info->ai_addrlen);
+
+    free(msg);
+    printf("%d bytes sent to b\n", bytes_sent);
     /* TODO: Re-enable timer interrupts */
 }
 
@@ -69,13 +77,18 @@ static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
  * Handler for the timers in the port c message queue
  */
 static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
-    printf("Sending to C\n");
+    int bytes_sent = 0;
+    printf("Sending to B\n");
     /* TODO: Disable timer interrupts*/
-    ListFirst(port_c_queue);
+    ListFirst(port_b_queue);
     message *msg = ListRemove(port_c_queue);
 
     timer_delete(msg->delay_timer);
-    /* TODO: Actually transmit the message */
+    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
+                        port_c_info->ai_addr, port_c_info->ai_addrlen);
+
+    free(msg);
+    printf("%d bytes sent to c\n", bytes_sent);
     /* TODO: Re-enable timer interrupts */
 }
 
@@ -136,8 +149,8 @@ int parseArguments(int argc, char **argv, arguments *result) {
     result->delay = delay;
     result->queue_length = queue_length;
     strcpy(result->port_a, argv[4]);
-    result->port_b = port_b;
-    result->port_c = port_c;
+    strcpy(result->port_b, argv[5]);
+    strcpy(result->port_c, argv[6]);
 
     return 0;
 }
@@ -203,19 +216,9 @@ int enqueueMessage(LIST *queue,
     return return_code;
 }
 
-/*
- * Remove a message from the provided message queue
- */
-message *dequeueMessage(LIST *queue) {
-
-    /* TODO: Disable message timer */
-    return (message *) ListFirst(queue);
-}
-
 int main(int argc, char **argv) {
 
     arguments args;
-    int port_a_fd;
     struct addrinfo port_a_hints, *port_a_info, *i_portinfo;
     int status_code;
     int byte_count;
@@ -254,6 +257,28 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    memset(&port_b_hints, 0, sizeof port_b_hints);
+    port_b_hints.ai_family = AF_UNSPEC;
+    port_b_hints.ai_socktype = SOCK_DGRAM;
+    port_b_hints.ai_flags = AI_PASSIVE;
+
+    status_code = getaddrinfo(NULL, args.port_b, &port_b_hints, &port_b_info);
+    if (status_code != 0) {
+        fprintf(stderr, "Failed to get address info for port B\n");
+        return 1;
+    }
+
+    memset(&port_c_hints, 0, sizeof port_c_hints);
+    port_c_hints.ai_family = AF_UNSPEC;
+    port_c_hints.ai_socktype = SOCK_DGRAM;
+    port_c_hints.ai_flags = AI_PASSIVE;
+
+    status_code = getaddrinfo(NULL, args.port_c, &port_c_hints, &port_c_info);
+    if (status_code != 0) {
+        fprintf(stderr, "Failed to get address info for port C\n");
+        return 1;
+    }
+
     /* bind to A */
 
     for (i_portinfo = port_a_info;
@@ -283,6 +308,7 @@ int main(int argc, char **argv) {
     /* Start Listening */
     printf("Listening\n");
     address_length = sizeof incoming_address;
+
     while (keep_running) {
         byte_count = recvfrom(port_a_fd,
                               buffer,
@@ -295,38 +321,38 @@ int main(int argc, char **argv) {
             continue;
         }
 
-        if (ntohs(incoming_address.sin_port) == args.port_b) {
+        if (ntohs(incoming_address.sin_port) == strtol(args.port_b, 0, 10)) {
             printf("port b (%d) sent:\n", ntohs(incoming_address.sin_port));
             printf("packet:\n");
             printf("\tlength: %d\n", byte_count);
             buffer[byte_count] = '\0';
             printf("\tcontent: %s\n", buffer);
 
-            if (rand() % 100 > args.drop_probability) {
-                if (ListCount(port_b_queue) < args.queue_length) {
-                    enqueueMessage(port_b_queue, buffer, byte_count, args.delay,
-                                   portBTimerHandler);
-                } else {
-                    printf("Port B queue full\n");
-                }
-            } else {
-                printf("DROPPED!\n");
-            }
-
-        } else if (ntohs(incoming_address.sin_port) == args.port_c) {
-            printf("port c (%d) sent:\n", ntohs(incoming_address.sin_port));
-            printf("packet:\n");
-            printf("\tlength: %d\n", byte_count);
-            buffer[byte_count] = '\0';
-            printf("\tcontent: %s\n", buffer);
-            int rnd = rand() % 100;
-            printf("%d\n", rnd);
-            if (rnd > args.drop_probability) {
+            if ((rand() % 100) > args.drop_probability) {
                 if (ListCount(port_c_queue) < args.queue_length) {
                     enqueueMessage(port_c_queue, buffer, byte_count, args.delay,
                                    portCTimerHandler);
                 } else {
                     printf("Port C queue full\n");
+                }
+            } else {
+                printf("DROPPED!\n");
+            }
+
+        } else if (ntohs(incoming_address.sin_port) ==
+                   strtol(args.port_c, 0, 10)) {
+            printf("port c (%d) sent:\n", ntohs(incoming_address.sin_port));
+            printf("packet:\n");
+            printf("\tlength: %d\n", byte_count);
+            buffer[byte_count] = '\0';
+            printf("\tcontent: %s\n", buffer);
+
+            if ((rand() % 100) > args.drop_probability) {
+                if (ListCount(port_b_queue) < args.queue_length) {
+                    enqueueMessage(port_b_queue, buffer, byte_count, args.delay,
+                                   portBTimerHandler);
+                } else {
+                    printf("Port B queue full\n");
                 }
             } else {
                 printf("DROPPED!\n");
