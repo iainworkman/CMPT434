@@ -14,20 +14,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <signal.h>
-#include <time.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <sys/time.h>
 
 #include "list.h"
 
 #define MAX_BUFFER_SIZE 1024
 
-LIST *port_b_queue;
-LIST *port_c_queue;
-int port_a_fd;
-struct addrinfo port_b_hints, *port_b_info;
-struct addrinfo port_c_hints, *port_c_info;
-
-typedef void(*timer_handler)(int sig, siginfo_t *si, void *uc);
 typedef struct arguments {
     int drop_probability;
     int delay;
@@ -38,10 +32,20 @@ typedef struct arguments {
 } arguments;
 
 typedef struct message {
-    timer_t delay_timer;
+    struct timeval time_received;
     char data[MAX_BUFFER_SIZE];
     int size;
 } message;
+
+int port_a_fd;
+struct addrinfo port_b_hints, *port_b_info;
+struct addrinfo port_c_hints, *port_c_info;
+LIST *port_b_queue;
+sem_t port_b_queue_semaphore;
+LIST *port_c_queue;
+sem_t port_c_queue_semaphore;
+arguments args;
+
 
 void printUsage() {
 
@@ -54,73 +58,140 @@ void printUsage() {
     printf("\t<port_c>\n");
 }
 
-/*
- * Function for disabling timer interrupts. Can be used to ensure that no timer
- * is fired while a critical section of code is being executed.
- */
-void disableTimerInterrupts() {
-    sigset_t signal_mask;
+///*
+// * Handler for the timers in the port b message queue
+// */
+//static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
+//    int bytes_sent = 0;
+//    printf("Sending to B\n");
+//
+//    disableTimerInterrupts();
+//    ListFirst(port_b_queue);
+//    message *msg = ListRemove(port_b_queue);
+//
+//    timer_delete(msg->delay_timer);
+//    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
+//                        port_b_info->ai_addr, port_b_info->ai_addrlen);
+//
+//    timer_delete(msg->delay_timer);
+//    free(msg);
+//    printf("%d bytes sent to b\n", bytes_sent);
+//    enableTimerInterrupts();
+//}
+//
+///*
+// * Handler for the timers in the port c message queue
+// */
+//static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
+//    int bytes_sent = 0;
+//    printf("Sending to B\n");
+//    disableTimerInterrupts();
+//    ListFirst(port_b_queue);
+//    message *msg = ListRemove(port_c_queue);
+//
+//    timer_delete(msg->delay_timer);
+//    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
+//                        port_c_info->ai_addr, port_c_info->ai_addrlen);
+//
+//    timer_delete(msg->delay_timer);
+//    free(msg);
+//    printf("%d bytes sent to c\n", bytes_sent);
+//    enableTimerInterrupts();
+//}
 
-    sigemptyset(&signal_mask);
-    sigaddset(&signal_mask, SIGRTMIN);
-    if (sigprocmask(SIG_SETMASK, &signal_mask, NULL) == -1) {
-        fprintf(stderr, "Error disabling timer interrupts!\n");
+long timedelta(struct timeval start, struct timeval end) {
+
+    return (end.tv_sec - start.tv_sec) * 1000 +
+           (end.tv_usec - start.tv_usec) / 1000;
+}
+
+void *portBSenderThread() {
+    struct timespec sleep_time;
+    sleep_time.tv_nsec = (args.delay * 10000) / 2;
+    long delta_time;
+    struct timeval current_time;
+
+    while (1) {
+        gettimeofday(&current_time, NULL);
+        sem_wait(&port_b_queue_semaphore);
+
+        if (ListCount(port_b_queue) != 0) {
+            int still_to_send = 1;
+            while (still_to_send) {
+                message *msg = ListFirst(port_b_queue);
+
+                if (msg != NULL) {
+
+                    delta_time = timedelta(msg->time_received, current_time);
+                    if (delta_time > args.delay) {
+
+                        ListRemove(port_b_queue);
+
+                        /* Send the Message */
+                        printf("Sending %s from B\n", msg->data);
+                        sendto(port_a_fd, msg->data, msg->size, 0,
+                               port_b_info->ai_addr, port_b_info->ai_addrlen);
+                        free(msg);
+
+                    } else {
+                        still_to_send = 0;
+                    }
+
+
+                } else {
+                    still_to_send = 0;
+                }
+            }
+        }
+        sem_post(&port_b_queue_semaphore);
+        nanosleep(&sleep_time, 0);
     }
+
+    return 0;
 }
 
-/*
- * Function for enabling timer interrupts. Is used once a critical section of
- * code is completed
- */
-void enableTimerInterrupts() {
-    sigset_t signal_mask;
+void *portCSenderThread() {
+    struct timespec sleep_time;
+    sleep_time.tv_nsec = (args.delay * 10000) / 2;
+    long delta_time;
+    struct timeval current_time;
 
-    sigemptyset(&signal_mask);
-    sigaddset(&signal_mask, SIGRTMIN);
-    if (sigprocmask(SIG_UNBLOCK, &signal_mask, NULL) == -1) {
-        fprintf(stderr, "Error enabling timer interrupts!\n");
+    while (1) {
+        gettimeofday(&current_time, NULL);
+        sem_wait(&port_c_queue_semaphore);
+
+        if (ListCount(port_c_queue) != 0) {
+            int still_to_send = 1;
+            while (still_to_send) {
+                message *msg = ListFirst(port_c_queue);
+
+                if (msg != NULL) {
+
+                    delta_time = timedelta(msg->time_received, current_time);
+                    if (delta_time > args.delay) {
+
+                        ListRemove(port_c_queue);
+
+                        /* Send the Message */
+                        sendto(port_a_fd, msg->data, msg->size, 0,
+                               port_c_info->ai_addr, port_c_info->ai_addrlen);
+                        free(msg);
+
+                    } else {
+                        still_to_send = 0;
+                    }
+
+
+                } else {
+                    still_to_send = 0;
+                }
+            }
+        }
+        sem_post(&port_c_queue_semaphore);
+        nanosleep(&sleep_time, 0);
     }
-}
 
-/*
- * Handler for the timers in the port b message queue
- */
-static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
-    int bytes_sent = 0;
-    printf("Sending to B\n");
-
-    disableTimerInterrupts();
-    ListFirst(port_b_queue);
-    message *msg = ListRemove(port_b_queue);
-
-    timer_delete(msg->delay_timer);
-    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
-                        port_b_info->ai_addr, port_b_info->ai_addrlen);
-
-    timer_delete(msg->delay_timer);
-    free(msg);
-    printf("%d bytes sent to b\n", bytes_sent);
-    enableTimerInterrupts();
-}
-
-/*
- * Handler for the timers in the port c message queue
- */
-static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
-    int bytes_sent = 0;
-    printf("Sending to B\n");
-    disableTimerInterrupts();
-    ListFirst(port_b_queue);
-    message *msg = ListRemove(port_c_queue);
-
-    timer_delete(msg->delay_timer);
-    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
-                        port_c_info->ai_addr, port_c_info->ai_addrlen);
-
-    timer_delete(msg->delay_timer);
-    free(msg);
-    printf("%d bytes sent to c\n", bytes_sent);
-    enableTimerInterrupts();
+    return 0;
 }
 
 /*
@@ -191,71 +262,111 @@ int parseArguments(int argc, char **argv, arguments *result) {
  * timer added associated with the provided timer_handler
  */
 int enqueueMessage(LIST *queue,
+                   sem_t *queue_semaphore,
                    char *data,
-                   int data_length,
-                   int send_delay,
-                   timer_handler handler) {
+                   int data_length) {
 
     int return_code;
-    struct sigevent signal_event;
-    struct itimerspec timer_specs;
-    struct sigaction signal_action;
 
     message *msg = malloc(sizeof(message));
     if (msg == 0) {
         return -1;
     }
+
     /* Copy data across into the message struct */
     memcpy(msg->data, data, data_length);
     msg->size = data_length;
 
-    /* Initialize message timer */
-    signal_action.sa_flags = SA_SIGINFO;
-    signal_action.sa_sigaction = handler;
-    sigemptyset(&signal_action.sa_mask);
-    if (sigaction(SIGRTMIN, &signal_action, NULL) == -1) {
-        free(msg);
-        return -1;
-    }
+    /* Initialize message time */
+    gettimeofday(&msg->time_received, NULL);
 
-    signal_event.sigev_notify = SIGEV_SIGNAL;
-    signal_event.sigev_signo = SIGRTMIN;
-    signal_event.sigev_value.sival_ptr = &msg->delay_timer;
-    if (timer_create(CLOCK_REALTIME, &signal_event, &msg->delay_timer) == -1) {
-        free(msg);
-        return -1;
-    }
-
-    timer_specs.it_value.tv_sec = send_delay / 1000;
-    timer_specs.it_value.tv_nsec = send_delay * 1000;
-    timer_specs.it_interval.tv_sec = timer_specs.it_value.tv_sec;
-    timer_specs.it_interval.tv_nsec = timer_specs.it_value.tv_nsec;
-
-    if (timer_settime(msg->delay_timer, 0, &timer_specs, NULL) == -1) {
-        free(msg);
-        return -1;
-    }
-
-
-    disableTimerInterrupts();
+    /* Add to queue */
+    sem_wait(queue_semaphore);
     return_code = ListAppend(queue, msg);
     if (return_code == -1) {
         free(msg);
     }
-    enableTimerInterrupts();
+    sem_post(queue_semaphore);
     return return_code;
+}
+
+
+void *receiverThread() {
+    int byte_count;
+    char buffer[MAX_BUFFER_SIZE];
+    struct sockaddr_in incoming_address;
+    int keep_running = 1;
+    socklen_t address_length;
+
+    /* Start Listening */
+    printf("Listening\n");
+    address_length = sizeof incoming_address;
+
+    while (keep_running) {
+        byte_count = recvfrom(port_a_fd,
+                              buffer,
+                              MAX_BUFFER_SIZE - 1,
+                              0,
+                              (struct sockaddr *) &incoming_address,
+                              &address_length);
+
+        if (byte_count == -1) {
+            continue;
+        }
+
+        if (ntohs(incoming_address.sin_port) == strtol(args.port_b, 0, 10)) {
+            printf("port b (%d) sent:\n", ntohs(incoming_address.sin_port));
+            printf("packet:\n");
+            printf("\tlength: %d\n", byte_count);
+            buffer[byte_count] = '\0';
+            printf("\tcontent: %s\n", buffer);
+
+            if ((rand() % 100) > args.drop_probability) {
+                if (ListCount(port_c_queue) < args.queue_length) {
+                    enqueueMessage(port_c_queue, &port_c_queue_semaphore,
+                                   buffer, byte_count);
+                } else {
+                    printf("Port C queue full\n");
+                }
+            } else {
+                printf("DROPPED!\n");
+            }
+
+        } else if (ntohs(incoming_address.sin_port) ==
+                   strtol(args.port_c, 0, 10)) {
+            printf("port c (%d) sent:\n", ntohs(incoming_address.sin_port));
+            printf("packet:\n");
+            printf("\tlength: %d\n", byte_count);
+            buffer[byte_count] = '\0';
+            printf("\tcontent: %s\n", buffer);
+
+            if ((rand() % 100) > args.drop_probability) {
+                if (ListCount(port_b_queue) < args.queue_length) {
+                    enqueueMessage(port_b_queue,
+                                   &port_b_queue_semaphore,
+                                   buffer, byte_count);
+                } else {
+                    printf("Port B queue full\n");
+                }
+            } else {
+                printf("DROPPED!\n");
+            }
+
+        } else {
+            fprintf(stderr, "No idea who you are (%d).\n",
+                    ntohs(incoming_address.sin_port));
+        }
+    }
+
+    return 0;
 }
 
 int main(int argc, char **argv) {
 
-    arguments args;
     struct addrinfo port_a_hints, *port_a_info, *i_portinfo;
     int status_code;
-    int byte_count;
-    struct sockaddr_in incoming_address;
-    char buffer[MAX_BUFFER_SIZE];
-    int keep_running = 1;
-    socklen_t address_length;
+
+    pthread_t senderb_thread, senderc_thread, receiver_thread;
 
     /* Set the random seed */
     srand(time(0));
@@ -272,6 +383,17 @@ int main(int argc, char **argv) {
 
     if (port_b_queue == 0 || port_c_queue == 0) {
         fprintf(stderr, "Could not create message queues\n");
+        return 1;
+    }
+
+    /* Initialize queue semaphores */
+    if (sem_init(&port_b_queue_semaphore, 0, 1) == -1) {
+        fprintf(stderr, "Could not initialize port b queue semaphore\n");
+        return 1;
+    }
+
+    if (sem_init(&port_c_queue_semaphore, 0, 1) == -1) {
+        fprintf(stderr, "Could not initialize port c queue semaphore\n");
         return 1;
     }
 
@@ -335,63 +457,40 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* Start Listening */
-    printf("Listening\n");
-    address_length = sizeof incoming_address;
+    if (pthread_create(&receiver_thread, NULL, receiverThread, NULL) != 0) {
 
-    while (keep_running) {
-        byte_count = recvfrom(port_a_fd,
-                              buffer,
-                              MAX_BUFFER_SIZE - 1,
-                              0,
-                              (struct sockaddr *) &incoming_address,
-                              &address_length);
+        fprintf(stderr, "Error creating receiver thread\n");
+        return 1;
+    }
 
-        if (byte_count == -1) {
-            continue;
-        }
+    if (pthread_create(&senderb_thread, NULL, portBSenderThread, NULL) != 0) {
 
-        if (ntohs(incoming_address.sin_port) == strtol(args.port_b, 0, 10)) {
-            printf("port b (%d) sent:\n", ntohs(incoming_address.sin_port));
-            printf("packet:\n");
-            printf("\tlength: %d\n", byte_count);
-            buffer[byte_count] = '\0';
-            printf("\tcontent: %s\n", buffer);
+        fprintf(stderr, "Error creating port B sender thread\n");
+        return 1;
+    }
 
-            if ((rand() % 100) > args.drop_probability) {
-                if (ListCount(port_c_queue) < args.queue_length) {
-                    enqueueMessage(port_c_queue, buffer, byte_count, args.delay,
-                                   portCTimerHandler);
-                } else {
-                    printf("Port C queue full\n");
-                }
-            } else {
-                printf("DROPPED!\n");
-            }
+    if (pthread_create(&senderc_thread, NULL, portCSenderThread, NULL) != 0) {
 
-        } else if (ntohs(incoming_address.sin_port) ==
-                   strtol(args.port_c, 0, 10)) {
-            printf("port c (%d) sent:\n", ntohs(incoming_address.sin_port));
-            printf("packet:\n");
-            printf("\tlength: %d\n", byte_count);
-            buffer[byte_count] = '\0';
-            printf("\tcontent: %s\n", buffer);
+        fprintf(stderr, "Error creating port C sender thread\n");
+        return 1;
+    }
 
-            if ((rand() % 100) > args.drop_probability) {
-                if (ListCount(port_b_queue) < args.queue_length) {
-                    enqueueMessage(port_b_queue, buffer, byte_count, args.delay,
-                                   portBTimerHandler);
-                } else {
-                    printf("Port B queue full\n");
-                }
-            } else {
-                printf("DROPPED!\n");
-            }
+    if (pthread_join(receiver_thread, NULL) != 0) {
 
-        } else {
-            fprintf(stderr, "No idea who you are (%d).\n",
-                    ntohs(incoming_address.sin_port));
-        }
+        fprintf(stderr, "Error joining receiver thread\n");
+        return 2;
+    }
+
+    if (pthread_join(senderb_thread, NULL) != 0) {
+
+        fprintf(stderr, "Error joining port B sender thread\n");
+        return 2;
+    }
+
+    if (pthread_join(senderc_thread, NULL) != 0) {
+
+        fprintf(stderr, "Error joining port C sender thread\n");
+        return 2;
     }
 
     return 0;

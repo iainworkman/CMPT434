@@ -18,7 +18,6 @@
 #include <time.h>
 #include <semaphore.h>
 
-#define MAX_BUFFER_SIZE 64
 #define MESSAGE_COUNT   100
 #define WINDOW_SIZE     5
 #define SEQUENCE_SIZE   (WINDOW_SIZE*2)
@@ -35,7 +34,6 @@ int window_start;
 int window_end;
 int accepted[SEQUENCE_SIZE];
 struct timeval time_sent[SEQUENCE_SIZE];
-char buffer[MAX_BUFFER_SIZE];
 struct sockaddr_storage server_address;
 
 /* Globals for statistics */
