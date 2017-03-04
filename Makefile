@@ -34,7 +34,7 @@ sr_client$(ARCH).o: sr_client.c
 	$(CC) $(CFLAGS) -c sr_client.c -o $@
 
 sr_server: sr_server$(ARCH).o 
-	$(CC) $(CFLAGS) -I. -L. -o $@ sr_server$(ARCH).o -lpthread
+	$(CC) $(CFLAGS) -I. -L. -o $@ sr_server$(ARCH).o
 
 sr_server$(ARCH).o: sr_server.c
 	$(CC) $(CFLAGS) -c sr_server.c -o $@
