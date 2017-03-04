@@ -14,29 +14,34 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <sys/time.h>
+#include <time.h>
 #include <semaphore.h>
 
 #define MAX_BUFFER_SIZE 64
 #define MESSAGE_COUNT   100
 #define WINDOW_SIZE     5
 #define SEQUENCE_SIZE   (WINDOW_SIZE*2)
+#define TIMEOUT_MS      1000
 
 /* Globals for the server */
 int send_fd;
 struct addrinfo *server_info;
 sem_t free_to_send;
+sem_t sending;
 socklen_t address_length;
 int next_sequence_number;
 int window_start;
 int window_end;
 int accepted[SEQUENCE_SIZE];
+struct timeval time_sent[SEQUENCE_SIZE];
 char buffer[MAX_BUFFER_SIZE];
 struct sockaddr_storage server_address;
 
 /* Globals for statistics */
 int items_sent = 0;
 int acks_received = 0;
-int retransmission = 0;
+int retransmissions = 0;
 
 typedef struct arguments {
     char server_port[6];    /* Server's listen port */
@@ -168,7 +173,15 @@ void *senderThread() {
         status_code = sem_wait(&free_to_send);
 
         if (status_code == -1) {
-            fprintf(stderr, "Could not V the semaphore\n");
+            fprintf(stderr, "Could not V the window semaphore\n");
+            return 0;
+        }
+
+        status_code = sem_wait(&sending);
+
+        if (status_code == -1) {
+            fprintf(stderr, "Could not V the sending semaphore\n");
+            return 0;
         }
 
         /* Send the next message from the window */
@@ -182,9 +195,87 @@ void *senderThread() {
                 server_info->ai_addr,
                 server_info->ai_addrlen
         );
+
+        /* Setup timout timer */
+        gettimeofday(&time_sent[next_sequence_number], NULL);
+
         next_sequence_number = (next_sequence_number + 1) % SEQUENCE_SIZE;
         items_sent++;
-        /* TODO: Setup timout timer */
+
+        status_code = sem_post(&sending);
+
+        if (status_code == -1) {
+            fprintf(stderr, "Could not P the sending semaphore\n");
+            return 0;
+        }
+    }
+    return 0;
+}
+
+long timedelta(struct timeval start, struct timeval end) {
+
+    return (end.tv_sec - start.tv_sec) * 1000 +
+           (end.tv_usec - start.tv_usec) / 1000;
+}
+
+void *timeoutThread() {
+    int i_window_iterator;
+    int status_code;
+    struct timespec sleep_time;
+    long delta_time;
+
+    sleep_time.tv_nsec = (TIMEOUT_MS * 10000) / 2;
+
+    while (acks_received < MESSAGE_COUNT) {
+        for (i_window_iterator = 0;
+             i_window_iterator < WINDOW_SIZE; ++i_window_iterator) {
+
+            int window_index = (i_window_iterator + window_start) % WINDOW_SIZE;
+            struct timeval current_time;
+            int converted_number;
+
+            if (accepted[window_index] == 1) {
+                continue;
+            }
+
+            gettimeofday(&current_time, NULL);
+
+            delta_time = timedelta(time_sent[window_index], current_time);
+            if (delta_time > TIMEOUT_MS) {
+
+                status_code = sem_wait(&sending);
+
+                if (status_code == -1) {
+                    fprintf(stderr, "Could not V the sending semaphore\n");
+                    return 0;
+                }
+
+                /* Send the next message from the window */
+                printf("Re-Sending: %d\n", window_index);
+                converted_number = htonl(window_index);
+                sendto(
+                        send_fd,
+                        &converted_number,
+                        sizeof(int),
+                        0,
+                        server_info->ai_addr,
+                        server_info->ai_addrlen
+                );
+
+                /* Resetup timout timer */
+                gettimeofday(&time_sent[window_index], NULL);
+                retransmissions++;
+
+                status_code = sem_post(&sending);
+
+                if (status_code == -1) {
+                    fprintf(stderr, "Could not P the sending semaphore\n");
+                    return 0;
+                }
+            }
+
+            nanosleep(&sleep_time, 0);
+        }
     }
 
     return 0;
@@ -200,7 +291,7 @@ int main(int argc, char **argv) {
     struct addrinfo ack_hints, *ack_info;
     int status_code;
     arguments args;
-    pthread_t sender_thread, receiver_thread;
+    pthread_t sender_thread, receiver_thread, timeout_thread;
 
     /* Init globals */
     window_start = 0;
@@ -225,6 +316,12 @@ int main(int argc, char **argv) {
     if (status_code == -1) {
         fprintf(stderr, "Failed to initialize window semaphore\n");
         return 1;
+    }
+
+    status_code = sem_init(&sending, 0, 1);
+    if (status_code == -1) {
+        fprintf(stderr, "Failed to initialize sender semaphore\n");
+        return -1;
     }
 
 
@@ -297,6 +394,12 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    if (pthread_create(&timeout_thread, NULL, timeoutThread, NULL) != 0) {
+
+        fprintf(stderr, "Error creating timeout thread'n");
+        return 1;
+    }
+
     if (pthread_join(sender_thread, NULL) != 0) {
 
         fprintf(stderr, "Error joining sender thread\n");
@@ -311,9 +414,15 @@ int main(int argc, char **argv) {
 
     }
 
+    if (pthread_join(timeout_thread, NULL) != 0) {
+
+        fprintf(stderr, "Error joining timeout thread\n");
+        return 2;
+    }
+
     printf("Messages Sent: %d\n", items_sent);
     printf("ACKs Received: %d\n", acks_received);
-    printf("Messages Resent: %d\n", retransmission);
+    printf("Messages Resent: %d\n", retransmissions);
 
     close(send_fd);
     return 0;
