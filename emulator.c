@@ -22,6 +22,7 @@
 
 #define MAX_BUFFER_SIZE 1024
 
+/* Structs & Data Types */
 typedef struct arguments {
     int drop_probability;
     int delay;
@@ -37,6 +38,8 @@ typedef struct message {
     int size;
 } message;
 
+/* Globals */
+
 int port_a_fd;
 struct addrinfo port_b_hints, *port_b_info;
 struct addrinfo port_c_hints, *port_c_info;
@@ -46,153 +49,6 @@ LIST *port_c_queue;
 sem_t port_c_queue_semaphore;
 arguments args;
 
-
-void printUsage() {
-
-    printf("\temulator <drop_probability> <delay> <queue_length> <port_a> <port_b> <port_c>\n\n");
-    printf("\t<drop_probability> ~ The probability %% that a single packet will be lost (0-100)\n");
-    printf("\t<delay> ~ The delay (ms) before a packet will be forwarded\n");
-    printf("\t<queue_length> ~ The number of packets which can be queued on a given port\n");
-    printf("\t<port_a>\n");
-    printf("\t<port_b>\n");
-    printf("\t<port_c>\n");
-}
-
-///*
-// * Handler for the timers in the port b message queue
-// */
-//static void portBTimerHandler(int sig, siginfo_t *si, void *uc) {
-//    int bytes_sent = 0;
-//    printf("Sending to B\n");
-//
-//    disableTimerInterrupts();
-//    ListFirst(port_b_queue);
-//    message *msg = ListRemove(port_b_queue);
-//
-//    timer_delete(msg->delay_timer);
-//    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
-//                        port_b_info->ai_addr, port_b_info->ai_addrlen);
-//
-//    timer_delete(msg->delay_timer);
-//    free(msg);
-//    printf("%d bytes sent to b\n", bytes_sent);
-//    enableTimerInterrupts();
-//}
-//
-///*
-// * Handler for the timers in the port c message queue
-// */
-//static void portCTimerHandler(int sig, siginfo_t *si, void *uc) {
-//    int bytes_sent = 0;
-//    printf("Sending to B\n");
-//    disableTimerInterrupts();
-//    ListFirst(port_b_queue);
-//    message *msg = ListRemove(port_c_queue);
-//
-//    timer_delete(msg->delay_timer);
-//    bytes_sent = sendto(port_a_fd, msg->data, msg->size, 0,
-//                        port_c_info->ai_addr, port_c_info->ai_addrlen);
-//
-//    timer_delete(msg->delay_timer);
-//    free(msg);
-//    printf("%d bytes sent to c\n", bytes_sent);
-//    enableTimerInterrupts();
-//}
-
-long timedelta(struct timeval start, struct timeval end) {
-
-    return (end.tv_sec - start.tv_sec) * 1000 +
-           (end.tv_usec - start.tv_usec) / 1000;
-}
-
-void *portBSenderThread() {
-    struct timespec sleep_time;
-    sleep_time.tv_nsec = (args.delay * 10000) / 2;
-    long delta_time;
-    struct timeval current_time;
-
-    while (1) {
-        gettimeofday(&current_time, NULL);
-        sem_wait(&port_b_queue_semaphore);
-
-        if (ListCount(port_b_queue) != 0) {
-            int still_to_send = 1;
-            while (still_to_send) {
-                message *msg = ListFirst(port_b_queue);
-
-                if (msg != NULL) {
-
-                    delta_time = timedelta(msg->time_received, current_time);
-                    if (delta_time > args.delay) {
-
-                        ListRemove(port_b_queue);
-
-                        /* Send the Message */
-                        printf("Sending %s from B\n", msg->data);
-                        sendto(port_a_fd, msg->data, msg->size, 0,
-                               port_b_info->ai_addr, port_b_info->ai_addrlen);
-                        free(msg);
-
-                    } else {
-                        still_to_send = 0;
-                    }
-
-
-                } else {
-                    still_to_send = 0;
-                }
-            }
-        }
-        sem_post(&port_b_queue_semaphore);
-        nanosleep(&sleep_time, 0);
-    }
-
-    return 0;
-}
-
-void *portCSenderThread() {
-    struct timespec sleep_time;
-    sleep_time.tv_nsec = (args.delay * 10000) / 2;
-    long delta_time;
-    struct timeval current_time;
-
-    while (1) {
-        gettimeofday(&current_time, NULL);
-        sem_wait(&port_c_queue_semaphore);
-
-        if (ListCount(port_c_queue) != 0) {
-            int still_to_send = 1;
-            while (still_to_send) {
-                message *msg = ListFirst(port_c_queue);
-
-                if (msg != NULL) {
-
-                    delta_time = timedelta(msg->time_received, current_time);
-                    if (delta_time > args.delay) {
-
-                        ListRemove(port_c_queue);
-
-                        /* Send the Message */
-                        sendto(port_a_fd, msg->data, msg->size, 0,
-                               port_c_info->ai_addr, port_c_info->ai_addrlen);
-                        free(msg);
-
-                    } else {
-                        still_to_send = 0;
-                    }
-
-
-                } else {
-                    still_to_send = 0;
-                }
-            }
-        }
-        sem_post(&port_c_queue_semaphore);
-        nanosleep(&sleep_time, 0);
-    }
-
-    return 0;
-}
 
 /*
  * Helper function for parsing command line arguments
@@ -253,6 +109,137 @@ int parseArguments(int argc, char **argv, arguments *result) {
     strcpy(result->port_a, argv[4]);
     strcpy(result->port_b, argv[5]);
     strcpy(result->port_c, argv[6]);
+
+    return 0;
+}
+
+/*
+ * Helper function which prints out the required command line arguments
+ */
+void printUsage() {
+
+    printf("\temulator <drop_probability> <delay> <queue_length> <port_a> <port_b> <port_c>\n\n");
+    printf("\t<drop_probability> ~ The probability %% that a single packet will be lost (0-100)\n");
+    printf("\t<delay> ~ The delay (ms) before a packet will be forwarded\n");
+    printf("\t<queue_length> ~ The number of packets which can be queued on a given port\n");
+    printf("\t<port_a>\n");
+    printf("\t<port_b>\n");
+    printf("\t<port_c>\n");
+}
+
+/*
+ * Helper function which returns the time in ms between start and end
+ */
+long timedelta(struct timeval start, struct timeval end) {
+
+    return (end.tv_sec - start.tv_sec) * 1000 +
+           (end.tv_usec - start.tv_usec) / 1000;
+}
+
+/*
+ * Thread which does the sending for port B
+ */
+void *portBSenderThread() {
+    struct timespec sleep_time;
+    sleep_time.tv_nsec = (args.delay * 10000) / 2;
+    long delta_time;
+    struct timeval current_time;
+
+    while (1) {
+        gettimeofday(&current_time, NULL);
+
+        /* Ensure we have exclusive access to the message queue */
+        sem_wait(&port_b_queue_semaphore);
+
+        if (ListCount(port_b_queue) != 0) {
+            /* We have messages in the queue */
+            int still_to_send = 1;
+            while (still_to_send) {
+                /* Grab the next message in the queue */
+                message *msg = ListFirst(port_b_queue);
+
+                if (msg != NULL) {
+                    /* Check how long its been in for */
+                    delta_time = timedelta(msg->time_received, current_time);
+                    if (delta_time > args.delay) {
+                        /* Message has been in the queue for long enough */
+                        ListRemove(port_b_queue);
+
+                        /* Send the Message */
+                        printf("Sending %s from B\n", msg->data);
+                        sendto(port_a_fd, msg->data, msg->size, 0,
+                               port_b_info->ai_addr, port_b_info->ai_addrlen);
+                        free(msg);
+
+                    } else {
+                        /* First in queue hasn't waited the necessary delay time
+                         * */
+                        still_to_send = 0;
+                    }
+
+                } else {
+                    /* No more in the queue */
+                    still_to_send = 0;
+                }
+            }
+        }
+        sem_post(&port_b_queue_semaphore);
+        /* Sleep for a bit so we're not hammering the queue */
+        nanosleep(&sleep_time, 0);
+    }
+
+    return 0;
+}
+
+/*
+ *  Thread which does the sending for port C
+ */
+void *portCSenderThread() {
+    struct timespec sleep_time;
+    sleep_time.tv_nsec = (args.delay * 10000) / 2;
+    long delta_time;
+    struct timeval current_time;
+
+    while (1) {
+        gettimeofday(&current_time, NULL);
+        /* Ensure we have exclusive access to the message queue */
+        sem_wait(&port_c_queue_semaphore);
+
+        if (ListCount(port_c_queue) != 0) {
+            /* We have messages in the queue */
+            int still_to_send = 1;
+            while (still_to_send) {
+                /* Grab the next message in the queue*/
+                message *msg = ListFirst(port_c_queue);
+
+                if (msg != NULL) {
+                    /* Check how long its been in for */
+                    delta_time = timedelta(msg->time_received, current_time);
+                    if (delta_time > args.delay) {
+                        /* Message has been in the queue for long enough */
+                        ListRemove(port_c_queue);
+
+                        /* Send the Message */
+                        sendto(port_a_fd, msg->data, msg->size, 0,
+                               port_c_info->ai_addr, port_c_info->ai_addrlen);
+                        free(msg);
+
+                    } else {
+                        /* First in queue hasn't waited the necessary delay time
+                        * */
+                        still_to_send = 0;
+                    }
+
+
+                } else {
+                    /* No more in the queue */
+                    still_to_send = 0;
+                }
+            }
+        }
+        sem_post(&port_c_queue_semaphore);
+        nanosleep(&sleep_time, 0);
+    }
 
     return 0;
 }

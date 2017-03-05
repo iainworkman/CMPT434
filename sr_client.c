@@ -21,7 +21,7 @@
 #define MESSAGE_COUNT   100
 #define WINDOW_SIZE     5
 #define SEQUENCE_SIZE   (WINDOW_SIZE*2)
-#define TIMEOUT_MS      1000
+#define TIMEOUT_MS      4000
 
 /* Globals for the server */
 int send_fd;
@@ -107,6 +107,7 @@ void *receiverThread() {
     int status_code;
     int byte_count;
     address_length = sizeof server_address;
+    int amount_to_increment_window;
 
     while (acks_received < MESSAGE_COUNT) {
         /* receive ack response */
@@ -121,19 +122,23 @@ void *receiverThread() {
             continue;
         }
 
-        acks_received++;
+
         sent_sequence_number = ntohl(sent_sequence_number);
         if (is_in_window(sent_sequence_number) == 0) {
             fprintf(stderr,
-                    "Receieved ACK outside of window (%d)\n",
-                    sent_sequence_number);
+                    "\tReceieved ACK outside of window (%d [%d - %d])\n",
+                    sent_sequence_number, window_start, window_end);
+            continue;
         }
 
-        printf("Received ACK for %d\n", sent_sequence_number);
+        printf("\tReceived ACK (%d)", sent_sequence_number);
+        acks_received++;
         /* Mark as arrived */
         accepted[sent_sequence_number] = 1;
 
         /* Process changes to the window */
+        amount_to_increment_window = 0;
+        out_of_sequence = 0;
         for (i_window_iterator = 0;
              i_window_iterator < WINDOW_SIZE && out_of_sequence == 0;
              ++i_window_iterator) {
@@ -145,17 +150,32 @@ void *receiverThread() {
                 /* Reset the accepted status so it can be used next time around */
                 accepted[i_window_position] = 0;
                 /* Advance the Window */
-                window_start = (window_start + 1) % SEQUENCE_SIZE;
-                window_end = (window_end + 1) % SEQUENCE_SIZE;
-                /* Wake up the sender (potentially) */
-                status_code = sem_post(&free_to_send);
-                if (status_code == -1) {
-                    fprintf(stderr, "Could not P the semaphore\n");
-                }
+                amount_to_increment_window++;
+
 
             } else {
-                out_of_sequence = 0;
+                out_of_sequence = 1;
             }
+        }
+        if (amount_to_increment_window > 0) {
+            window_start =
+                    (window_start + amount_to_increment_window) % SEQUENCE_SIZE;
+            window_end =
+                    (window_end + amount_to_increment_window) % SEQUENCE_SIZE;
+            printf("Window is now [%d - %d]\n", window_start, window_end);
+        } else {
+            printf("\n");
+        }
+
+        while (amount_to_increment_window > 0) {
+            /* Wake up the sender (potentially) */
+            sem_post(&free_to_send);
+
+            if (status_code == -1) {
+                fprintf(stderr, "Could not P the semaphore\n");
+            }
+
+            amount_to_increment_window--;
         }
     }
     return 0;
@@ -226,9 +246,10 @@ void *timeoutThread() {
 
     while (acks_received < MESSAGE_COUNT) {
         for (i_window_iterator = 0;
-             i_window_iterator < WINDOW_SIZE; ++i_window_iterator) {
+             i_window_iterator < WINDOW_SIZE; i_window_iterator++) {
 
-            int window_index = (i_window_iterator + window_start) % WINDOW_SIZE;
+            int window_index =
+                    (i_window_iterator + window_start) % SEQUENCE_SIZE;
             struct timeval current_time;
             int converted_number;
 
@@ -249,7 +270,7 @@ void *timeoutThread() {
                 }
 
                 /* Send the next message from the window */
-                printf("Re-Sending: %d\n", window_index);
+                printf("\t\tRe-Sending: %d\n", window_index);
                 converted_number = htonl(window_index);
                 sendto(
                         send_fd,

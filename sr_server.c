@@ -98,6 +98,7 @@ int main(int argc, char **argv) {
     int i_window_iterator;
     int out_of_sequence = 0;
     int bytes_received;
+    int amount_to_increment_window;
 
     /* Init globals */
     window_start = 0;
@@ -187,18 +188,10 @@ int main(int argc, char **argv) {
         }
 
         received_sequence_number = ntohl(received_sequence_number);
-        if (is_in_window(received_sequence_number, window_start, window_end) ==
-            0) {
-            fprintf(stderr,
-                    "Rejected message (%d) as outside of window\n",
-                    received_sequence_number);
-        }
-
-        /* Mark as arrived */
-        accepted[received_sequence_number] = 1;
-
+        printf("Received (%d)\n", received_sequence_number);
         converted_sequence_number = htonl(received_sequence_number);
         /* Send the ACK */
+        printf("\tSending ACK(%d)\n", received_sequence_number);
         sendto(listen_fd,
                &converted_sequence_number,
                sizeof(int),
@@ -207,8 +200,22 @@ int main(int argc, char **argv) {
                ack_info->ai_addrlen
         );
 
-        /* Send to network layer all items which are arrived and in order */
+        if (is_in_window(received_sequence_number, window_start, window_end) ==
+            0) {
+            fprintf(stderr,
+                    "\tRejected %d as outside of window\n",
+                    received_sequence_number);
+            continue;
+        }
 
+        /* Mark as arrived */
+        accepted[received_sequence_number] = 1;
+
+
+
+        /* Send to network layer all items which are arrived and in order */
+        amount_to_increment_window = 0;
+        out_of_sequence = 0;
         for (i_window_iterator = 0;
              i_window_iterator < WINDOW_SIZE && out_of_sequence == 0;
              ++i_window_iterator) {
@@ -220,16 +227,18 @@ int main(int argc, char **argv) {
                 /* Reset the accepted status so it can be used next time around */
                 accepted[i_window_position] = 0;
                 /* 'Send' to the network layer */
-                printf("Sending %d to the network layer\n", i_window_position);
+                printf("\t\tSending %d to the network layer\n",
+                       i_window_position);
 
-                /* Advance the Window */
-                window_start = (window_start + 1) % SEQUENCE_SIZE;
-                window_end = (window_end + 1) % SEQUENCE_SIZE;
-
+                amount_to_increment_window++;
             } else {
-                out_of_sequence = 0;
+                out_of_sequence = 1;
             }
         }
+        /* Advance the Window */
+        window_start =
+                (window_start + amount_to_increment_window) % SEQUENCE_SIZE;
+        window_end = (window_end + amount_to_increment_window) % SEQUENCE_SIZE;
     }
 
     close(listen_fd);
