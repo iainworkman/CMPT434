@@ -141,9 +141,9 @@ long timedelta(struct timeval start, struct timeval end) {
  */
 void *portBSenderThread() {
     struct timespec sleep_time;
-    sleep_time.tv_nsec = (args.delay * 10000) / 2;
     long delta_time;
     struct timeval current_time;
+    sleep_time.tv_nsec = (args.delay * 10000) / 2;
 
     while (1) {
         gettimeofday(&current_time, NULL);
@@ -196,9 +196,9 @@ void *portBSenderThread() {
  */
 void *portCSenderThread() {
     struct timespec sleep_time;
-    sleep_time.tv_nsec = (args.delay * 10000) / 2;
     long delta_time;
     struct timeval current_time;
+    sleep_time.tv_nsec = (args.delay * 10000) / 2;
 
     while (1) {
         gettimeofday(&current_time, NULL);

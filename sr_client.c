@@ -106,8 +106,8 @@ void *receiverThread() {
     int out_of_sequence = 0;
     int status_code;
     int byte_count;
-    address_length = sizeof server_address;
     int amount_to_increment_window;
+    address_length = sizeof server_address;
 
     while (acks_received < MESSAGE_COUNT) {
         /* receive ack response */
@@ -169,7 +169,7 @@ void *receiverThread() {
 
         while (amount_to_increment_window > 0) {
             /* Wake up the sender (potentially) */
-            sem_post(&free_to_send);
+            status_code = sem_post(&free_to_send);
 
             if (status_code == -1) {
                 fprintf(stderr, "Could not P the semaphore\n");
