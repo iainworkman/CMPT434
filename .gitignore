@@ -4,3 +4,5 @@ cmake-build-debug/
 *.swp
 .idea/
 emulator
+sr_client
+sr_server

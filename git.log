@@ -1,0 +1,82 @@
+commit ba80f0bdc50af885c782fdc60cd9c933c04fe009
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Mar 4 18:47:08 2017 -0600
+
+    Bugfixes based on tests with server/client hooked up to emulator
+
+commit 3e1b8a83f96128097bcacd111920ff68abaf2e35
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Mar 4 12:48:10 2017 -0600
+
+    Moved emulator from timer to thread system
+
+commit d876d2aedb5a39a1c6f700250f9dc636ed3b7fe2
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Mar 4 10:45:54 2017 -0600
+
+    Added timeout thread to client
+
+commit 7ea6dde0f423406e7f25b26bbd31366837fcb3db
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Mar 4 09:44:14 2017 -0600
+
+    Altered server to be single threaded
+
+commit a7d54738cf535e286282792e86f4f7f978ba7ac4
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Tue Feb 28 19:26:03 2017 -0600
+
+    Updated server and client so they properly send acks/messages and receive messages/acks respectively
+
+commit 5ecc1d84899ca359864982f8789e932ae3a876d1
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Thu Feb 16 10:39:32 2017 -0600
+
+    Added timer interrupt enabling/disabling to protect critical code sections
+
+commit 7f75423a9c71d6b077229617afd7b125d7352994
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Thu Feb 16 10:11:30 2017 -0600
+
+    Emulator now sends when message timer interrupt is fired
+
+commit 699d269f3c126034f0fc7bf6a0e569f4ea27c537
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Feb 11 18:08:45 2017 -0600
+
+    Added a few comments
+
+commit 50a0a6b1c9d16ad1fdbdf77da08806b70a19eef4
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Feb 11 18:04:34 2017 -0600
+
+    Remove messages from queue in timer
+
+commit 5f2c598b103757e8c86fbdf6cb059b2d8fbad2f1
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Feb 11 16:41:11 2017 -0600
+
+    Message queuing
+    - Included list library
+    - Added queues for C and B
+    - Add to queue on receipt of message if not full with random change of drop
+
+commit 3ca8b8942f1d10e59abf49aaa8bf5a7be714f172
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Feb 11 14:31:52 2017 -0600
+
+    Server stub:
+    - Parses arguments
+    - Sets up socket to listen on port A, detects incoming d-grams from port B and C
+
+commit 84dc76f35aac0ca78b832a4562e68536960b3ab6
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Feb 11 11:23:19 2017 -0600
+
+    Configured buildchain
+
+commit fd7cbef1bca6061285acfd809491de4e190b1518
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Thu Jan 12 21:49:00 2017 -0600
+
+    Initial Commit: GitIgnore

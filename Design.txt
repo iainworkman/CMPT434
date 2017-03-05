@@ -1,0 +1,138 @@
+Name: Iain Workman
+NSID: ipw949
+Student #: 11139430
+
+Design for Assignment 2 - Part B
+#################################
+
+# Emulator
+
+## Running the application:
+	emulator <drop_probability> <delay> <queue_length> <port_a> <port_b> <port_c>
+
+	<drop_probability> ~ The probability % that a single packet will be lost (0-100)
+	<delay> ~ The delay (ms) before a packet will be forwarded
+	<queue_length> ~ The number of packets which can be queued on a given port
+	<port_a> ~ The port to listen for incoming data on
+	<port_b> ~ Data received on this port will be forwarded to port_c
+	<port_c> ~ Data received on this port will be forwarded to port_b
+
+
+## Design
+The emulator runs in three threads which are spawned from the main thread. 
+1. The port B sender thread - Sends queued data to port B
+2. The port C sender thread - Sends queued data to port C
+3. The receiver thread - Receives data from port A, schedules to be forwared to
+                         port B or C with drop probability n.
+
+LISTs are maintained for the queues of data waiting to be sent on ports
+B and C. The main method initializes the fd for the port A socket, obtains
+address information for ports B and C, creates the above mentioned 3 threads
+and then joins the above 3 threads.
+
+### The Receiver Thread
+The receiver thread performs a recvfrom on the port A fd, writing the received 
+data into a buffer. It then has a random probability n of dropping the packet,
+in which case no further action is taken with the data. If the packet is not
+dropped a message is built which consists of the following information:
+1. A copy of the data received.
+2. The length of the data received.
+3. A timeval which is set to the current time (i.e. arrival time)
+
+The receiver thread then checks the port which the data was received from. If
+it was received from port B it is added to the port C queue. If it was received
+from port C it is added to the port B queue.
+
+### The Port Sender Threads
+Both port sender threads operate in the same manner, looping forever repeating
+the following actions:
+1. Get the current time
+2. Check there are any items in the queue
+3. If there are not, go to 9
+4. Get the next item in the queue
+5. Check if the time delta between its arrival time and the current time is 
+   greater than the delay time for messages.
+6. If not, go to 9
+7. Send the message to the relevant port
+8. Go to 2.
+9. Sleep for delay/2
+10. Go to 1.
+
+# Selective Repeat Client
+
+## Running the Application
+	sr_client <server_port> <ack_port>
+
+	<server_port> ~ The port to which the client will send
+	<ack_port> ~ The port to receive ACKs on
+
+## Design
+The client runs in 3 threads:
+1. The sender thread - Sends 100 messages which are inside the window
+2. The receiver thread - Receives ACKs from the server, marks the 
+                         messages as accepted based on ACKS received and
+                         advances the window when required
+3. The timeout thread - Checks the current window messages, resending them
+                        if the timeout has expired and no ACK has been received
+
+
+The main method then initializes the socket fd, gets address information for
+the server, initializes the window start and end to valid values (0 and 
+WINDOW_SIZE) and marks all the current sequence as not accepted. It then
+creates the 3 threads mentioned above, and waits for them to join().
+
+### The Sender Thread
+The sender thread performs the following actions 100 times, then prints out
+statistics for sent messages, received ACKS and number of re-transmissions:
+1. Check if there are any messages to send (done using a semaphore of 
+WINDOW_SIZE, calling V on it)
+2. Sends the next sequence number to the server
+3. Keeps a record of the time which the message was sent at
+4. Increments the sequence number
+
+### The Receiver Thread
+The receiver thread performs the following actions until such time that 100
+ACKS have been received:
+1. Waits to Receive a sequence number ACK from the server
+2. If the sequence number is outside of the current window go to 1
+3. Marks the message for that sequence number as accepted
+4. Moves the window forward as far as it can (i.e. as far as the last accepted
+   message in the current window) resetting their accepted state as it goes.
+5. Calls P on the semaphore used to control the sender thread as many times as
+   it moved the window forward (thus allowing the sender to wake)
+
+### The timeout thread
+The timeout thread performs the following actions until such time that 100
+ACKS have been received:
+1. Obtain the current time
+2. For each item in the window resend if it has not been accepted and the time
+   delta between its send time and the current time > timeout time.
+3. Sleep for timeout time / 2
+
+# Selective Repeat Server
+
+## Running the Application
+	sr_server <listen_port> <ack_port>
+
+	<listen_port> ~ The port on which this server will listen
+	<ack_port> ~ The port to send ACKs to
+
+## Design
+The server application runs in a single thread, performing the following 
+actions:
+
+1. Initializes the window and sequence information to valid starting values
+2. Initialzes the server listen fd, and obtains address info for the client
+   ACK port.
+3. Receives sequence number from client
+4. Sends an ACK response to the client for that sequence number
+5. If the sequence number is within the current window, marks it as
+   accepted.
+6. Sends as many messages to the network layer as possible (i.e. as many as 
+   the last accepted message in the current window)
+7. Advances the window for as many messages as were sent to the network layer
+8. go to 3
+
+
+
+

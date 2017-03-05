@@ -1,0 +1,611 @@
+Name: Iain Workman
+NSID: ipw969
+Student#: 11139430
+
+
+NOTE: Resend timeout for the client is 4000 ms
+# Test case statistics
+Drop%			Delay(ms)			Queue Size	Sent	ACK'd		Resent
+10				250						10					100		100			31		
+20				250						10					100		100			40
+50				250						10					100		100			237
+
+
+# Full Output
+
+The following output shows sending and receiving information output for the 
+following emulator values:
+drop probability: 10%
+delay: 250ms
+queue size: 10
+
+SERVER OUTPUT
+#########################################
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+Received (5)
+	Sending ACK(5)
+		Sending 5 to the network layer
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+Received (7)
+	Sending ACK(7)
+		Sending 7 to the network layer
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+Received (5)
+	Sending ACK(5)
+		Sending 5 to the network layer
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+Received (2)
+	Sending ACK(2)
+	Rejected 2 as outside of window
+Received (2)
+	Sending ACK(2)
+	Rejected 2 as outside of window
+Received (7)
+	Sending ACK(7)
+		Sending 7 to the network layer
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (9)
+	Sending ACK(9)
+	Rejected 9 as outside of window
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+Received (5)
+	Sending ACK(5)
+		Sending 5 to the network layer
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+Received (7)
+	Sending ACK(7)
+		Sending 7 to the network layer
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (8)
+	Sending ACK(8)
+	Rejected 8 as outside of window
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+Received (5)
+	Sending ACK(5)
+		Sending 5 to the network layer
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+Received (7)
+	Sending ACK(7)
+		Sending 7 to the network layer
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (3)
+	Sending ACK(3)
+Received (4)
+	Sending ACK(4)
+Received (5)
+	Sending ACK(5)
+Received (6)
+	Sending ACK(6)
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+		Sending 3 to the network layer
+		Sending 4 to the network layer
+		Sending 5 to the network layer
+		Sending 6 to the network layer
+Received (2)
+	Sending ACK(2)
+	Rejected 2 as outside of window
+Received (7)
+	Sending ACK(7)
+		Sending 7 to the network layer
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (8)
+	Sending ACK(8)
+	Rejected 8 as outside of window
+Received (2)
+	Sending ACK(2)
+Received (3)
+	Sending ACK(3)
+Received (4)
+	Sending ACK(4)
+Received (5)
+	Sending ACK(5)
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+		Sending 2 to the network layer
+		Sending 3 to the network layer
+		Sending 4 to the network layer
+		Sending 5 to the network layer
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+Received (2)
+	Sending ACK(2)
+	Rejected 2 as outside of window
+Received (7)
+	Sending ACK(7)
+		Sending 7 to the network layer
+Received (9)
+	Sending ACK(9)
+Received (0)
+	Sending ACK(0)
+Received (1)
+	Sending ACK(1)
+Received (2)
+	Sending ACK(2)
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+		Sending 9 to the network layer
+		Sending 0 to the network layer
+		Sending 1 to the network layer
+		Sending 2 to the network layer
+Received (0)
+	Sending ACK(0)
+	Rejected 0 as outside of window
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+Received (5)
+	Sending ACK(5)
+		Sending 5 to the network layer
+Received (2)
+	Sending ACK(2)
+	Rejected 2 as outside of window
+Received (7)
+	Sending ACK(7)
+Received (8)
+	Sending ACK(8)
+Received (9)
+	Sending ACK(9)
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+		Sending 7 to the network layer
+		Sending 8 to the network layer
+		Sending 9 to the network layer
+Received (8)
+	Sending ACK(8)
+	Rejected 8 as outside of window
+Received (5)
+	Sending ACK(5)
+	Rejected 5 as outside of window
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+Received (6)
+	Sending ACK(6)
+Received (7)
+	Sending ACK(7)
+Received (8)
+	Sending ACK(8)
+Received (9)
+	Sending ACK(9)
+Received (5)
+	Sending ACK(5)
+		Sending 5 to the network layer
+		Sending 6 to the network layer
+		Sending 7 to the network layer
+		Sending 8 to the network layer
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (5)
+	Sending ACK(5)
+Received (7)
+	Sending ACK(7)
+Received (8)
+	Sending ACK(8)
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+		Sending 5 to the network layer
+Received (6)
+	Sending ACK(6)
+		Sending 6 to the network layer
+		Sending 7 to the network layer
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+Received (3)
+	Sending ACK(3)
+		Sending 3 to the network layer
+Received (9)
+	Sending ACK(9)
+	Rejected 9 as outside of window
+Received (5)
+	Sending ACK(5)
+Received (7)
+	Sending ACK(7)
+Received (6)
+	Sending ACK(6)
+Received (3)
+	Sending ACK(3)
+	Rejected 3 as outside of window
+Received (4)
+	Sending ACK(4)
+		Sending 4 to the network layer
+		Sending 5 to the network layer
+		Sending 6 to the network layer
+		Sending 7 to the network layer
+Received (8)
+	Sending ACK(8)
+		Sending 8 to the network layer
+Received (9)
+	Sending ACK(9)
+		Sending 9 to the network layer
+Received (0)
+	Sending ACK(0)
+		Sending 0 to the network layer
+Received (1)
+	Sending ACK(1)
+		Sending 1 to the network layer
+Received (2)
+	Sending ACK(2)
+		Sending 2 to the network layer
+
+
+
+CLIENT OUTPUT
+#############################################
+Sending: 0
+Sending: 1
+Sending: 2
+Sending: 3
+Sending: 4
+	Received ACK (0) Window is now [1 - 5]
+	Received ACK (1) Window is now [2 - 6]
+	Received ACK (2) Window is now [3 - 7]
+	Received ACK (3) Window is now [4 - 8]
+	Received ACK (4) Window is now [5 - 9]
+Sending: 5
+Sending: 6
+Sending: 7
+Sending: 8
+Sending: 9
+	Received ACK (5) Window is now [6 - 0]
+	Received ACK (6) Window is now [7 - 1]
+	Received ACK (7) Window is now [8 - 2]
+	Received ACK (8) Window is now [9 - 3]
+Sending: 0
+Sending: 1
+Sending: 2
+Sending: 3
+	Received ACK (9) Window is now [0 - 4]
+Sending: 4
+	Received ACK (0) Window is now [1 - 5]
+Sending: 5
+	Received ACK (1) Window is now [2 - 6]
+Sending: 6
+	Received ACK (3)
+	Received ACK (4)
+	Received ACK (5)
+	Received ACK (6)
+		Re-Sending: 2
+		Re-Sending: 2
+	Received ACK (2) Window is now [7 - 1]
+Sending: 7
+Sending: 8
+Sending: 9
+Sending: 0
+Sending: 1
+	Received ACK (7) Window is now [8 - 2]
+	Received ACK (8) Window is now [9 - 3]
+	Received ACK (0)
+	Received ACK (1)
+Sending: 2
+Sending: 3
+	Received ACK (2)
+		Re-Sending: 9
+		Re-Sending: 3
+	Received ACK (3)
+		Re-Sending: 9
+	Received ACK (9) Window is now [4 - 8]
+Sending: 4
+Sending: 5
+Sending: 6
+Sending: 7
+Sending: 8
+	Received ACK (4) Window is now [5 - 9]
+Sending: 9
+	Received ACK (5) Window is now [6 - 0]
+Sending: 0
+	Received ACK (6) Window is now [7 - 1]
+Sending: 1
+	Received ACK (7) Window is now [8 - 2]
+Sending: 2
+	Received ACK (9)
+	Received ACK (0)
+	Received ACK (1)
+	Received ACK (2)
+		Re-Sending: 8
+	Received ACK (8) Window is now [3 - 7]
+Sending: 3
+Sending: 4
+Sending: 5
+Sending: 6
+Sending: 7
+	Received ACK (3) Window is now [4 - 8]
+	Received ACK (4) Window is now [5 - 9]
+Sending: 8
+Sending: 9
+	Received ACK (5) Window is now [6 - 0]
+Sending: 0
+	Received ACK (6) Window is now [7 - 1]
+Sending: 1
+	Received ACK (7) Window is now [8 - 2]
+Sending: 2
+	Received ACK (8) Window is now [9 - 3]
+	Received ACK (9) Window is now [0 - 4]
+	Received ACK (0) Window is now [1 - 5]
+	Received ACK (1) Window is now [2 - 6]
+Sending: 3
+Sending: 4
+Sending: 5
+Sending: 6
+	Received ACK (3)
+	Received ACK (4)
+	Received ACK (5)
+	Received ACK (6)
+		Re-Sending: 2
+		Re-Sending: 2
+		Re-Sending: 2
+	Received ACK (2) Window is now [7 - 1]
+Sending: 7
+Sending: 8
+Sending: 9
+Sending: 0
+Sending: 1
+		Re-Sending: 8
+	Received ACK (7) Window is now [8 - 2]
+	Received ACK (8) Window is now [9 - 3]
+Sending: 2
+	Received ACK (9) Window is now [0 - 4]
+Sending: 3
+	Received ACK (0) Window is now [1 - 5]
+Sending: 4
+Sending: 5
+	Receieved ACK outside of window (8 [1 - 5])
+	Received ACK (3)
+	Received ACK (4)
+	Received ACK (5)
+		Re-Sending: 1
+	Received ACK (1) Window is now [2 - 6]
+Sending: 6
+		Re-Sending: 2
+	Received ACK (6)
+		Re-Sending: 2
+	Received ACK (2) Window is now [7 - 1]
+Sending: 7
+Sending: 8
+Sending: 9
+Sending: 0
+Sending: 1
+	Received ACK (7) Window is now [8 - 2]
+	Received ACK (9)
+	Received ACK (1)
+Sending: 2
+		Re-Sending: 8
+		Re-Sending: 0
+	Received ACK (8) Window is now [0 - 4]
+Sending: 3
+Sending: 4
+	Received ACK (0) Window is now [2 - 6]
+Sending: 5
+Sending: 6
+		Re-Sending: 2
+	Received ACK (3)
+	Received ACK (4)
+	Received ACK (2) Window is now [5 - 9]
+Sending: 7
+Sending: 8
+Sending: 9
+	Received ACK (7)
+	Received ACK (9)
+		Re-Sending: 6
+		Re-Sending: 5
+	Received ACK (6)
+		Re-Sending: 8
+	Received ACK (8)
+		Re-Sending: 5
+	Received ACK (5) Window is now [0 - 4]
+Sending: 0
+Sending: 1
+Sending: 2
+Sending: 3
+Sending: 4
+	Received ACK (0) Window is now [1 - 5]
+	Received ACK (1) Window is now [2 - 6]
+	Received ACK (2) Window is now [3 - 7]
+	Received ACK (3) Window is now [4 - 8]
+Sending: 5
+	Received ACK (4) Window is now [5 - 9]
+Sending: 6
+Sending: 7
+Sending: 8
+Sending: 9
+	Received ACK (6)
+	Received ACK (7)
+	Received ACK (8)
+	Received ACK (9)
+		Re-Sending: 5
+	Received ACK (5) Window is now [0 - 4]
+Sending: 0
+Sending: 1
+Sending: 2
+Sending: 3
+Sending: 4
+	Received ACK (0) Window is now [1 - 5]
+Sending: 5
+	Received ACK (1) Window is now [2 - 6]
+Sending: 6
+	Received ACK (2) Window is now [3 - 7]
+Sending: 7
+	Received ACK (3) Window is now [4 - 8]
+Sending: 8
+	Received ACK (5)
+	Received ACK (7)
+	Received ACK (8)
+		Re-Sending: 4
+		Re-Sending: 6
+	Received ACK (4) Window is now [6 - 0]
+Sending: 9
+Sending: 0
+	Received ACK (6) Window is now [9 - 3]
+Sending: 1
+Sending: 2
+Sending: 3
+	Received ACK (0)
+	Received ACK (1)
+	Received ACK (2)
+		Re-Sending: 9
+		Re-Sending: 3
+	Received ACK (9) Window is now [3 - 7]
+Sending: 4
+Sending: 5
+Sending: 6
+Sending: 7
+	Received ACK (5)
+	Received ACK (7)
+		Re-Sending: 6
+		Re-Sending: 3
+		Re-Sending: 4
+	Received ACK (6)
+	Received ACK (3) Window is now [4 - 8]
+Sending: 8
+	Received ACK (4) Window is now [8 - 2]
+Sending: 9
+		Re-Sending: 0
+		Re-Sending: 1
+		Re-Sending: 2
+	Received ACK (9)
+	Received ACK (0)
+Messages Sent: 100
+ACKs Received: 100
+Messages Resent: 31
