@@ -1,0 +1,6 @@
+*.o
+*.a
+cmake-build-debug/
+*.swp
+.idea/
+dtn_simulation
