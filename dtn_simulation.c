@@ -4,19 +4,46 @@
  * 11139430
  */
 #include <stdio.h>
+#include "dtn_grid.h"
+#include "dtn_node.h"
+
 
 #define TIMESTEP_COUNT      1000    /* K */
 #define NODE_COUNT          15      /* N */
 #define DESTINATION_COUNT   3       /* D */
+#define NODE_BUFFER_SIZE    10      /* B */
 
 /* Input parameters:
  * move_distance ~ Distance each node should move in a given period
  * node_range ~ Distance each node can transmit */
 int main(int argc, char** argv) {
 
+    int i_node = 0;
+    int return_code = 0;
+    dtn_grid *grid = 0;
+
+    /* Init Grid */
+    grid = grid_init(NODE_COUNT, DESTINATION_COUNT);
+
+    if (!grid) {
+        return 1;
+    }
+
     /* Init N nodes */
-    /* Make first D nodes destinations */
-    /* Spin up threads for each node pair */
+    for (i_node = 0; i_node < NODE_COUNT; i_node++) {
+
+        return_code = node_init(grid[i_node], NODE_BUFFER_SIZE);
+        if (return_code == -1) {
+            return 1;
+        }
+    }
+
+    /* Run the simulation */
+    return_code = grid_run(grid, TIMESTEP_COUNT);
+    if (return_code == -1) {
+        return 1;
+    }
+
 
     /* Repeat K Times: */
     /* Generate data packet at each node, add it to the buffer */

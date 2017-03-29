@@ -38,11 +38,8 @@ typedef struct dtn_node {
     int next_buffer_slot;
 }dtn_node;
 
-/* Initializes a new dtn node with sensible initial values */
-dtn_node* node_init(int buffer_size);
-
-/* Frees the resources associated with a dtn node */
-void node_free(dtn_node* node);
+/* Initializes the provided dtn node with sensible initial values */
+int node_init(dtn_node *node, int buffer_size);
 
 /* Checks whether two dtn nodes are in range
  * @returns: 1 if the two nodes are within the provided range, 0 otherwise */

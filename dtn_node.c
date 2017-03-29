@@ -8,30 +8,28 @@
 #include <stdlib.h>
 #include <math.h>
 
-dtn_node* node_init(int buffer_size) {
+int node_init(dtn_node *node, int buffer_size) {
     if (buffer_size < 1) {
-        return 0;
+        return -1;
     }
 
-    dtn_node* new_node = malloc(sizeof(dtn_node));
-
-    if (!new_node) {
-        return 0;
+    if (!node) {
+        return -1;
     }
 
-    new_node->message_buffer = malloc(sizeof(dtn_message) * buffer_size);
+    node->message_buffer = malloc(sizeof(dtn_message) * buffer_size);
 
-    if (!new_node->message_buffer) {
-        return 0;
+    if (!node->message_buffer) {
+        return -1;
     }
 
-    new_node->x_position = 0;
-    new_node->y_position = 0;
-    new_node->next_sequence_number = 0;
-    new_node->transmission_count = 0;
-    new_node->next_buffer_slot = 0;
+    node->x_position = 0;
+    node->y_position = 0;
+    node->next_sequence_number = 0;
+    node->transmission_count = 0;
+    node->next_buffer_slot = 0;
 
-    return new_node;
+    return 0;
 }
 
 void node_free(dtn_node* node) {
