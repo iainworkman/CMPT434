@@ -15,13 +15,32 @@ TARGETS=dtn_simulation
 
 all: $(TARGETS)
 
+# Test
+####################################
+
+test: test$(ARCH).o network$(ARCH).o
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lpthread
+
+test$(ARCH).o: 
+	$(CC) $(CFLAGS) -c test.c -o $@
+
 # DTN Build - Delay Tolerant Network
 ####################################
-dtn_simulation: dtn_simulation$(ARCH).o
-	$(CC) $(CFLAGS) -I. -L. -o $@ dtn_simulation$(ARCH).o
+dtn_simulation: dtn_simulation$(ARCH).o dtn_grid$(ARCH).o dtn_node$(ARCH).o \
+								network$(ARCH).o
+	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lpthread -lm
 
 dtn_simulation$(ARCH).o: dtn_simulation.c
 	$(CC) $(CFLAGS) -c dtn_simulation.c -o $@
+
+dtn_node$(ARCH).o: dtn_node.c
+	$(CC) $(CFLAGS) -c dtn_node.c -o $@
+
+dtn_grid$(ARCH).o: dtn_grid.c
+	$(CC) $(CFLAGS) -c dtn_grid.c -o $@
+
+network$(ARCH).o: network.c
+	$(CC) $(CFLAGS) -c network.c -o $@
 
 # List Library
 ########################################
@@ -43,4 +62,4 @@ list_removers$(ARCH).o: list_removers.c
 
 
 clean:
-	rm -rf *.o *.a $(TARGETS) *~
+	rm -rf *.o *.a $(TARGETS) test *~

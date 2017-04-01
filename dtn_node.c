@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-int node_init(dtn_node *node, int buffer_size) {
+int node_init(dtn_node *node, int buffer_size, int node_id) {
     if (buffer_size < 1) {
         return -1;
     }
@@ -23,6 +23,7 @@ int node_init(dtn_node *node, int buffer_size) {
         return -1;
     }
 
+    node->id = node_id;
     node->x_position = 0;
     node->y_position = 0;
     node->next_sequence_number = 0;
@@ -90,8 +91,8 @@ int node_move(dtn_node* node, float distance) {
         delta_x = sin(angle_radians) * distance;
         delta_y = cos(angle_radians) * distance;
 
-        node->x_position = min(node->x_position + distance, MAX_POSITION);
-        node->y_position = min(node->y_position + distance, MAX_POSITION);
+        node->x_position = min(node->x_position + delta_x, MAX_POSITION);
+        node->y_position = min(node->y_position + delta_y, MAX_POSITION);
     } else if (angle_degrees > 90 && angle_degrees < 180) {
         float delta_x;
         float delta_y;
@@ -101,8 +102,8 @@ int node_move(dtn_node* node, float distance) {
         delta_x = cos(angle_radians) * distance;
         delta_y = sin(angle_radians) * distance;
 
-        node->x_position = max(node->x_position - distance, MIN_POSITION);
-        node->y_position = min(node->y_position + distance, MAX_POSITION);
+        node->x_position = max(node->x_position - delta_x, MIN_POSITION);
+        node->y_position = min(node->y_position + delta_y, MAX_POSITION);
     } else if (angle_degrees > 180 && angle_degrees < 270) {
         float delta_x;
         float delta_y;
@@ -112,8 +113,8 @@ int node_move(dtn_node* node, float distance) {
         delta_x = sin(angle_radians) * distance;
         delta_y = cos(angle_radians) * distance;
 
-        node->x_position = max(node->x_position - distance, MIN_POSITION);
-        node->y_position = max(node->y_position - distance, MIN_POSITION);
+        node->x_position = max(node->x_position - delta_x, MIN_POSITION);
+        node->y_position = max(node->y_position - delta_y, MIN_POSITION);
     } else if (angle_degrees > 270 && angle_degrees < 360) {
         float delta_x;
         float delta_y;
@@ -123,8 +124,8 @@ int node_move(dtn_node* node, float distance) {
         delta_x = cos(angle_radians) * distance;
         delta_y = sin(angle_radians) * distance;
 
-        node->x_position = min(node->x_position + distance, MAX_POSITION);
-        node->y_position = max(node->y_position - distance, MIN_POSITION);
+        node->x_position = min(node->x_position + delta_x, MAX_POSITION);
+        node->y_position = max(node->y_position - delta_y, MIN_POSITION);
     }
 
     return 1;
