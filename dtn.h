@@ -19,6 +19,8 @@
 #define MAX_POSITION 1000
 #define MIN_POSITION 0
 
+int verbose_mode;
+
 typedef struct dtn_node {
     int id;
     float x_position;

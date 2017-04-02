@@ -84,19 +84,22 @@ int run_simulation(dtn_grid *grid,
 
     for (i_step = 0; i_step < settings.step_count; i_step++) {
 
-        printf("Step %d\n", i_step);
+        if (verbose_mode) printf("Step %d\n", i_step);
         /* 1. Move Nodes */
         for (i_current = 0; i_current < grid->node_count; i_current++) {
-            printf("\tMoving node %d", i_current);
+            if (verbose_mode) printf("\tMoving node %d", i_current);
             dtn_node *self = &grid->nodes[i_current];
 
             node_move(self, settings.move_distance);
-            printf(" now at (%f, %f)\n", self->x_position, self->y_position);
+            if (verbose_mode)
+                printf(" now at (%f, %f)\n", self->x_position,
+                       self->y_position);
         }
 
         /* 2. Generate 1 Message at each node */
         for (i_current = 0; i_current < grid->node_count; i_current++) {
-            printf("\tGenerating messages at node %d\n", i_current);
+            if (verbose_mode)
+                printf("\tGenerating messages at node %d\n", i_current);
             int destination_id;
             dtn_node *self = &grid->nodes[i_current];
             dtn_message *new_message = malloc(sizeof(dtn_message));
@@ -127,7 +130,7 @@ int run_simulation(dtn_grid *grid,
 
             dtn_node *self = &grid->nodes[i_current];
 
-            printf("\tSending messages from %d\n", i_current);
+            if (verbose_mode) printf("\tSending messages from %d\n", i_current);
             for (i_other = 0; i_other < grid->node_count; i_other++) {
                 dtn_node *other = &grid->nodes[i_other];
                 if (i_current == i_other) {
@@ -166,7 +169,7 @@ int run_simulation(dtn_grid *grid,
                             }
                             ListRemove(self->messages);
                             current_message = ListFirst(self->messages);
-                            printf("\t\tto %d\n", i_other);
+                            if (verbose_mode) printf("\t\tto %d\n", i_other);
                         } else if (ListCount(other->messages) >=
                                    other->buffer_size) {
                             /* No Room */
@@ -204,7 +207,8 @@ int run_simulation(dtn_grid *grid,
                                 } else {
                                     current_message = ListNext(self->messages);
                                 }
-                                printf("\t\tto %d\n", i_other);
+                                if (verbose_mode)
+                                    printf("\t\tto %d\n", i_other);
                             } else {
                                 current_message = ListNext(self->messages);
                             }
