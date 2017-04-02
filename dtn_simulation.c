@@ -4,19 +4,99 @@
  * 11139430
  */
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include "dtn_grid.h"
-#include "dtn_node.h"
+#include "dtn.h"
+#include "policies.h"
 
+typedef struct simulation_args {
 
-#define TIMESTEP_COUNT      1000    /* K */
-#define NODE_COUNT          15      /* N */
-#define DESTINATION_COUNT   3       /* D */
-#define NODE_BUFFER_SIZE    10      /* B */
+    int timestep_count;
+    int node_count;
+    int destination_count;
+    int node_buffer_size;
+    int broadcast_range;
+    int move_distance;
+    int policy;
 
-int always_send(dtn_node *self, dtn_node *other) {
+} simulation_args;
 
-    return 1;
+extern int verbose_mode;
+
+void print_usage() {
+
+    printf("\tdtn_simulation help: Print this message\n");
+    printf("\tdtn_simulation [-v] <timesteps> <node_count> <destination_count> <node_buffer_size> <broadcast_range> <move_distance> <propagation_policy>\n");
+
+    printf("\t-v (optional): Prints verbose output\n");
+    printf("\ttimesteps: How many iterations of the simulation should be run\n");
+    printf("\tnode_count: The number of nodes in the dtn grid\n");
+    printf("\tdestination_count: The number of nodes which are considered a message destination\n");
+    printf("\tnode_buffer_size: The amount of messages a node can hold\n");
+    printf("\tbroadcast_range: How far a node can send a message\n");
+    printf("\tmove_distance: How far each node will move in an iteration\n");
+    printf("\tpropagation policy: The method used to determine if a node will broadcast a message\n");
+    printf("\n\tThe following propagation policies are available:\n");
+    printf("\t\tendemic_select: Will always attempt to send messages, messages will be removed from sender if message has taken more than 20 hops\n");
+    printf("\t\tendemic_always: Will always attempt to send messages, messages will always be removed from sender\n");
+    printf("\t\trandom: Will send with a 0.7 chance, messages will always be removed from sender\n");
+}
+
+int parse_args(int argc, char **argv, simulation_args *args) {
+
+    if (!args) {
+        return -1;
+    }
+
+    if (argc == 8) {
+
+        verbose_mode = 0;
+        args->timestep_count = strtol(argv[1], 0, 10);
+        args->node_count = strtol(argv[2], 0, 10);
+        args->destination_count = strtol(argv[3], 0, 10);
+        args->node_buffer_size = strtol(argv[4], 0, 10);
+        args->broadcast_range = strtol(argv[5], 0, 10);
+        args->move_distance = strtol(argv[6], 0, 10);
+
+        if (strcmp(argv[7], "endemic_select") == 0) {
+            args->policy = ENDEMIC_SELECT;
+        } else if (strcmp(argv[7], "endemic_always") == 0) {
+            args->policy = ENDEMIC_ALWAYS;
+        } else if (strcmp(argv[7], "random") == 0) {
+            args->policy = RANDOM;
+        } else {
+            return -1;
+        }
+    } else if (argc == 9) {
+        if (strcmp(argv[1], "-v") == 0) {
+            verbose_mode = 1;
+        } else {
+            return -1;
+        }
+
+        args->timestep_count = strtol(argv[2], 0, 10);
+        args->node_count = strtol(argv[3], 0, 10);
+        args->destination_count = strtol(argv[4], 0, 10);
+        args->node_buffer_size = strtol(argv[5], 0, 10);
+        args->broadcast_range = strtol(argv[6], 0, 10);
+        args->move_distance = strtol(argv[7], 0, 10);
+
+        if (strcmp(argv[8], "endemic_select") == 0) {
+            args->policy = ENDEMIC_SELECT;
+        } else if (strcmp(argv[8], "endemic_always") == 0) {
+            args->policy = ENDEMIC_ALWAYS;
+        } else if (strcmp(argv[8], "random") == 0) {
+            args->policy = RANDOM;
+        } else {
+            return -1;
+        }
+    } else {
+        return -1;
+    }
+
+    return 0;
 }
 
 /* Input parameters:
@@ -24,43 +104,59 @@ int always_send(dtn_node *self, dtn_node *other) {
  * node_range ~ Distance each node can transmit */
 int main(int argc, char** argv) {
 
-    int i_node = 0;
     int return_code = 0;
     dtn_grid *grid = 0;
+    simulation_settings settings;
+    simulation_statistics statistics;
+    simulation_args args;
+
+    return_code = parse_args(argc, argv, &args);
+
+    if (return_code != 0) {
+        print_usage();
+        return 1;
+    }
 
     /* Init Grid */
-    grid = grid_init(NODE_COUNT, DESTINATION_COUNT);
+    grid = init_grid(args.node_count,
+                     args.destination_count,
+                     args.node_buffer_size);
+
+    srand(time(NULL));
 
     if (!grid) {
         fprintf(stderr, "[CRITICAL] Failed to init dtn grid\n");
         return 1;
     }
 
-    /* Init N nodes */
-    for (i_node = 0; i_node < NODE_COUNT; i_node++) {
-
-        return_code = node_init(&grid->nodes[i_node], NODE_BUFFER_SIZE, i_node);
-        if (return_code == -1) {
-            fprintf(stderr, "[CRITICAL] Failed to init dtn node %d\n", i_node);
-            return 1;
-        }
-    }
+    settings.step_count = args.timestep_count;
+    settings.broadcast_range = args.broadcast_range;
+    settings.move_distance = args.move_distance;
 
     /* Run the simulation */
-    return_code = grid_run(grid, TIMESTEP_COUNT, always_send);
+    if (args.policy == ENDEMIC_ALWAYS) {
+        return_code = run_simulation(grid, settings, endemic_always_remove,
+                                     &statistics);
+    } else if (args.policy == ENDEMIC_SELECT) {
+        return_code = run_simulation(grid, settings, endemic_selective_remove,
+                                     &statistics);
+    } else if (args.policy == RANDOM) {
+        return_code = run_simulation(grid, settings, random_transmit,
+                                     &statistics);
+    }
+
     if (return_code == -1) {
         fprintf(stderr, "[ERROR] Could not run simulation\n");
         return 1;
     }
 
+    printf("Results:\n");
+    printf("\tFraction of messages which reached destination: %f\n",
+           (float) statistics.messages_at_destination /
+           (statistics.messages_at_destination +
+            statistics.messages_in_flight +
+            statistics.total_messages_lost));
+    printf("\tBroadcasts required: %d\n", statistics.total_broadcasts);
 
-    /* Repeat K Times: */
-    /* Generate data packet at each node, add it to the buffer */
-    /* For each node: */
-    /* Move move_distance in random direction */
-    /* Check if in range of all other nodes */
-    /* Transmit based on policy and node_range */
-    /* end For each node */
-    /* end repeat K times */
-
+    return 0;
 }
