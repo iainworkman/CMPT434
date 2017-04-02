@@ -99,11 +99,13 @@ int run_simulation(dtn_grid *grid,
         /* 2. Generate 1 Message at each node */
         for (i_current = 0; i_current < grid->node_count; i_current++) {
             int destination_id;
+            dtn_node *self = &grid->nodes[i_current];
+            dtn_message *new_message = malloc(sizeof(dtn_message));
+            
             if (verbose_mode) {
                 printf("\tGenerating messages at node %d\n", i_current);
             }
-            dtn_node *self = &grid->nodes[i_current];
-            dtn_message *new_message = malloc(sizeof(dtn_message));
+
 
             new_message->id = message_id;
             message_id++;
