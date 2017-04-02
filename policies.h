@@ -10,8 +10,7 @@
 #define ENDEMIC_SELECT  1
 #define RANDOM          3
 
-typedef struct dtn_node dtn_node;
-typedef struct dtn_message dtn_message;
+#include "dtn.h"
 
 int endemic_selective_remove(dtn_node *self,
                              dtn_node *other,
@@ -29,4 +28,4 @@ int random_transmit(dtn_node *self,
                     dtn_message *message,
                     int *should_remove);
 
-#endif //CMPT434_POLICIES_H
+#endif

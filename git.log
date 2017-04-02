@@ -1,0 +1,58 @@
+commit 9b836db3230a324777b4653fe7e85b8051d44466
+Merge: 9c5c3d9 2253753
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Apr 2 16:26:43 2017 -0600
+
+    Merge pull request #1 from iainworkman/A3_v2
+    
+    Remove networking aspect
+
+commit 2253753a48101a9ee4c96940e11dacf1901b95a7
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Apr 2 16:25:09 2017 -0600
+
+    Get simulation settings from args
+
+commit fc3628b4c468d01af989491e947028b02c521df3
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Apr 2 13:09:55 2017 -0600
+
+    Get simulation settings from args
+
+commit 64992bd90bece79062f4d554abe85ce5ebb50946
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Apr 2 12:14:54 2017 -0600
+
+    Moved propagation functions into own file
+
+commit b3fa3c211b8324831f826a33072f3322371ff9a3
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sun Apr 2 12:09:25 2017 -0600
+
+    Got simple simulation working with 'always send' propagation policy
+
+commit 9c5c3d93be47ad988f795ec252a02b6b53536238
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Sat Apr 1 15:29:07 2017 -0600
+
+    Added networking stuff. Struggling to wrap my head around this
+
+commit 4707eb464da1c2998ef4d0b5a3422a0ade304a16
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Wed Mar 29 08:31:51 2017 -0600
+
+    Created outline interfaces for nodes and grid
+
+commit 11e1deca7e15f583061184acf3b991fd6b447192
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Wed Mar 22 16:23:48 2017 -0600
+
+    Initial commit of A3:
+    - Set up usual gitignore, makefile
+    - Started work on the dtn node for the simulation
+
+commit fd7cbef1bca6061285acfd809491de4e190b1518
+Author: iainworkman <iain.workman@googlemail.com>
+Date:   Thu Jan 12 21:49:00 2017 -0600
+
+    Initial Commit: GitIgnore

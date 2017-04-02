@@ -76,4 +76,4 @@ int node_in_range(dtn_node *node1, dtn_node *node2, float range);
  * @returns 1 if the node was moved successfully, 0 otherwise */
 int node_move(dtn_node *node, float distance);
 
-#endif //CMPT434_DTN_H
+#endif
