@@ -1,0 +1,27 @@
+####################################################
+# Name: Iain Workman
+# NSID: ipw969
+# Student No.: 11139430
+####################################################
+
+Running the application:
+
+	dtn_simulation help: Print this message
+	dtn_simulation [-v] <timesteps> <node_count> <destination_count> <node_buffer_size> <broadcast_range> <move_distance> <propagation_policy>
+	-v (optional): Prints verbose output
+	timesteps: How many iterations of the simulation should be run
+	node_count: The number of nodes in the dtn grid
+	destination_count: The number of nodes which are considered a message destination
+	node_buffer_size: The amount of messages a node can hold
+	broadcast_range: How far a node can send a message
+	move_distance: How far each node will move in an iteration
+	propagation_policy: The method used to determine if a node will broadcast a message
+
+	The following propagation policies are available:
+		endemic_select: Will always attempt to send messages, messages will be removed from sender if message has taken more than 20 hops
+		endemic_always: Will always attempt to send messages, messages will always be removed from sender
+		random: Will send with a 0.7 chance, messages will always be removed from sender
+
+Settings used to obtain results:
+
+./dtn_simulation -v 100 15 3 50 50 60 <propagation_policy>

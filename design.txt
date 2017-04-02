@@ -1,0 +1,35 @@
+####################################################
+# Name: Iain Workman
+# NSID: ipw969
+# Student No.: 11139430
+####################################################
+
+1. General Approach
+
+The general approach taken was to forgo the management of transmission of data
+between nodes through threads and TCP connections, instead simply iterating
+through the nodes within the application itself to see if transmissions could
+take place. This decision was made owing to time constraints and from the fact
+that this decision had no impact on the simulation results. It was considered
+that the learning experience of working with the dtn simulation would be of
+greater benefit than spending the time getting TCP connections and threads set
+up.
+
+2. Functional Elements
+
+The system was divided into the following parts:
+
+2.1 dtn(.c/.h)
+This file contains all the elements of the system related specifically to
+elements of the dtn simulation (nodes, messages, grids). Contains function for
+initializing the grid of dtn nodes and running the simulation.
+
+2.2 policies(.c/.h)
+The file contains all of the functions which are passed to the simulation as
+function pointers in order to determine the transmission policies which the
+nodes will use to tell if they should send a message to another node in range.
+
+2.3 dtn_simulation.c
+The main application for the simulation. Takes command line arguments which
+determine the parameters of the simulation, runs the simulation and then
+outputs the results to the screen. Can be run in verbose or non verbose modes.

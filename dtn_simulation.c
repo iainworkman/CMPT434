@@ -11,14 +11,6 @@
 #include "dtn.h"
 #include "policies.h"
 
-
-#define TIMESTEP_COUNT      100    /* K */
-#define NODE_COUNT          15      /* N */
-#define DESTINATION_COUNT   3       /* D */
-#define NODE_BUFFER_SIZE    50      /* B */
-#define BROADCAST_RANGE     50      /* R */
-#define MOVE_DISTANCE       60      /* M */
-
 typedef struct simulation_args {
 
     int timestep_count;
@@ -47,8 +39,9 @@ void print_usage() {
     printf("\tmove_distance: How far each node will move in an iteration\n");
     printf("\tpropagation policy: The method used to determine if a node will broadcast a message\n");
     printf("\n\tThe following propagation policies are available:\n");
-    printf("\t\tendemic: Will always attempt to send messages, messages will always be removed from sender\n");
-    printf("\t\trandom: Will send with a 0.2 chance, messages will always be removed from sender\n");
+    printf("\t\tendemic_select: Will always attempt to send messages, messages will be removed from sender if message has taken more than 20 hops\n");
+    printf("\t\tendemic_always: Will always attempt to send messages, messages will always be removed from sender\n");
+    printf("\t\trandom: Will send with a 0.7 chance, messages will always be removed from sender\n");
 }
 
 int parse_args(int argc, char **argv, simulation_args *args) {
@@ -67,8 +60,10 @@ int parse_args(int argc, char **argv, simulation_args *args) {
         args->broadcast_range = strtol(argv[5], 0, 10);
         args->move_distance = strtol(argv[6], 0, 10);
 
-        if (strcmp(argv[7], "endemic") == 0) {
-            args->policy = ENDEMIC;
+        if (strcmp(argv[7], "endemic_select") == 0) {
+            args->policy = ENDEMIC_SELECT;
+        } else if (strcmp(argv[7], "endemic_always") == 0) {
+            args->policy = ENDEMIC_ALWAYS;
         } else if (strcmp(argv[7], "random") == 0) {
             args->policy = RANDOM;
         } else {
@@ -88,8 +83,10 @@ int parse_args(int argc, char **argv, simulation_args *args) {
         args->broadcast_range = strtol(argv[6], 0, 10);
         args->move_distance = strtol(argv[7], 0, 10);
 
-        if (strcmp(argv[8], "endemic") == 0) {
-            args->policy = ENDEMIC;
+        if (strcmp(argv[8], "endemic_select") == 0) {
+            args->policy = ENDEMIC_SELECT;
+        } else if (strcmp(argv[8], "endemic_always") == 0) {
+            args->policy = ENDEMIC_ALWAYS;
         } else if (strcmp(argv[8], "random") == 0) {
             args->policy = RANDOM;
         } else {
@@ -137,8 +134,12 @@ int main(int argc, char** argv) {
     settings.move_distance = args.move_distance;
 
     /* Run the simulation */
-    if (args.policy == ENDEMIC) {
-        return_code = run_simulation(grid, settings, endemic, &statistics);
+    if (args.policy == ENDEMIC_ALWAYS) {
+        return_code = run_simulation(grid, settings, endemic_always_remove,
+                                     &statistics);
+    } else if (args.policy == ENDEMIC_SELECT) {
+        return_code = run_simulation(grid, settings, endemic_selective_remove,
+                                     &statistics);
     } else if (args.policy == RANDOM) {
         return_code = run_simulation(grid, settings, random_transmit,
                                      &statistics);

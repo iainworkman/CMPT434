@@ -1,0 +1,7047 @@
+####################################################
+# Name: Iain Workman
+# NSID: ipw969
+# Student No.: 11139430
+####################################################
+
+Each test was run 10x, and averages collected for the fraction of messages
+created which were received by their destination and the number of total
+transmissions.
+
+In each case the following settings were used for the dtn grid:
+simulation steps: 100
+node count: 15
+destination nodes: 3 (of the 15 nodes)
+node buffer size: 50
+node transmit range: 50
+distance nodes move per step: 60
+
+policy: random
+description: Chance of transmitting message is 70%. If the message is transmitted
+from A to B, then it is removed from A.
+fraction of messages which reached destination: 0.07997
+transmissions: 1373
+
+policy: endemic_always
+description: A node will always transmit a message to all nodes in range. Once
+the transmit from A to B has occurred A will always remove the message from its
+own buffer.
+fraction of messages which reached destination: 0.09557
+transmissions: 2113
+
+policy: endemic_select
+description: A node will always transmit a message to all nodes in range. The
+message is removed from the sender buffer if it has made more than 20 hops.
+fraction of messages which reached destination: 0.0694
+transmissions: 578
+
+Below is shown the verbose output for a single run of the random policy
+simulation:
+
+Step 0
+	Moving node 0 now at (415.418152, 936.488281)
+	Moving node 1 now at (752.031189, 969.557861)
+	Moving node 2 now at (825.418152, 385.488251)
+	Moving node 3 now at (340.591858, 452.781372)
+	Moving node 4 now at (649.000000, 481.000000)
+	Moving node 5 now at (379.019745, 0.000000)
+	Moving node 6 now at (665.031189, 113.557846)
+	Moving node 7 now at (780.019714, 868.464539)
+	Moving node 8 now at (557.019714, 368.464539)
+	Moving node 9 now at (189.019730, 678.464539)
+	Moving node 10 now at (228.019730, 310.464539)
+	Moving node 11 now at (542.031189, 483.557861)
+	Moving node 12 now at (832.488281, 562.418152)
+	Moving node 13 now at (862.000000, 183.000000)
+	Moving node 14 now at (42.031189, 189.557846)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 1
+	Moving node 0 now at (390.449341, 991.046143)
+	Moving node 1 now at (760.498413, 910.158325)
+	Moving node 2 now at (833.885376, 326.088684)
+	Moving node 3 now at (295.183716, 413.562744)
+	Moving node 4 now at (649.000000, 541.000000)
+	Moving node 5 now at (436.629974, 0.000000)
+	Moving node 6 now at (673.498413, 54.158295)
+	Moving node 7 now at (780.019714, 928.464539)
+	Moving node 8 now at (532.050903, 423.022400)
+	Moving node 9 now at (129.620178, 686.931763)
+	Moving node 10 now at (228.019730, 370.464539)
+	Moving node 11 now at (559.050903, 426.022400)
+	Moving node 12 now at (787.080139, 523.199524)
+	Moving node 13 now at (879.019714, 125.464539)
+	Moving node 14 now at (92.519447, 221.975983)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+		to 7
+		to 7
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 8
+		to 11
+		to 11
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 2
+	Moving node 0 now at (345.041199, 951.827515)
+	Moving node 1 now at (810.986694, 942.576477)
+	Moving node 2 now at (833.885376, 386.088684)
+	Moving node 3 now at (352.793945, 396.797821)
+	Moving node 4 now at (649.000000, 601.000000)
+	Moving node 5 now at (411.661163, 54.557846)
+	Moving node 6 now at (634.279785, 8.750145)
+	Moving node 7 now at (837.629944, 911.699585)
+	Moving node 8 now at (472.651367, 431.489594)
+	Moving node 9 now at (84.212029, 647.713135)
+	Moving node 10 now at (245.039459, 312.929077)
+	Moving node 11 now at (513.642761, 386.803772)
+	Moving node 12 now at (804.099854, 465.664062)
+	Moving node 13 now at (833.611572, 86.245926)
+	Moving node 14 now at (67.550636, 276.533813)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 1
+		to 1
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 3
+	Moving node 0 now at (395.529449, 984.245667)
+	Moving node 1 now at (843.404846, 993.064758)
+	Moving node 2 now at (850.905090, 328.553223)
+	Moving node 3 now at (369.813690, 339.262360)
+	Moving node 4 now at (624.031189, 655.557861)
+	Moving node 5 now at (428.680908, 0.000000)
+	Moving node 6 now at (684.768066, 41.168282)
+	Moving node 7 now at (846.097168, 852.300049)
+	Moving node 8 now at (530.261597, 414.724670)
+	Moving node 9 now at (101.231758, 590.177673)
+	Moving node 10 now at (220.070648, 367.486938)
+	Moving node 11 now at (488.673950, 441.361633)
+	Moving node 12 now at (812.567078, 406.264526)
+	Moving node 13 now at (808.642761, 140.803772)
+	Moving node 14 now at (22.142487, 237.315201)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 4
+	Moving node 0 now at (403.996643, 924.846130)
+	Moving node 1 now at (797.996704, 953.846130)
+	Moving node 2 now at (883.323242, 379.041473)
+	Moving node 3 now at (324.405548, 300.043732)
+	Moving node 4 now at (641.050903, 598.022400)
+	Moving node 5 now at (479.169159, 32.418137)
+	Moving node 6 now at (684.768066, 101.168282)
+	Moving node 7 now at (846.097168, 912.300049)
+	Moving node 8 now at (530.261597, 474.724670)
+	Moving node 9 now at (101.231758, 650.177673)
+	Moving node 10 now at (270.558899, 399.905090)
+	Moving node 11 now at (488.673950, 501.361633)
+	Moving node 12 now at (767.158936, 367.045898)
+	Moving node 13 now at (763.234619, 101.585159)
+	Moving node 14 now at (22.142487, 297.315186)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 5
+	Moving node 0 now at (358.588501, 885.627502)
+	Moving node 1 now at (815.016418, 896.310669)
+	Moving node 2 now at (837.915100, 339.822845)
+	Moving node 3 now at (324.405548, 360.043732)
+	Moving node 4 now at (616.082092, 652.580261)
+	Moving node 5 now at (496.188904, 0.000000)
+	Moving node 6 now at (693.235291, 41.768730)
+	Moving node 7 now at (854.564392, 852.900513)
+	Moving node 8 now at (530.261597, 534.724670)
+	Moving node 9 now at (118.251488, 592.642212)
+	Moving node 10 now at (279.026093, 340.505554)
+	Moving node 11 now at (488.673950, 561.361633)
+	Moving node 12 now at (799.577087, 417.534149)
+	Moving node 13 now at (724.015991, 56.177010)
+	Moving node 14 now at (0.000000, 351.873047)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 7
+	Sending messages from 8
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+	Sending messages from 9
+	Sending messages from 10
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+	Sending messages from 11
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 12
+	Sending messages from 13
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 14
+Step 6
+	Moving node 0 now at (409.076752, 918.045654)
+	Moving node 1 now at (823.483643, 836.911133)
+	Moving node 2 now at (854.934814, 282.287384)
+	Moving node 3 now at (332.872742, 300.644165)
+	Moving node 4 now at (648.500244, 703.068542)
+	Moving node 5 now at (471.220093, 54.557846)
+	Moving node 6 now at (647.827148, 2.550114)
+	Moving node 7 now at (871.584106, 795.365051)
+	Moving node 8 now at (580.749878, 567.142822)
+	Moving node 9 now at (135.271225, 535.106750)
+	Moving node 10 now at (254.057281, 395.063416)
+	Moving node 11 now at (429.274414, 569.828857)
+	Moving node 12 now at (774.608276, 472.091980)
+	Moving node 13 now at (756.434143, 106.665268)
+	Moving node 14 now at (0.000000, 411.873047)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 7
+	Moving node 0 now at (426.096497, 860.510193)
+	Moving node 1 now at (823.483643, 896.911133)
+	Moving node 2 now at (871.954529, 224.751923)
+	Moving node 3 now at (349.892487, 243.108704)
+	Moving node 4 now at (656.967468, 643.669006)
+	Moving node 5 now at (432.001465, 9.149696)
+	Moving node 6 now at (705.437378, 0.000000)
+	Moving node 7 now at (904.002258, 845.853333)
+	Moving node 8 now at (589.217102, 507.743286)
+	Moving node 9 now at (135.271225, 595.106750)
+	Moving node 10 now at (271.077026, 337.527954)
+	Moving node 11 now at (446.294159, 512.293396)
+	Moving node 12 now at (807.026428, 522.580261)
+	Moving node 13 now at (756.434143, 166.665268)
+	Moving node 14 now at (32.418137, 462.361298)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 8
+	Moving node 0 now at (483.706726, 843.745239)
+	Moving node 1 now at (840.503357, 839.375671)
+	Moving node 2 now at (846.985718, 279.309753)
+	Moving node 3 now at (358.359680, 183.709152)
+	Moving node 4 now at (673.987183, 586.133545)
+	Moving node 5 now at (449.021210, 0.000000)
+	Moving node 6 now at (680.468567, 54.557846)
+	Moving node 7 now at (858.594116, 806.634705)
+	Moving node 8 now at (597.684326, 448.343750)
+	Moving node 9 now at (89.863075, 555.888123)
+	Moving node 10 now at (211.677475, 345.995148)
+	Moving node 11 now at (421.325348, 566.851257)
+	Moving node 12 now at (807.026428, 582.580261)
+	Moving node 13 now at (764.901367, 107.265717)
+	Moving node 14 now at (7.449326, 516.919128)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 9
+	Moving node 0 now at (438.298584, 804.526611)
+	Moving node 1 now at (848.970581, 779.976135)
+	Moving node 2 now at (864.005432, 221.774292)
+	Moving node 3 now at (333.390869, 238.266998)
+	Moving node 4 now at (691.006897, 528.598083)
+	Moving node 5 now at (449.021210, 60.000000)
+	Moving node 6 now at (712.886719, 105.046104)
+	Moving node 7 now at (833.625305, 861.192566)
+	Moving node 8 now at (597.684326, 508.343750)
+	Moving node 9 now at (44.454926, 516.669495)
+	Moving node 10 now at (220.144669, 286.595581)
+	Moving node 11 now at (438.345093, 509.315796)
+	Moving node 12 now at (839.444580, 633.068542)
+	Moving node 13 now at (739.932556, 161.823563)
+	Moving node 14 now at (0.000000, 571.476990)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 10
+	Moving node 0 now at (446.765778, 745.127075)
+	Moving node 1 now at (857.437805, 720.576599)
+	Moving node 2 now at (804.605896, 230.241486)
+	Moving node 3 now at (341.858063, 178.867447)
+	Moving node 4 now at (645.598755, 489.379456)
+	Moving node 5 now at (466.040955, 2.464542)
+	Moving node 6 now at (729.906433, 47.510647)
+	Moving node 7 now at (842.092529, 801.793030)
+	Moving node 8 now at (597.684326, 568.343750)
+	Moving node 9 now at (76.873062, 567.157776)
+	Moving node 10 now at (160.745117, 295.062775)
+	Moving node 11 now at (438.345093, 569.315796)
+	Moving node 12 now at (897.054810, 616.303589)
+	Moving node 13 now at (700.713928, 116.415413)
+	Moving node 14 now at (0.000000, 631.476990)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 11
+	Moving node 0 now at (463.785522, 687.591614)
+	Moving node 1 now at (812.029663, 681.357971)
+	Moving node 2 now at (821.625610, 172.706024)
+	Moving node 3 now at (392.346313, 211.285583)
+	Moving node 4 now at (654.065979, 429.979919)
+	Moving node 5 now at (420.632812, 0.000000)
+	Moving node 6 now at (684.498291, 8.292030)
+	Moving node 7 now at (817.123718, 856.350891)
+	Moving node 8 now at (655.294556, 551.578796)
+	Moving node 9 now at (93.892792, 509.622314)
+	Moving node 10 now at (160.745117, 355.062775)
+	Moving node 11 now at (446.812286, 509.916260)
+	Moving node 12 now at (947.543091, 648.721741)
+	Moving node 13 now at (700.713928, 176.415405)
+	Moving node 14 now at (32.418137, 681.965271)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 12
+	Moving node 0 now at (463.785522, 747.591614)
+	Moving node 1 now at (787.060852, 735.915833)
+	Moving node 2 now at (796.656799, 227.263870)
+	Moving node 3 now at (449.956543, 194.520660)
+	Moving node 4 now at (662.533203, 370.580383)
+	Moving node 5 now at (375.224670, 0.000000)
+	Moving node 6 now at (734.986572, 40.710167)
+	Moving node 7 now at (792.154907, 910.908752)
+	Moving node 8 now at (655.294556, 611.578796)
+	Moving node 9 now at (93.892792, 569.622314)
+	Moving node 10 now at (115.336967, 315.844147)
+	Moving node 11 now at (463.832031, 452.380798)
+	Moving node 12 now at (956.010315, 589.322205)
+	Moving node 13 now at (709.181152, 117.015854)
+	Moving node 14 now at (40.885338, 622.565735)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 13
+	Moving node 0 now at (463.785522, 807.591614)
+	Moving node 1 now at (762.092041, 790.473694)
+	Moving node 2 now at (771.687988, 281.821716)
+	Moving node 3 now at (424.987732, 249.078506)
+	Moving node 4 now at (637.564392, 425.138245)
+	Moving node 5 now at (375.224670, 60.000000)
+	Moving node 6 now at (785.474854, 73.128304)
+	Moving node 7 now at (746.746765, 871.690125)
+	Moving node 8 now at (655.294556, 671.578796)
+	Moving node 9 now at (68.923981, 624.180176)
+	Moving node 10 now at (147.755096, 366.332397)
+	Moving node 11 now at (514.320312, 484.798950)
+	Moving node 12 now at (916.791687, 543.914062)
+	Moving node 13 now at (726.200867, 59.480396)
+	Moving node 14 now at (0.000000, 631.032959)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 14
+	Moving node 0 now at (438.816711, 862.149475)
+	Moving node 1 now at (702.692505, 798.940918)
+	Moving node 2 now at (746.719177, 336.379578)
+	Moving node 3 now at (400.018921, 303.636353)
+	Moving node 4 now at (654.584106, 367.602783)
+	Moving node 5 now at (375.224670, 120.000000)
+	Moving node 6 now at (793.942078, 13.728752)
+	Moving node 7 now at (746.746765, 931.690125)
+	Moving node 8 now at (672.314270, 614.043335)
+	Moving node 9 now at (85.943710, 566.644714)
+	Moving node 10 now at (122.786285, 420.890259)
+	Moving node 11 now at (468.912170, 445.580322)
+	Moving node 12 now at (871.383545, 504.695435)
+	Moving node 13 now at (758.619019, 109.968658)
+	Moving node 14 now at (0.000000, 691.032959)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 15
+	Moving node 0 now at (471.234863, 912.637756)
+	Moving node 1 now at (657.284363, 759.722290)
+	Moving node 2 now at (755.186401, 276.980042)
+	Moving node 3 now at (375.050110, 358.194214)
+	Moving node 4 now at (671.603821, 310.067322)
+	Moving node 5 now at (329.816528, 80.781387)
+	Moving node 6 now at (826.360229, 64.217010)
+	Moving node 7 now at (707.528137, 886.281982)
+	Moving node 8 now at (626.906128, 574.824707)
+	Moving node 9 now at (102.963440, 509.109253)
+	Moving node 10 now at (122.786285, 480.890259)
+	Moving node 11 now at (468.912170, 505.580322)
+	Moving node 12 now at (871.383545, 564.695435)
+	Moving node 13 now at (758.619019, 169.968658)
+	Moving node 14 now at (0.000000, 751.032959)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+	Sending messages from 10
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 16
+	Moving node 0 now at (471.234863, 972.637756)
+	Moving node 1 now at (714.894592, 742.957336)
+	Moving node 2 now at (772.206116, 219.444580)
+	Moving node 3 now at (335.831482, 312.786072)
+	Moving node 4 now at (626.195679, 270.848694)
+	Moving node 5 now at (338.283722, 21.381836)
+	Moving node 6 now at (843.379944, 6.681553)
+	Moving node 7 now at (724.547852, 828.746521)
+	Moving node 8 now at (601.937317, 629.382568)
+	Moving node 9 now at (57.555290, 469.890625)
+	Moving node 10 now at (77.378136, 441.671631)
+	Moving node 11 now at (468.912170, 565.580322)
+	Moving node 12 now at (921.871826, 597.113586)
+	Moving node 13 now at (809.107300, 202.386795)
+	Moving node 14 now at (8.467200, 691.633423)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+	Sending messages from 10
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 14
+Step 17
+	Moving node 0 now at (479.702057, 913.238220)
+	Moving node 1 now at (714.894592, 802.957336)
+	Moving node 2 now at (789.225830, 161.909119)
+	Moving node 3 now at (352.851227, 255.250610)
+	Moving node 4 now at (634.662903, 211.449142)
+	Moving node 5 now at (370.701843, 71.870094)
+	Moving node 6 now at (818.411133, 61.239399)
+	Moving node 7 now at (679.139709, 789.527893)
+	Moving node 8 now at (601.937317, 689.382568)
+	Moving node 9 now at (12.147141, 430.671997)
+	Moving node 10 now at (52.409325, 496.229492)
+	Moving node 11 now at (477.379364, 506.180786)
+	Moving node 12 now at (972.360107, 629.531738)
+	Moving node 13 now at (763.699158, 163.168182)
+	Moving node 14 now at (16.934401, 632.233887)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 2
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 14
+Step 18
+	Moving node 0 now at (537.312256, 896.473267)
+	Moving node 1 now at (723.361816, 743.557800)
+	Moving node 2 now at (797.693054, 102.509567)
+	Moving node 3 now at (327.882416, 309.808472)
+	Moving node 4 now at (667.081055, 261.937408)
+	Moving node 5 now at (370.701843, 131.870087)
+	Moving node 6 now at (779.192505, 15.831249)
+	Moving node 7 now at (679.139709, 849.527893)
+	Moving node 8 now at (556.529175, 650.163940)
+	Moving node 9 now at (44.565277, 481.160248)
+	Moving node 10 now at (7.001175, 457.010864)
+	Moving node 11 now at (494.399109, 448.645325)
+	Moving node 12 now at (989.379822, 571.996277)
+	Moving node 13 now at (763.699158, 223.168182)
+	Moving node 14 now at (16.934401, 692.233887)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+		to 10
+	Sending messages from 10
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+		to 9
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 19
+	Moving node 0 now at (491.904114, 857.254639)
+	Moving node 1 now at (698.393005, 798.115662)
+	Moving node 2 now at (752.284912, 63.290951)
+	Moving node 3 now at (344.902161, 252.273010)
+	Moving node 4 now at (675.548279, 202.537857)
+	Moving node 5 now at (325.293701, 92.651474)
+	Moving node 6 now at (719.792969, 24.298450)
+	Moving node 7 now at (654.170898, 904.085754)
+	Moving node 8 now at (607.017456, 682.582092)
+	Moving node 9 now at (19.596466, 535.718079)
+	Moving node 10 now at (-32.217442, 411.602722)
+	Moving node 11 now at (511.418854, 391.109863)
+	Moving node 12 now at (989.379822, 631.996277)
+	Moving node 13 now at (772.166382, 163.768631)
+	Moving node 14 now at (16.934401, 752.233887)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 20
+	Moving node 0 now at (549.514343, 840.489685)
+	Moving node 1 now at (706.860229, 738.716125)
+	Moving node 2 now at (760.752136, 3.891399)
+	Moving node 3 now at (353.369354, 192.873459)
+	Moving node 4 now at (630.140137, 163.319244)
+	Moving node 5 now at (357.711853, 143.139740)
+	Moving node 6 now at (777.403198, 7.533520)
+	Moving node 7 now at (654.170898, 964.085754)
+	Moving node 8 now at (607.017456, 742.582092)
+	Moving node 9 now at (19.596466, 595.718079)
+	Moving node 10 now at (0.000000, 420.069916)
+	Moving node 11 now at (569.029053, 374.344940)
+	Moving node 12 now at (1000.000000, 664.414429)
+	Moving node 13 now at (772.166382, 223.768631)
+	Moving node 14 now at (16.934401, 812.233887)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 3
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+	Sending messages from 4
+	Sending messages from 5
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+	Sending messages from 6
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 21
+	Moving node 0 now at (600.002625, 872.907837)
+	Moving node 1 now at (706.860229, 798.716125)
+	Moving node 2 now at (735.783325, 58.449245)
+	Moving node 3 now at (353.369354, 252.873459)
+	Moving node 4 now at (638.607361, 103.919693)
+	Moving node 5 now at (318.493225, 97.731590)
+	Moving node 6 now at (785.870422, 0.000000)
+	Moving node 7 now at (629.202087, 1000.000000)
+	Moving node 8 now at (624.037170, 685.046631)
+	Moving node 9 now at (19.596466, 655.718079)
+	Moving node 10 now at (0.000000, 474.627747)
+	Moving node 11 now at (569.029053, 434.344940)
+	Moving node 12 now at (1008.467224, 605.014893)
+	Moving node 13 now at (726.758240, 184.550018)
+	Moving node 14 now at (0.000000, 820.701111)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 22
+	Moving node 0 now at (554.594482, 833.689209)
+	Moving node 1 now at (723.879944, 741.180664)
+	Moving node 2 now at (752.803040, 0.913788)
+	Moving node 3 now at (328.400543, 307.431305)
+	Moving node 4 now at (613.638550, 158.477539)
+	Moving node 5 now at (293.524414, 152.289429)
+	Moving node 6 now at (802.890137, 0.000000)
+	Moving node 7 now at (629.202087, 1000.000000)
+	Moving node 8 now at (599.068359, 739.604492)
+	Moving node 9 now at (36.616196, 598.182617)
+	Moving node 10 now at (0.000000, 435.409119)
+	Moving node 11 now at (529.810425, 388.936798)
+	Moving node 12 now at (983.498413, 659.572754)
+	Moving node 13 now at (726.758240, 244.550018)
+	Moving node 14 now at (0.000000, 875.258972)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 23
+	Moving node 0 now at (571.614197, 776.153748)
+	Moving node 1 now at (732.347168, 681.781128)
+	Moving node 2 now at (752.803040, 60.913788)
+	Moving node 3 now at (386.010773, 290.666382)
+	Moving node 4 now at (622.105774, 99.077988)
+	Moving node 5 now at (344.012665, 184.707565)
+	Moving node 6 now at (819.909851, 0.000000)
+	Moving node 7 now at (583.793945, 960.781372)
+	Moving node 8 now at (631.486511, 790.092773)
+	Moving node 9 now at (11.647385, 652.740479)
+	Moving node 10 now at (57.610218, 418.644196)
+	Moving node 11 now at (529.810425, 448.936798)
+	Moving node 12 now at (991.965637, 600.173218)
+	Moving node 13 now at (726.758240, 304.550018)
+	Moving node 14 now at (0.000000, 935.258972)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 24
+	Moving node 0 now at (546.645386, 830.711609)
+	Moving node 1 now at (732.347168, 741.781128)
+	Moving node 2 now at (769.822754, 3.378330)
+	Moving node 3 now at (361.041962, 345.224243)
+	Moving node 4 now at (597.136963, 153.635834)
+	Moving node 5 now at (394.500916, 217.125702)
+	Moving node 6 now at (836.929565, 0.000000)
+	Moving node 7 now at (558.825134, 1000.000000)
+	Moving node 8 now at (663.904663, 840.581055)
+	Moving node 9 now at (69.257599, 635.975525)
+	Moving node 10 now at (57.610218, 478.644196)
+	Moving node 11 now at (529.810425, 508.936798)
+	Moving node 12 now at (966.996826, 654.731079)
+	Moving node 13 now at (784.368469, 287.785095)
+	Moving node 14 now at (50.488258, 967.677124)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 25
+	Moving node 0 now at (521.676575, 885.269470)
+	Moving node 1 now at (782.835449, 774.199280)
+	Moving node 2 now at (786.842468, 0.000000)
+	Moving node 3 now at (378.061707, 287.688782)
+	Moving node 4 now at (647.625244, 186.053970)
+	Moving node 5 now at (369.532104, 271.683533)
+	Moving node 6 now at (836.929565, 60.000000)
+	Moving node 7 now at (513.416992, 960.781372)
+	Moving node 8 now at (638.935852, 895.138916)
+	Moving node 9 now at (69.257599, 695.975525)
+	Moving node 10 now at (12.202068, 439.425568)
+	Moving node 11 now at (580.298706, 541.354919)
+	Moving node 12 now at (921.588684, 615.512451)
+	Moving node 13 now at (738.960327, 248.566483)
+	Moving node 14 now at (100.976517, 1000.000000)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+	Sending messages from 4
+	Sending messages from 5
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 26
+	Moving node 0 now at (476.268433, 846.050842)
+	Moving node 1 now at (782.835449, 834.199280)
+	Moving node 2 now at (747.623840, 0.000000)
+	Moving node 3 now at (386.528900, 228.289230)
+	Moving node 4 now at (602.217102, 146.835358)
+	Moving node 5 now at (420.020355, 304.101685)
+	Moving node 6 now at (791.521423, 20.781384)
+	Moving node 7 now at (563.905273, 993.199524)
+	Moving node 8 now at (647.403076, 835.739380)
+	Moving node 9 now at (126.867813, 679.210571)
+	Moving node 10 now at (29.221800, 381.890106)
+	Moving node 11 now at (580.298706, 601.354919)
+	Moving node 12 now at (876.180542, 576.293823)
+	Moving node 13 now at (755.980042, 191.031021)
+	Moving node 14 now at (76.007706, 1000.000000)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 27
+	Moving node 0 now at (493.288177, 788.515381)
+	Moving node 1 now at (840.445679, 817.434326)
+	Moving node 2 now at (805.234070, 0.000000)
+	Moving node 3 now at (361.560089, 282.847076)
+	Moving node 4 now at (619.236816, 89.299896)
+	Moving node 5 now at (420.020355, 364.101685)
+	Moving node 6 now at (799.988647, 0.000000)
+	Moving node 7 now at (572.372498, 933.799988)
+	Moving node 8 now at (601.994934, 796.520752)
+	Moving node 9 now at (126.867813, 739.210571)
+	Moving node 10 now at (0.000000, 342.671478)
+	Moving node 11 now at (555.329895, 655.912781)
+	Moving node 12 now at (884.647766, 516.894287)
+	Moving node 13 now at (731.011230, 245.588867)
+	Moving node 14 now at (126.495964, 1000.000000)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 28
+	Moving node 0 now at (468.319366, 843.073242)
+	Moving node 1 now at (848.912903, 758.034790)
+	Moving node 2 now at (805.234070, 60.000000)
+	Moving node 3 now at (412.048340, 315.265198)
+	Moving node 4 now at (594.268005, 143.857742)
+	Moving node 5 now at (420.020355, 424.101685)
+	Moving node 6 now at (832.406799, 50.488258)
+	Moving node 7 now at (589.392212, 876.264526)
+	Moving node 8 now at (542.595398, 804.987976)
+	Moving node 9 now at (143.887543, 681.675110)
+	Moving node 10 now at (8.467200, 283.271912)
+	Moving node 11 now at (530.361084, 710.470642)
+	Moving node 12 now at (859.678955, 571.452148)
+	Moving node 13 now at (788.621460, 228.823944)
+	Moving node 14 now at (101.527153, 1000.000000)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 29
+	Moving node 0 now at (525.929565, 826.308289)
+	Moving node 1 now at (823.944092, 812.592651)
+	Moving node 2 now at (780.265259, 114.557846)
+	Moving node 3 now at (462.536591, 347.683350)
+	Moving node 4 now at (644.756287, 176.275879)
+	Moving node 5 now at (395.051544, 478.659546)
+	Moving node 6 now at (832.406799, 110.488258)
+	Moving node 7 now at (589.392212, 936.264526)
+	Moving node 8 now at (551.062622, 745.588440)
+	Moving node 9 now at (98.479393, 642.456482)
+	Moving node 10 now at (8.467200, 343.271912)
+	Moving node 11 now at (505.392273, 765.028503)
+	Moving node 12 now at (814.270813, 532.233521)
+	Moving node 13 now at (797.088684, 169.424393)
+	Moving node 14 now at (109.994354, 940.600464)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 30
+	Moving node 0 now at (525.929565, 886.308289)
+	Moving node 1 now at (823.944092, 872.592651)
+	Moving node 2 now at (780.265259, 174.557846)
+	Moving node 3 now at (479.556335, 290.147888)
+	Moving node 4 now at (644.756287, 236.275879)
+	Moving node 5 now at (427.469666, 529.147827)
+	Moving node 6 now at (849.426514, 52.952801)
+	Moving node 7 now at (564.423401, 990.822388)
+	Moving node 8 now at (526.093811, 800.146301)
+	Moving node 9 now at (148.967651, 674.874634)
+	Moving node 10 now at (-30.751415, 297.863770)
+	Moving node 11 now at (466.173645, 719.620361)
+	Moving node 12 now at (814.270813, 592.233521)
+	Moving node 13 now at (854.698914, 152.659454)
+	Moving node 14 now at (127.014084, 883.065002)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 31
+	Moving node 0 now at (542.949280, 828.772827)
+	Moving node 1 now at (874.432373, 905.010803)
+	Moving node 2 now at (797.284973, 117.022385)
+	Moving node 3 now at (496.576080, 232.612427)
+	Moving node 4 now at (619.787476, 290.833740)
+	Moving node 5 now at (477.957916, 561.565979)
+	Moving node 6 now at (881.844666, 103.441055)
+	Moving node 7 now at (539.454590, 1000.000000)
+	Moving node 8 now at (558.511963, 850.634583)
+	Moving node 9 now at (157.434845, 615.475098)
+	Moving node 10 now at (-30.751415, 357.863770)
+	Moving node 11 now at (420.765503, 680.401733)
+	Moving node 12 now at (768.862671, 553.014893)
+	Moving node 13 now at (854.698914, 212.659454)
+	Moving node 14 now at (135.481277, 823.665466)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 32
+	Moving node 0 now at (497.541138, 789.554199)
+	Moving node 1 now at (849.463562, 959.568665)
+	Moving node 2 now at (751.876831, 77.803772)
+	Moving node 3 now at (554.186279, 215.847504)
+	Moving node 4 now at (619.787476, 350.833740)
+	Moving node 5 now at (438.739288, 516.157837)
+	Moving node 6 now at (881.844666, 163.441055)
+	Moving node 7 now at (547.921814, 940.600464)
+	Moving node 8 now at (558.511963, 910.634583)
+	Moving node 9 now at (189.852982, 665.963379)
+	Moving node 10 now at (-69.970032, 312.455627)
+	Moving node 11 now at (395.796692, 734.959595)
+	Moving node 12 now at (743.893860, 607.572754)
+	Moving node 13 now at (887.117065, 263.147705)
+	Moving node 14 now at (135.481277, 883.665466)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 33
+	Moving node 0 now at (497.541138, 849.554199)
+	Moving node 1 now at (881.881714, 1000.000000)
+	Moving node 2 now at (751.876831, 137.803772)
+	Moving node 3 now at (571.205994, 158.312042)
+	Moving node 4 now at (670.275757, 383.251892)
+	Moving node 5 now at (447.206482, 456.758301)
+	Moving node 6 now at (881.844666, 223.441055)
+	Moving node 7 now at (564.941528, 883.065002)
+	Moving node 8 now at (590.930115, 961.122864)
+	Moving node 9 now at (240.341248, 698.381531)
+	Moving node 10 now at (-19.481773, 344.873779)
+	Moving node 11 now at (370.827881, 789.517456)
+	Moving node 12 now at (718.925049, 662.130615)
+	Moving node 13 now at (841.708923, 223.929092)
+	Moving node 14 now at (152.501007, 826.130005)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 14
+Step 34
+	Moving node 0 now at (497.541138, 909.554199)
+	Moving node 1 now at (890.348938, 940.600464)
+	Moving node 2 now at (760.344055, 78.404221)
+	Moving node 3 now at (531.987366, 112.903893)
+	Moving node 4 now at (702.693909, 433.740143)
+	Moving node 5 now at (401.798340, 417.539673)
+	Moving node 6 now at (932.332947, 255.859192)
+	Moving node 7 now at (564.941528, 943.065002)
+	Moving node 8 now at (551.711487, 915.714722)
+	Moving node 9 now at (290.829498, 730.799683)
+	Moving node 10 now at (-19.481773, 404.873779)
+	Moving node 11 now at (421.316132, 821.935608)
+	Moving node 12 now at (718.925049, 722.130615)
+	Moving node 13 now at (816.740112, 278.486938)
+	Moving node 14 now at (160.968201, 766.730469)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 35
+	Moving node 0 now at (514.560852, 852.018738)
+	Moving node 1 now at (865.380127, 995.158325)
+	Moving node 2 now at (810.832336, 110.822357)
+	Moving node 3 now at (582.475647, 145.322021)
+	Moving node 4 now at (677.725098, 488.297974)
+	Moving node 5 now at (418.818085, 360.004211)
+	Moving node 6 now at (940.800171, 196.459641)
+	Moving node 7 now at (525.722900, 897.656860)
+	Moving node 8 now at (602.199768, 948.132874)
+	Moving node 9 now at (299.296692, 671.400146)
+	Moving node 10 now at (-2.462042, 347.338318)
+	Moving node 11 now at (396.347321, 876.493469)
+	Moving node 12 now at (769.413330, 754.548767)
+	Moving node 13 now at (825.207336, 219.087387)
+	Moving node 14 now at (193.386337, 817.218750)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 36
+	Moving node 0 now at (523.028076, 792.619202)
+	Moving node 1 now at (840.411316, 1000.000000)
+	Moving node 2 now at (819.299561, 51.422806)
+	Moving node 3 now at (557.506836, 199.879868)
+	Moving node 4 now at (677.725098, 548.297974)
+	Moving node 5 now at (393.849274, 414.562073)
+	Moving node 6 now at (895.392029, 157.241028)
+	Moving node 7 now at (500.754089, 952.214722)
+	Moving node 8 now at (602.199768, 1000.000000)
+	Moving node 9 now at (253.888550, 632.181519)
+	Moving node 10 now at (-2.462042, 407.338318)
+	Moving node 11 now at (396.347321, 936.493469)
+	Moving node 12 now at (819.901611, 786.966919)
+	Moving node 13 now at (882.817566, 202.322449)
+	Moving node 14 now at (193.386337, 877.218750)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 14
+Step 37
+	Moving node 0 now at (477.619934, 753.400574)
+	Moving node 1 now at (840.411316, 1000.000000)
+	Moving node 2 now at (819.299561, 111.422806)
+	Moving node 3 now at (518.288208, 154.471710)
+	Moving node 4 now at (652.756287, 602.855835)
+	Moving node 5 now at (354.630646, 369.153931)
+	Moving node 6 now at (870.423218, 211.798874)
+	Moving node 7 now at (509.221283, 892.815186)
+	Moving node 8 now at (602.199768, 1000.000000)
+	Moving node 9 now at (304.376801, 664.599670)
+	Moving node 10 now at (14.557690, 349.802856)
+	Moving node 11 now at (413.367065, 878.958008)
+	Moving node 12 now at (794.932800, 841.524780)
+	Moving node 13 now at (933.305847, 234.740585)
+	Moving node 14 now at (210.406067, 819.683289)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 38
+	Moving node 0 now at (494.639679, 695.865112)
+	Moving node 1 now at (815.442505, 1000.000000)
+	Moving node 2 now at (794.330750, 165.980652)
+	Moving node 3 now at (526.755432, 95.072159)
+	Moving node 4 now at (669.776001, 545.320374)
+	Moving node 5 now at (309.222504, 329.935303)
+	Moving node 6 now at (870.423218, 271.798889)
+	Moving node 7 now at (541.639404, 943.303467)
+	Moving node 8 now at (577.230957, 1000.000000)
+	Moving node 9 now at (258.968658, 625.381042)
+	Moving node 10 now at (0.000000, 404.360718)
+	Moving node 11 now at (430.386810, 821.422546)
+	Moving node 12 now at (803.400024, 782.125244)
+	Moving node 13 now at (941.773071, 175.341034)
+	Moving node 14 now at (164.997925, 780.464661)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 39
+	Moving node 0 now at (503.106873, 636.465576)
+	Moving node 1 now at (790.473694, 1000.000000)
+	Moving node 2 now at (811.350464, 108.445190)
+	Moving node 3 now at (535.222656, 35.672607)
+	Moving node 4 now at (624.367859, 506.101746)
+	Moving node 5 now at (284.253693, 384.493164)
+	Moving node 6 now at (902.841370, 322.287140)
+	Moving node 7 now at (496.231262, 904.084839)
+	Moving node 8 now at (585.698181, 940.600464)
+	Moving node 9 now at (258.968658, 685.381042)
+	Moving node 10 now at (0.000000, 458.918579)
+	Moving node 11 now at (384.978668, 782.203918)
+	Moving node 12 now at (757.991882, 742.906616)
+	Moving node 13 now at (950.240295, 115.941483)
+	Moving node 14 now at (215.486176, 812.882812)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 40
+	Moving node 0 now at (520.126587, 578.930115)
+	Moving node 1 now at (840.961975, 1000.000000)
+	Moving node 2 now at (861.838745, 140.863327)
+	Moving node 3 now at (585.710938, 68.090744)
+	Moving node 4 now at (632.835083, 446.702209)
+	Moving node 5 now at (284.253693, 444.493164)
+	Moving node 6 now at (911.308594, 262.887573)
+	Moving node 7 now at (546.719543, 936.502991)
+	Moving node 8 now at (585.698181, 1000.000000)
+	Moving node 9 now at (275.988403, 627.845581)
+	Moving node 10 now at (8.467200, 399.519043)
+	Moving node 11 now at (339.570526, 742.985291)
+	Moving node 12 now at (698.592346, 751.373840)
+	Moving node 13 now at (911.021667, 70.533333)
+	Moving node 14 now at (176.267563, 767.474670)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 41
+	Moving node 0 now at (474.718445, 539.711487)
+	Moving node 1 now at (815.993164, 1000.000000)
+	Moving node 2 now at (816.430603, 101.644714)
+	Moving node 3 now at (594.178162, 8.691193)
+	Moving node 4 now at (641.302307, 387.302673)
+	Moving node 5 now at (334.741943, 476.911316)
+	Moving node 6 now at (943.726746, 313.375824)
+	Moving node 7 now at (546.719543, 996.502991)
+	Moving node 8 now at (560.729370, 1000.000000)
+	Moving node 9 now at (308.406555, 678.333862)
+	Moving node 10 now at (0.000000, 360.300415)
+	Moving node 11 now at (397.180756, 726.220337)
+	Moving node 12 now at (653.184204, 712.155212)
+	Moving node 13 now at (928.041382, 12.997875)
+	Moving node 14 now at (151.298752, 822.032532)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 42
+	Moving node 0 now at (474.718445, 599.711487)
+	Moving node 1 now at (833.012878, 942.464539)
+	Moving node 2 now at (777.211975, 56.236565)
+	Moving node 3 now at (569.209351, 63.249039)
+	Moving node 4 now at (641.302307, 447.302673)
+	Moving node 5 now at (343.209137, 417.511780)
+	Moving node 6 now at (918.757935, 367.933655)
+	Moving node 7 now at (521.750732, 1000.000000)
+	Moving node 8 now at (535.760559, 1000.000000)
+	Moving node 9 now at (316.873749, 618.934326)
+	Moving node 10 now at (8.467200, 300.900879)
+	Moving node 11 now at (414.200500, 668.684875)
+	Moving node 12 now at (670.203918, 654.619751)
+	Moving node 13 now at (882.633240, 0.000000)
+	Moving node 14 now at (105.890602, 782.813904)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 43
+	Moving node 0 now at (429.310303, 560.492859)
+	Moving node 1 now at (841.480103, 883.065002)
+	Moving node 2 now at (777.211975, 116.236565)
+	Moving node 3 now at (523.801208, 24.030422)
+	Moving node 4 now at (581.902771, 455.769867)
+	Moving node 5 now at (297.800995, 378.293152)
+	Moving node 6 now at (893.789124, 422.491516)
+	Moving node 7 now at (538.770447, 942.464539)
+	Moving node 8 now at (496.541931, 954.591858)
+	Moving node 9 now at (316.873749, 678.934326)
+	Moving node 10 now at (8.467200, 360.900879)
+	Moving node 11 now at (431.220245, 611.149414)
+	Moving node 12 now at (678.671143, 595.220215)
+	Moving node 13 now at (899.652954, 0.000000)
+	Moving node 14 now at (105.890602, 842.813904)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 44
+	Moving node 0 now at (390.091675, 515.084717)
+	Moving node 1 now at (816.511292, 937.622864)
+	Moving node 2 now at (731.803833, 77.017944)
+	Moving node 3 now at (523.801208, 84.030426)
+	Moving node 4 now at (590.369995, 396.370300)
+	Moving node 5 now at (330.219116, 428.781403)
+	Moving node 6 now at (902.256348, 363.091980)
+	Moving node 7 now at (513.801636, 997.022400)
+	Moving node 8 now at (513.561646, 897.056396)
+	Moving node 9 now at (291.904938, 733.492188)
+	Moving node 10 now at (25.486931, 303.365417)
+	Moving node 11 now at (448.239990, 553.613953)
+	Moving node 12 now at (695.690857, 537.684753)
+	Moving node 13 now at (908.120178, 0.000000)
+	Moving node 14 now at (80.921791, 897.371765)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 45
+	Moving node 0 now at (365.122864, 569.642578)
+	Moving node 1 now at (866.999573, 970.041016)
+	Moving node 2 now at (740.271057, 17.618393)
+	Moving node 3 now at (581.411438, 67.265495)
+	Moving node 4 now at (590.369995, 456.370300)
+	Moving node 5 now at (291.000488, 383.373260)
+	Moving node 6 now at (902.256348, 423.091980)
+	Moving node 7 now at (530.821350, 939.486938)
+	Moving node 8 now at (513.561646, 957.056396)
+	Moving node 9 now at (300.372131, 674.092651)
+	Moving node 10 now at (0.518120, 357.923279)
+	Moving node 11 now at (456.707184, 494.214417)
+	Moving node 12 now at (695.690857, 597.684753)
+	Moving node 13 now at (925.139893, 0.000000)
+	Moving node 14 now at (138.532013, 880.606812)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 46
+	Moving node 0 now at (415.611115, 602.060730)
+	Moving node 1 now at (866.999573, 1000.000000)
+	Moving node 2 now at (694.862915, 0.000000)
+	Moving node 3 now at (556.442627, 121.823341)
+	Moving node 4 now at (590.369995, 516.370300)
+	Moving node 5 now at (299.467682, 323.973694)
+	Moving node 6 now at (902.256348, 483.091980)
+	Moving node 7 now at (539.288574, 880.087402)
+	Moving node 8 now at (571.171875, 940.291443)
+	Moving node 9 now at (300.372131, 734.092651)
+	Moving node 10 now at (0.000000, 412.481140)
+	Moving node 11 now at (473.726929, 436.678955)
+	Moving node 12 now at (670.722046, 652.242615)
+	Moving node 13 now at (957.558044, 50.488258)
+	Moving node 14 now at (138.532013, 940.606812)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 47
+	Moving node 0 now at (390.642303, 656.618591)
+	Moving node 1 now at (821.591431, 960.781372)
+	Moving node 2 now at (711.882629, 0.000000)
+	Moving node 3 now at (556.442627, 181.823334)
+	Moving node 4 now at (622.788147, 566.858582)
+	Moving node 5 now at (307.934875, 264.574158)
+	Moving node 6 now at (856.848206, 443.873352)
+	Moving node 7 now at (589.776855, 912.505554)
+	Moving node 8 now at (579.639099, 880.891907)
+	Moving node 9 now at (308.839325, 674.693115)
+	Moving node 10 now at (0.000000, 373.262512)
+	Moving node 11 now at (482.194122, 377.279419)
+	Moving node 12 now at (679.189270, 592.843079)
+	Moving node 13 now at (932.589233, 105.046104)
+	Moving node 14 now at (138.532013, 1000.000000)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 48
+	Moving node 0 now at (351.423676, 611.210449)
+	Moving node 1 now at (821.591431, 1000.000000)
+	Moving node 2 now at (711.882629, 60.000000)
+	Moving node 3 now at (588.860779, 232.311584)
+	Moving node 4 now at (631.255371, 507.459045)
+	Moving node 5 now at (307.934875, 324.574158)
+	Moving node 6 now at (889.266357, 494.361603)
+	Moving node 7 now at (647.387085, 895.740601)
+	Moving node 8 now at (554.670288, 935.449768)
+	Moving node 9 now at (263.431183, 635.474487)
+	Moving node 10 now at (50.488258, 405.680664)
+	Moving node 11 now at (539.804321, 360.514496)
+	Moving node 12 now at (729.677551, 625.261230)
+	Moving node 13 now at (941.056458, 45.646553)
+	Moving node 14 now at (155.551743, 942.464539)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 49
+	Moving node 0 now at (326.454865, 665.768311)
+	Moving node 1 now at (838.611145, 942.464539)
+	Moving node 2 now at (666.474487, 20.781384)
+	Moving node 3 now at (639.349060, 264.729736)
+	Moving node 4 now at (631.255371, 567.459045)
+	Moving node 5 now at (324.954620, 267.038696)
+	Moving node 6 now at (939.754639, 526.779724)
+	Moving node 7 now at (647.387085, 955.740601)
+	Moving node 8 now at (563.137512, 876.050232)
+	Moving node 9 now at (238.462372, 690.032349)
+	Moving node 10 now at (11.269642, 360.272522)
+	Moving node 11 now at (500.585693, 315.106354)
+	Moving node 12 now at (762.095703, 675.749512)
+	Moving node 13 now at (998.666687, 28.881622)
+	Moving node 14 now at (172.571472, 884.929077)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 50
+	Moving node 0 now at (334.922058, 606.368774)
+	Moving node 1 now at (889.099426, 974.882690)
+	Moving node 2 now at (683.494202, 0.000000)
+	Moving node 3 now at (639.349060, 324.729736)
+	Moving node 4 now at (571.855835, 575.926270)
+	Moving node 5 now at (382.564850, 250.273773)
+	Moving node 6 now at (894.346497, 487.561096)
+	Moving node 7 now at (664.406799, 898.205139)
+	Moving node 8 now at (538.168701, 930.608093)
+	Moving node 9 now at (213.493561, 744.590210)
+	Moving node 10 now at (11.269642, 420.272522)
+	Moving node 11 now at (558.195923, 298.341431)
+	Moving node 12 now at (737.126892, 730.307373)
+	Moving node 13 now at (1000.000000, 12.116692)
+	Moving node 14 now at (127.163322, 845.710449)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 51
+	Moving node 0 now at (309.953247, 660.926636)
+	Moving node 1 now at (897.566650, 915.483154)
+	Moving node 2 now at (683.494202, 60.000000)
+	Moving node 3 now at (656.368774, 267.194275)
+	Moving node 4 now at (546.887024, 630.484131)
+	Moving node 5 now at (391.032043, 190.874222)
+	Moving node 6 now at (902.813721, 428.161560)
+	Moving node 7 now at (664.406799, 958.205139)
+	Moving node 8 now at (538.168701, 990.608093)
+	Moving node 9 now at (221.960754, 685.190674)
+	Moving node 10 now at (61.757900, 452.690674)
+	Moving node 11 now at (575.215637, 240.805969)
+	Moving node 12 now at (745.594116, 670.907837)
+	Moving node 13 now at (1000.000000, 44.534828)
+	Moving node 14 now at (144.183060, 788.174988)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 52
+	Moving node 0 now at (309.953247, 720.926636)
+	Moving node 1 now at (914.586365, 857.947693)
+	Moving node 2 now at (658.525391, 114.557846)
+	Moving node 3 now at (596.969238, 275.661469)
+	Moving node 4 now at (597.375305, 662.902283)
+	Moving node 5 now at (448.642273, 174.109283)
+	Moving node 6 now at (911.280945, 368.762024)
+	Moving node 7 now at (696.824951, 1000.000000)
+	Moving node 8 now at (546.635925, 931.208557)
+	Moving node 9 now at (176.552612, 645.972046)
+	Moving node 10 now at (61.757900, 512.690674)
+	Moving node 11 now at (529.807495, 201.587357)
+	Moving node 12 now at (803.204346, 654.142883)
+	Moving node 13 now at (1008.467224, 0.000000)
+	Moving node 14 now at (152.650253, 728.775452)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 53
+	Moving node 0 now at (318.420441, 661.527100)
+	Moving node 1 now at (889.617554, 912.505554)
+	Moving node 2 now at (675.545105, 57.022388)
+	Moving node 3 now at (551.561096, 236.442856)
+	Moving node 4 now at (614.395020, 605.366821)
+	Moving node 5 now at (448.642273, 234.109283)
+	Moving node 6 now at (865.872803, 329.543396)
+	Moving node 7 now at (696.824951, 1000.000000)
+	Moving node 8 now at (563.655640, 873.673096)
+	Moving node 9 now at (193.572342, 588.436584)
+	Moving node 10 now at (22.539284, 467.282532)
+	Moving node 11 now at (529.807495, 261.587341)
+	Moving node 12 now at (811.671570, 594.743347)
+	Moving node 13 now at (983.498413, 54.557846)
+	Moving node 14 now at (161.117447, 669.375916)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+		to 11
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+		to 3
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 54
+	Moving node 0 now at (318.420441, 721.527100)
+	Moving node 1 now at (864.648743, 967.063416)
+	Moving node 2 now at (650.576294, 111.580231)
+	Moving node 3 now at (583.979248, 286.931122)
+	Moving node 4 now at (614.395020, 665.366821)
+	Moving node 5 now at (423.673462, 288.667114)
+	Moving node 6 now at (916.361084, 361.961548)
+	Moving node 7 now at (705.292175, 940.600464)
+	Moving node 8 now at (563.655640, 933.673096)
+	Moving node 9 now at (148.164185, 549.217957)
+	Moving node 10 now at (31.006485, 407.882996)
+	Moving node 11 now at (529.807495, 321.587341)
+	Moving node 12 now at (811.671570, 654.743347)
+	Moving node 13 now at (983.498413, 114.557846)
+	Moving node 14 now at (178.137177, 611.840454)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 55
+	Moving node 0 now at (293.451630, 776.084961)
+	Moving node 1 now at (873.115967, 907.663879)
+	Moving node 2 now at (708.186523, 94.815300)
+	Moving node 3 now at (592.446472, 227.531570)
+	Moving node 4 now at (622.862244, 605.967285)
+	Moving node 5 now at (432.140656, 229.267563)
+	Moving node 6 now at (916.361084, 421.961548)
+	Moving node 7 now at (659.884033, 901.381836)
+	Moving node 8 now at (524.437012, 888.264954)
+	Moving node 9 now at (108.945572, 503.809814)
+	Moving node 10 now at (81.494743, 440.301147)
+	Moving node 11 now at (538.274719, 262.187805)
+	Moving node 12 now at (869.281799, 637.978394)
+	Moving node 13 now at (983.498413, 174.557846)
+	Moving node 14 now at (153.168365, 666.398315)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 56
+	Moving node 0 now at (293.451630, 836.084961)
+	Moving node 1 now at (827.707825, 868.445251)
+	Moving node 2 now at (758.674805, 127.233437)
+	Moving node 3 now at (592.446472, 287.531555)
+	Moving node 4 now at (639.881958, 548.431824)
+	Moving node 5 now at (372.741089, 237.734756)
+	Moving node 6 now at (891.392273, 476.519409)
+	Moving node 7 now at (676.903748, 843.846375)
+	Moving node 8 now at (574.925293, 920.683105)
+	Moving node 9 now at (108.945572, 563.809814)
+	Moving node 10 now at (36.086594, 401.082520)
+	Moving node 11 now at (513.305908, 316.745667)
+	Moving node 12 now at (901.699951, 688.466675)
+	Moving node 13 now at (958.529602, 229.115692)
+	Moving node 14 now at (128.199554, 720.956177)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 57
+	Moving node 0 now at (293.451630, 896.084961)
+	Moving node 1 now at (844.727539, 810.909790)
+	Moving node 2 now at (758.674805, 187.233429)
+	Moving node 3 now at (600.913696, 228.132004)
+	Moving node 4 now at (672.300110, 598.920105)
+	Moving node 5 now at (381.208282, 178.335205)
+	Moving node 6 now at (852.173645, 431.111267)
+	Moving node 7 now at (676.903748, 903.846375)
+	Moving node 8 now at (632.535522, 903.918152)
+	Moving node 9 now at (125.965302, 506.274353)
+	Moving node 10 now at (68.504730, 451.570770)
+	Moving node 11 now at (488.337097, 371.303528)
+	Moving node 12 now at (918.719666, 630.931213)
+	Moving node 13 now at (966.996826, 169.716141)
+	Moving node 14 now at (88.980942, 675.548035)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 8
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 58
+	Moving node 0 now at (310.471375, 838.549500)
+	Moving node 1 now at (853.194763, 751.510254)
+	Moving node 2 now at (775.694519, 129.697968)
+	Moving node 3 now at (561.695068, 182.723846)
+	Moving node 4 now at (672.300110, 658.920105)
+	Moving node 5 now at (431.696533, 210.753342)
+	Moving node 6 now at (852.173645, 491.111267)
+	Moving node 7 now at (709.321899, 954.334656)
+	Moving node 8 now at (593.316895, 858.510010)
+	Moving node 9 now at (176.453552, 538.692505)
+	Moving node 10 now at (118.992989, 483.988892)
+	Moving node 11 now at (505.356842, 313.768066)
+	Moving node 12 now at (893.750854, 685.489075)
+	Moving node 13 now at (966.996826, 229.716141)
+	Moving node 14 now at (139.469208, 707.966187)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 59
+	Moving node 0 now at (318.938568, 779.149963)
+	Moving node 1 now at (853.194763, 811.510254)
+	Moving node 2 now at (808.112671, 180.186218)
+	Moving node 3 now at (578.714783, 125.188385)
+	Moving node 4 now at (689.319824, 601.384644)
+	Moving node 5 now at (431.696533, 270.753357)
+	Moving node 6 now at (852.173645, 551.111267)
+	Moving node 7 now at (709.321899, 1000.000000)
+	Moving node 8 now at (601.784119, 799.110474)
+	Moving node 9 now at (208.871689, 589.180786)
+	Moving node 10 now at (176.603210, 467.223969)
+	Moving node 11 now at (562.967041, 297.003143)
+	Moving node 12 now at (926.169006, 735.977356)
+	Moving node 13 now at (1000.000000, 212.951202)
+	Moving node 14 now at (156.488937, 650.430725)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 60
+	Moving node 0 now at (273.530426, 739.931335)
+	Moving node 1 now at (885.612915, 861.998535)
+	Moving node 2 now at (840.530823, 230.674469)
+	Moving node 3 now at (587.182007, 65.788834)
+	Moving node 4 now at (706.339539, 543.849182)
+	Moving node 5 now at (431.696533, 330.753357)
+	Moving node 6 now at (884.591797, 601.599548)
+	Moving node 7 now at (726.341614, 942.464539)
+	Moving node 8 now at (618.803833, 741.575012)
+	Moving node 9 now at (225.891418, 531.645325)
+	Moving node 10 now at (193.622940, 409.688507)
+	Moving node 11 now at (579.986755, 239.467682)
+	Moving node 12 now at (886.950378, 690.569214)
+	Moving node 13 now at (954.591858, 173.732590)
+	Moving node 14 now at (97.089386, 658.897949)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 61
+	Moving node 0 now at (228.122284, 700.712708)
+	Moving node 1 now at (902.632629, 804.463074)
+	Moving node 2 now at (815.562012, 285.232300)
+	Moving node 3 now at (637.670288, 98.206970)
+	Moving node 4 now at (660.931396, 504.630554)
+	Moving node 5 now at (448.716278, 273.217896)
+	Moving node 6 now at (884.591797, 661.599548)
+	Moving node 7 now at (776.829895, 974.882690)
+	Moving node 8 now at (573.395691, 702.356384)
+	Moving node 9 now at (200.922607, 586.203186)
+	Moving node 10 now at (148.214783, 370.469879)
+	Moving node 11 now at (597.006470, 181.932220)
+	Moving node 12 now at (827.550842, 699.036438)
+	Moving node 13 now at (929.623047, 228.290436)
+	Moving node 14 now at (114.109116, 601.362488)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 62
+	Moving node 0 now at (236.589478, 641.313171)
+	Moving node 1 now at (960.242859, 787.698120)
+	Moving node 2 now at (776.343384, 239.824158)
+	Moving node 3 now at (592.262146, 58.988354)
+	Moving node 4 now at (711.419678, 537.048706)
+	Moving node 5 now at (499.204529, 305.636047)
+	Moving node 6 now at (893.059021, 602.200012)
+	Moving node 7 now at (793.849609, 917.347229)
+	Moving node 8 now at (548.426880, 756.914246)
+	Moving node 9 now at (217.942337, 528.667725)
+	Moving node 10 now at (198.703033, 402.888000)
+	Moving node 11 now at (557.787842, 136.524078)
+	Moving node 12 now at (844.570557, 641.500977)
+	Moving node 13 now at (904.654236, 282.848267)
+	Moving node 14 now at (74.890503, 555.954346)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 63
+	Moving node 0 now at (211.620667, 695.871033)
+	Moving node 1 now at (960.242859, 847.698120)
+	Moving node 2 now at (751.374573, 294.382019)
+	Moving node 3 now at (553.043518, 13.580204)
+	Moving node 4 now at (666.011536, 497.830078)
+	Moving node 5 now at (453.796387, 266.417419)
+	Moving node 6 now at (910.078735, 544.664551)
+	Moving node 7 now at (810.869324, 859.811768)
+	Moving node 8 now at (598.915161, 789.332397)
+	Moving node 9 now at (275.552551, 511.902802)
+	Moving node 10 now at (215.722763, 345.352539)
+	Moving node 11 now at (557.787842, 196.524078)
+	Moving node 12 now at (819.601746, 696.058838)
+	Moving node 13 now at (937.072388, 333.336517)
+	Moving node 14 now at (49.921692, 610.512207)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 64
+	Moving node 0 now at (262.108917, 728.289185)
+	Moving node 1 now at (914.834717, 808.479492)
+	Moving node 2 now at (705.966431, 255.163406)
+	Moving node 3 now at (570.063232, 0.000000)
+	Moving node 4 now at (723.621765, 481.065155)
+	Moving node 5 now at (428.827576, 320.975281)
+	Moving node 6 now at (918.545959, 485.265015)
+	Moving node 7 now at (827.889038, 802.276306)
+	Moving node 8 now at (649.403442, 821.750549)
+	Moving node 9 now at (326.040802, 544.320923)
+	Moving node 10 now at (190.753952, 399.910400)
+	Moving node 11 now at (590.205994, 247.012329)
+	Moving node 12 now at (828.068970, 636.659302)
+	Moving node 13 now at (891.664246, 294.117889)
+	Moving node 14 now at (4.513542, 571.293579)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 65
+	Moving node 0 now at (279.128662, 670.753723)
+	Moving node 1 now at (923.301941, 749.079956)
+	Moving node 2 now at (763.576660, 238.398468)
+	Moving node 3 now at (587.082947, 0.000000)
+	Moving node 4 now at (740.641479, 423.529694)
+	Moving node 5 now at (437.294769, 261.575745)
+	Moving node 6 now at (918.545959, 545.265015)
+	Moving node 7 now at (885.499268, 785.511353)
+	Moving node 8 now at (666.423157, 764.215088)
+	Moving node 9 now at (301.071991, 598.878784)
+	Moving node 10 now at (241.242218, 432.328552)
+	Moving node 11 now at (622.624146, 297.500580)
+	Moving node 12 now at (845.088684, 579.123840)
+	Moving node 13 now at (924.082397, 344.606140)
+	Moving node 14 now at (12.980742, 511.894043)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 66
+	Moving node 0 now at (296.148407, 613.218262)
+	Moving node 1 now at (898.333130, 803.637817)
+	Moving node 2 now at (763.576660, 298.398468)
+	Moving node 3 now at (541.674805, 0.000000)
+	Moving node 4 now at (798.251709, 406.764771)
+	Moving node 5 now at (437.294769, 321.575745)
+	Moving node 6 now at (918.545959, 605.265015)
+	Moving node 7 now at (902.518982, 727.975891)
+	Moving node 8 now at (641.454346, 818.772949)
+	Moving node 9 now at (309.539185, 539.479248)
+	Moving node 10 now at (202.023605, 386.920410)
+	Moving node 11 now at (639.643860, 239.965118)
+	Moving node 12 now at (845.088684, 639.123840)
+	Moving node 13 now at (932.549622, 285.206604)
+	Moving node 14 now at (12.980742, 571.894043)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 67
+	Moving node 0 now at (353.758636, 596.453308)
+	Moving node 1 now at (915.352844, 746.102356)
+	Moving node 2 now at (795.994812, 348.886719)
+	Moving node 3 now at (496.266663, 0.000000)
+	Moving node 4 now at (855.861938, 389.999847)
+	Moving node 5 now at (398.076141, 276.167603)
+	Moving node 6 now at (918.545959, 665.265015)
+	Moving node 7 now at (910.986206, 668.576355)
+	Moving node 8 now at (649.921570, 759.373413)
+	Moving node 9 now at (318.006378, 480.079712)
+	Moving node 10 now at (177.054794, 441.478271)
+	Moving node 11 now at (600.425232, 194.556976)
+	Moving node 12 now at (799.680542, 599.905212)
+	Moving node 13 now at (907.580811, 339.764465)
+	Moving node 14 now at (45.398880, 622.382324)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 68
+	Moving node 0 now at (362.225830, 537.053772)
+	Moving node 1 now at (923.820068, 686.702820)
+	Moving node 2 now at (795.994812, 408.886719)
+	Moving node 3 now at (528.684814, 50.488258)
+	Moving node 4 now at (906.350220, 422.417969)
+	Moving node 5 now at (373.107330, 330.725464)
+	Moving node 6 now at (927.013184, 605.865479)
+	Moving node 7 now at (886.017395, 723.134216)
+	Moving node 8 now at (624.952759, 813.931274)
+	Moving node 9 now at (335.026123, 422.544250)
+	Moving node 10 now at (177.054794, 501.478271)
+	Moving node 11 now at (617.444946, 137.021515)
+	Moving node 12 now at (850.168823, 632.323364)
+	Moving node 13 now at (916.048035, 280.364929)
+	Moving node 14 now at (62.418610, 564.846863)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 69
+	Moving node 0 now at (337.257019, 591.611633)
+	Moving node 1 now at (898.851257, 741.260681)
+	Moving node 2 now at (846.483093, 441.304871)
+	Moving node 3 now at (561.102966, 100.976517)
+	Moving node 4 now at (914.817444, 363.018433)
+	Moving node 5 now at (423.595581, 363.143616)
+	Moving node 6 now at (902.044373, 660.423340)
+	Moving node 7 now at (886.017395, 783.134216)
+	Moving node 8 now at (633.419983, 754.531738)
+	Moving node 9 now at (310.057312, 477.102112)
+	Moving node 10 now at (131.646637, 462.259644)
+	Moving node 11 now at (617.444946, 197.021515)
+	Moving node 12 now at (882.586975, 682.811646)
+	Moving node 13 now at (933.067749, 222.829468)
+	Moving node 14 now at (79.438339, 507.311401)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 70
+	Moving node 0 now at (291.848877, 552.393005)
+	Moving node 1 now at (853.443115, 702.042053)
+	Moving node 2 now at (854.950317, 381.905334)
+	Moving node 3 now at (561.102966, 160.976517)
+	Moving node 4 now at (889.848633, 417.576294)
+	Moving node 5 now at (398.626770, 417.701477)
+	Moving node 6 now at (902.044373, 720.423340)
+	Moving node 7 now at (886.017395, 843.134216)
+	Moving node 8 now at (691.030212, 737.766785)
+	Moving node 9 now at (318.524506, 417.702576)
+	Moving node 10 now at (106.677826, 516.817505)
+	Moving node 11 now at (617.444946, 257.021515)
+	Moving node 12 now at (857.618164, 737.369507)
+	Moving node 13 now at (908.098938, 277.387329)
+	Moving node 14 now at (34.030190, 468.092773)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 13
+	Sending messages from 14
+Step 71
+	Moving node 0 now at (349.459106, 535.628052)
+	Moving node 1 now at (808.034973, 662.823425)
+	Moving node 2 now at (854.950317, 441.905334)
+	Moving node 3 now at (561.102966, 220.976517)
+	Moving node 4 now at (922.266785, 468.064545)
+	Moving node 5 now at (398.626770, 477.701477)
+	Moving node 6 now at (934.462524, 770.911621)
+	Moving node 7 now at (840.609253, 803.915588)
+	Moving node 8 now at (708.049927, 680.231323)
+	Moving node 9 now at (273.116364, 378.483948)
+	Moving node 10 now at (61.269676, 477.598877)
+	Moving node 11 now at (625.912170, 197.621964)
+	Moving node 12 now at (908.106445, 769.787659)
+	Moving node 13 now at (916.566162, 217.987778)
+	Moving node 14 now at (42.497391, 408.693237)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 72
+	Moving node 0 now at (349.459106, 595.628052)
+	Moving node 1 now at (783.066162, 717.381287)
+	Moving node 2 now at (829.981506, 496.463196)
+	Moving node 3 now at (536.134155, 275.534363)
+	Moving node 4 now at (897.297974, 522.622375)
+	Moving node 5 now at (373.657959, 532.259338)
+	Moving node 6 now at (942.929749, 711.512085)
+	Moving node 7 now at (857.628967, 746.380127)
+	Moving node 8 now at (648.650391, 688.698547)
+	Moving node 9 now at (290.136108, 320.948486)
+	Moving node 10 now at (36.300865, 532.156738)
+	Moving node 11 now at (642.931885, 140.086502)
+	Moving node 12 now at (940.524597, 820.275940)
+	Moving node 13 now at (925.033386, 158.588226)
+	Moving node 14 now at (100.107605, 391.928314)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 73
+	Moving node 0 now at (290.059570, 604.095276)
+	Moving node 1 now at (783.066162, 777.381287)
+	Moving node 2 now at (829.981506, 556.463196)
+	Moving node 3 now at (553.153870, 217.998901)
+	Moving node 4 now at (872.329163, 577.180237)
+	Moving node 5 now at (373.657959, 592.259338)
+	Moving node 6 now at (1000.000000, 694.747131)
+	Moving node 7 now at (866.096191, 686.980591)
+	Moving node 8 now at (657.117615, 629.299011)
+	Moving node 9 now at (265.167297, 375.506348)
+	Moving node 10 now at (36.300865, 592.156738)
+	Moving node 11 now at (651.399109, 80.686951)
+	Moving node 12 now at (998.134827, 803.510986)
+	Moving node 13 now at (982.643616, 141.823303)
+	Moving node 14 now at (117.127335, 334.392853)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+	Sending messages from 3
+	Sending messages from 4
+		to 2
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 74
+	Moving node 0 now at (298.526764, 544.695740)
+	Moving node 1 now at (791.533386, 717.981750)
+	Moving node 2 now at (829.981506, 616.463196)
+	Moving node 3 now at (585.572021, 268.487152)
+	Moving node 4 now at (880.796387, 517.780701)
+	Moving node 5 now at (328.249817, 553.040710)
+	Moving node 6 now at (1000.000000, 727.165283)
+	Moving node 7 now at (820.688049, 647.761963)
+	Moving node 8 now at (611.709473, 590.080383)
+	Moving node 9 now at (225.948685, 330.098206)
+	Moving node 10 now at (93.911087, 575.391785)
+	Moving node 11 now at (626.430298, 135.244797)
+	Moving node 12 now at (1006.602051, 744.111450)
+	Moving node 13 now at (1000.000000, 174.241440)
+	Moving node 14 now at (57.727783, 342.860046)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 75
+	Moving node 0 now at (349.015015, 577.113892)
+	Moving node 1 now at (752.314758, 672.573608)
+	Moving node 2 now at (887.591736, 599.698242)
+	Moving node 3 now at (560.603210, 323.044983)
+	Moving node 4 now at (855.827576, 572.338562)
+	Moving node 5 now at (328.249817, 613.040710)
+	Moving node 6 now at (1000.000000, 669.629822)
+	Moving node 7 now at (761.288513, 656.229187)
+	Moving node 8 now at (611.709473, 650.080383)
+	Moving node 9 now at (242.968414, 272.562744)
+	Moving node 10 now at (144.399353, 607.809937)
+	Moving node 11 now at (626.430298, 195.244797)
+	Moving node 12 now at (981.633240, 798.669312)
+	Moving node 13 now at (954.591858, 135.022827)
+	Moving node 14 now at (57.727783, 402.860046)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+		to 5
+	Sending messages from 1
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 76
+	Moving node 0 now at (303.606873, 537.895264)
+	Moving node 1 now at (752.314758, 732.573608)
+	Moving node 2 now at (896.058960, 540.298706)
+	Moving node 3 now at (521.384583, 277.636841)
+	Moving node 4 now at (830.858765, 626.896423)
+	Moving node 5 now at (328.249817, 673.040710)
+	Moving node 6 now at (1000.000000, 702.047974)
+	Moving node 7 now at (818.898743, 639.464233)
+	Moving node 8 now at (611.709473, 710.080383)
+	Moving node 9 now at (251.435608, 213.163193)
+	Moving node 10 now at (176.817490, 658.298218)
+	Moving node 11 now at (587.211670, 149.836639)
+	Moving node 12 now at (1000.000000, 831.087463)
+	Moving node 13 now at (1000.000000, 167.440964)
+	Moving node 14 now at (66.194984, 343.460510)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 77
+	Moving node 0 now at (336.025024, 588.383545)
+	Moving node 1 now at (809.924988, 715.808655)
+	Moving node 2 now at (928.477112, 590.786987)
+	Moving node 3 now at (521.384583, 337.636841)
+	Moving node 4 now at (830.858765, 686.896423)
+	Moving node 5 now at (328.249817, 733.040710)
+	Moving node 6 now at (1032.418091, 752.536255)
+	Moving node 7 now at (835.918457, 581.928772)
+	Moving node 8 now at (586.740662, 764.638245)
+	Moving node 9 now at (301.923859, 245.581329)
+	Moving node 10 now at (131.409332, 619.079590)
+	Moving node 11 now at (604.231384, 92.301178)
+	Moving node 12 now at (1008.467224, 771.687927)
+	Moving node 13 now at (1000.000000, 150.676025)
+	Moving node 14 now at (123.805206, 326.695587)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 78
+	Moving node 0 now at (353.044769, 530.848083)
+	Moving node 1 now at (770.706360, 670.400513)
+	Moving node 2 now at (928.477112, 650.786987)
+	Moving node 3 now at (496.415771, 392.194702)
+	Moving node 4 now at (805.889954, 741.454285)
+	Moving node 5 now at (378.738068, 765.458862)
+	Moving node 6 now at (1040.885254, 693.136719)
+	Moving node 7 now at (886.406738, 614.346924)
+	Moving node 8 now at (637.228943, 797.056396)
+	Moving node 9 now at (334.341980, 296.069580)
+	Moving node 10 now at (106.440521, 673.637451)
+	Moving node 11 now at (612.698608, 32.901627)
+	Moving node 12 now at (1000.000000, 714.152466)
+	Moving node 13 now at (954.591858, 111.457413)
+	Moving node 14 now at (64.405655, 335.162781)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 79
+	Moving node 0 now at (353.044769, 590.848083)
+	Moving node 1 now at (711.306824, 678.867737)
+	Moving node 2 now at (889.258484, 605.378845)
+	Moving node 3 now at (471.446960, 446.752563)
+	Moving node 4 now at (822.909668, 683.918823)
+	Moving node 5 now at (411.156189, 815.947144)
+	Moving node 6 now at (995.477112, 653.918091)
+	Moving node 7 now at (827.007202, 622.814148)
+	Moving node 8 now at (598.010315, 751.648254)
+	Moving node 9 now at (334.341980, 356.069580)
+	Moving node 10 now at (164.050735, 656.872498)
+	Moving node 11 now at (612.698608, 92.901627)
+	Moving node 12 now at (975.031189, 768.710327)
+	Moving node 13 now at (954.591858, 171.457413)
+	Moving node 14 now at (81.425385, 277.627319)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 80
+	Moving node 0 now at (307.636627, 551.629456)
+	Moving node 1 now at (711.306824, 738.867737)
+	Moving node 2 now at (889.258484, 665.378845)
+	Moving node 3 now at (488.466705, 389.217102)
+	Moving node 4 now at (839.929382, 626.383362)
+	Moving node 5 now at (468.766418, 799.182190)
+	Moving node 6 now at (970.508301, 708.475952)
+	Moving node 7 now at (827.007202, 682.814148)
+	Moving node 8 now at (573.041504, 806.206116)
+	Moving node 9 now at (384.830231, 388.487732)
+	Moving node 10 now at (164.050735, 716.872498)
+	Moving node 11 now at (621.165833, 33.502075)
+	Moving node 12 now at (983.498413, 709.310791)
+	Moving node 13 now at (915.373230, 126.049263)
+	Moving node 14 now at (81.425385, 337.627319)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 81
+	Moving node 0 now at (365.246857, 534.864502)
+	Moving node 1 now at (686.338013, 793.425598)
+	Moving node 2 now at (897.725708, 605.979309)
+	Moving node 3 now at (463.497894, 443.774963)
+	Moving node 4 now at (890.417664, 658.801514)
+	Moving node 5 now at (423.358276, 759.963562)
+	Moving node 6 now at (970.508301, 768.475952)
+	Moving node 7 now at (859.425354, 733.302429)
+	Moving node 8 now at (605.459656, 856.694397)
+	Moving node 9 now at (401.849976, 330.952271)
+	Moving node 10 now at (172.517929, 657.472961)
+	Moving node 11 now at (653.583984, 83.990334)
+	Moving node 12 now at (938.090271, 670.092163)
+	Moving node 13 now at (915.373230, 186.049255)
+	Moving node 14 now at (22.025833, 346.094513)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+	Sending messages from 13
+	Sending messages from 14
+Step 82
+	Moving node 0 now at (397.664978, 585.352783)
+	Moving node 1 now at (703.357727, 735.890137)
+	Moving node 2 now at (852.317566, 566.760681)
+	Moving node 3 now at (418.089752, 404.556335)
+	Moving node 4 now at (922.835815, 709.289795)
+	Moving node 5 now at (384.139648, 714.555420)
+	Moving node 6 now at (925.100159, 729.257324)
+	Moving node 7 now at (876.445068, 675.766968)
+	Moving node 8 now at (655.947937, 889.112549)
+	Moving node 9 now at (376.881165, 385.510132)
+	Moving node 10 now at (127.109779, 618.254333)
+	Moving node 11 now at (670.603699, 26.454876)
+	Moving node 12 now at (970.508423, 720.580444)
+	Moving node 13 now at (947.791382, 236.537506)
+	Moving node 14 now at (-17.192783, 300.686371)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 5
+	Sending messages from 6
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+		to 4
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 83
+	Moving node 0 now at (397.664978, 645.352783)
+	Moving node 1 now at (703.357727, 795.890137)
+	Moving node 2 now at (869.337280, 509.225220)
+	Moving node 3 now at (418.089752, 464.556335)
+	Moving node 4 now at (877.427673, 670.071167)
+	Moving node 5 now at (401.159393, 657.019958)
+	Moving node 6 now at (975.588440, 761.675476)
+	Moving node 7 now at (876.445068, 735.766968)
+	Moving node 8 now at (655.947937, 949.112549)
+	Moving node 9 now at (331.473022, 346.291504)
+	Moving node 10 now at (184.720001, 601.489380)
+	Moving node 11 now at (645.634888, 81.012726)
+	Moving node 12 now at (945.539612, 775.138306)
+	Moving node 13 now at (998.279663, 268.955627)
+	Moving node 14 now at (0.000000, 261.467743)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 84
+	Moving node 0 now at (406.132172, 585.953247)
+	Moving node 1 now at (664.139099, 750.481995)
+	Moving node 2 now at (844.368469, 563.783081)
+	Moving node 3 now at (426.556946, 405.156799)
+	Moving node 4 now at (852.458862, 724.629028)
+	Moving node 5 now at (361.940765, 611.611816)
+	Moving node 6 now at (975.588440, 821.675476)
+	Moving node 7 now at (876.445068, 795.766968)
+	Moving node 8 now at (672.967651, 891.577087)
+	Moving node 9 now at (381.961273, 378.709656)
+	Moving node 10 now at (184.720001, 661.489380)
+	Moving node 11 now at (645.634888, 141.012726)
+	Moving node 12 now at (996.027893, 807.556458)
+	Moving node 13 now at (998.279663, 328.955627)
+	Moving node 14 now at (8.467200, 202.068192)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 85
+	Moving node 0 now at (414.599365, 526.553711)
+	Moving node 1 now at (672.606323, 691.082458)
+	Moving node 2 now at (861.388184, 506.247620)
+	Moving node 3 now at (477.045197, 437.574951)
+	Moving node 4 now at (852.458862, 784.629028)
+	Moving node 5 now at (419.550995, 594.846863)
+	Moving node 6 now at (992.608154, 764.140015)
+	Moving node 7 now at (876.445068, 855.766968)
+	Moving node 8 now at (689.987366, 834.041626)
+	Moving node 9 now at (322.561707, 387.176849)
+	Moving node 10 now at (159.751190, 716.047241)
+	Moving node 11 now at (620.666077, 195.570572)
+	Moving node 12 now at (1028.446045, 858.044739)
+	Moving node 13 now at (959.061035, 283.547485)
+	Moving node 14 now at (16.934401, 142.668640)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 86
+	Moving node 0 now at (375.380737, 481.145569)
+	Moving node 1 now at (672.606323, 751.082458)
+	Moving node 2 now at (878.407898, 448.712158)
+	Moving node 3 now at (452.076385, 492.132812)
+	Moving node 4 now at (827.490051, 839.186890)
+	Moving node 5 now at (419.550995, 654.846863)
+	Moving node 6 now at (1025.026245, 814.628296)
+	Moving node 7 now at (893.464783, 798.231506)
+	Moving node 8 now at (665.018555, 888.599487)
+	Moving node 9 now at (277.153564, 347.958221)
+	Moving node 10 now at (114.343040, 676.828613)
+	Moving node 11 now at (671.154358, 227.988708)
+	Moving node 12 now at (1000.000000, 841.279785)
+	Moving node 13 now at (934.092224, 338.105347)
+	Moving node 14 now at (33.954132, 85.133179)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 87
+	Moving node 0 now at (392.400482, 423.610107)
+	Moving node 1 now at (647.637512, 805.640320)
+	Moving node 2 now at (910.826050, 499.200409)
+	Moving node 3 now at (469.096130, 434.597351)
+	Moving node 4 now at (835.957275, 779.787354)
+	Moving node 5 now at (436.570740, 597.311401)
+	Moving node 6 now at (1057.444336, 865.116577)
+	Moving node 7 now at (910.484497, 740.696045)
+	Moving node 8 now at (715.506836, 921.017639)
+	Moving node 9 now at (277.153564, 407.958221)
+	Moving node 10 now at (89.374229, 731.386475)
+	Moving node 11 now at (679.621582, 168.589157)
+	Moving node 12 now at (1000.000000, 901.279785)
+	Moving node 13 now at (909.123413, 392.663208)
+	Moving node 14 now at (0.000000, 45.914562)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 88
+	Moving node 0 now at (392.400482, 483.610107)
+	Moving node 1 now at (647.637512, 865.640320)
+	Moving node 2 now at (885.857239, 553.758240)
+	Moving node 3 now at (444.127319, 489.155212)
+	Moving node 4 now at (790.549133, 740.568726)
+	Moving node 5 now at (391.162598, 558.092773)
+	Moving node 6 now at (1000.000000, 807.581116)
+	Moving node 7 now at (927.504211, 683.160583)
+	Moving node 8 now at (732.526550, 863.482178)
+	Moving node 9 now at (309.571716, 458.446472)
+	Moving node 10 now at (89.374229, 791.386475)
+	Moving node 11 now at (634.213440, 129.370544)
+	Moving node 12 now at (954.591858, 862.061157)
+	Moving node 13 now at (884.154602, 447.221069)
+	Moving node 14 now at (8.467200, 0.000000)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 89
+	Moving node 0 now at (442.888733, 516.028259)
+	Moving node 1 now at (602.229370, 826.421692)
+	Moving node 2 now at (860.888428, 608.316101)
+	Moving node 3 now at (444.127319, 549.155212)
+	Moving node 4 now at (841.037415, 772.986877)
+	Moving node 5 now at (423.580750, 608.581055)
+	Moving node 6 now at (1000.000000, 867.581116)
+	Moving node 7 now at (944.523926, 625.625122)
+	Moving node 8 now at (740.993774, 804.082642)
+	Moving node 9 now at (284.602905, 513.004333)
+	Moving node 10 now at (64.405418, 845.944336)
+	Moving node 11 now at (634.213440, 189.370544)
+	Moving node 12 now at (971.611572, 804.525696)
+	Moving node 13 now at (859.185791, 501.778931)
+	Moving node 14 now at (40.885338, 50.488258)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+		to 0
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 90
+	Moving node 0 now at (459.908478, 458.492798)
+	Moving node 1 now at (556.821228, 787.203064)
+	Moving node 2 now at (869.355652, 548.916565)
+	Moving node 3 now at (419.158508, 603.713074)
+	Moving node 4 now at (816.068604, 827.544739)
+	Moving node 5 now at (398.611938, 663.138916)
+	Moving node 6 now at (1032.418091, 918.069397)
+	Moving node 7 now at (944.523926, 685.625122)
+	Moving node 8 now at (716.024963, 858.640503)
+	Moving node 9 now at (293.070099, 453.604797)
+	Moving node 10 now at (124.405418, 845.944336)
+	Moving node 11 now at (588.805298, 150.151932)
+	Moving node 12 now at (926.203430, 765.307068)
+	Moving node 13 now at (834.216980, 556.336792)
+	Moving node 14 now at (91.373596, 82.906395)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 14
+Step 91
+	Moving node 0 now at (476.928223, 400.957336)
+	Moving node 1 now at (565.288452, 727.803528)
+	Moving node 2 now at (869.355652, 608.916565)
+	Moving node 3 now at (436.178253, 546.177612)
+	Moving node 4 now at (873.678833, 810.779785)
+	Moving node 5 now at (373.643127, 717.696777)
+	Moving node 6 now at (993.199463, 872.661255)
+	Moving node 7 now at (905.305298, 640.216980)
+	Moving node 8 now at (676.806335, 813.232361)
+	Moving node 9 now at (325.488220, 504.093048)
+	Moving node 10 now at (156.823547, 896.432617)
+	Moving node 11 now at (588.805298, 210.151932)
+	Moving node 12 now at (926.203430, 825.307068)
+	Moving node 13 now at (866.635132, 606.825073)
+	Moving node 14 now at (123.791733, 133.394653)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 2
+	Sending messages from 14
+Step 92
+	Moving node 0 now at (493.947968, 343.421875)
+	Moving node 1 now at (615.776733, 760.221680)
+	Moving node 2 now at (844.386841, 663.474426)
+	Moving node 3 now at (411.209442, 600.735474)
+	Moving node 4 now at (848.710022, 865.337646)
+	Moving node 5 now at (424.131378, 750.114929)
+	Moving node 6 now at (968.230652, 927.219116)
+	Moving node 7 now at (866.086670, 594.808838)
+	Moving node 8 now at (727.294617, 845.650513)
+	Moving node 9 now at (357.906372, 554.581299)
+	Moving node 10 now at (111.415398, 857.213989)
+	Moving node 11 now at (597.272522, 150.752380)
+	Moving node 12 now at (943.223145, 767.771606)
+	Moving node 13 now at (866.635132, 666.825073)
+	Moving node 14 now at (132.258926, 73.995102)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 2
+	Sending messages from 14
+Step 93
+	Moving node 0 now at (510.967712, 285.886414)
+	Moving node 1 now at (615.776733, 820.221680)
+	Moving node 2 now at (819.418030, 718.032288)
+	Moving node 3 now at (411.209442, 660.735474)
+	Moving node 4 now at (823.741211, 919.895508)
+	Moving node 5 now at (399.162567, 804.672791)
+	Moving node 6 now at (1000.648804, 977.707397)
+	Moving node 7 now at (898.504822, 645.297119)
+	Moving node 8 now at (702.325806, 900.208374)
+	Moving node 9 now at (374.926117, 497.045837)
+	Moving node 10 now at (66.007248, 817.995361)
+	Moving node 11 now at (597.272522, 210.752380)
+	Moving node 12 now at (975.641296, 818.259888)
+	Moving node 13 now at (875.102356, 607.425537)
+	Moving node 14 now at (107.290115, 128.552948)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+		to 13
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 14
+Step 94
+	Moving node 0 now at (519.434937, 226.486862)
+	Moving node 1 now at (624.243958, 760.822144)
+	Moving node 2 now at (851.836182, 768.520569)
+	Moving node 3 now at (461.697693, 693.153625)
+	Moving node 4 now at (778.333069, 880.676880)
+	Moving node 5 now at (407.629761, 745.273254)
+	Moving node 6 now at (955.240662, 938.488770)
+	Moving node 7 now at (915.524536, 587.761658)
+	Moving node 8 now at (702.325806, 960.208374)
+	Moving node 9 now at (374.926117, 557.045837)
+	Moving node 10 now at (41.038437, 872.553223)
+	Moving node 11 now at (558.053894, 165.344238)
+	Moving node 12 now at (950.672485, 872.817749)
+	Moving node 13 now at (850.133545, 661.983398)
+	Moving node 14 now at (82.321304, 183.110794)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 95
+	Moving node 0 now at (480.216309, 181.078705)
+	Moving node 1 now at (624.243958, 820.822144)
+	Moving node 2 now at (851.836182, 828.520569)
+	Moving node 3 now at (461.697693, 753.153625)
+	Moving node 4 now at (753.364258, 935.234741)
+	Moving node 5 now at (362.221619, 706.054626)
+	Moving node 6 now at (909.832520, 899.270142)
+	Moving node 7 now at (966.012817, 620.179810)
+	Moving node 8 now at (719.345520, 902.672913)
+	Moving node 9 now at (349.957306, 611.603699)
+	Moving node 10 now at (91.526695, 904.971375)
+	Moving node 11 now at (608.542175, 197.762375)
+	Moving node 12 now at (925.703674, 927.375610)
+	Moving node 13 now at (858.600769, 602.583862)
+	Moving node 14 now at (132.809570, 215.528931)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+		to 12
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 6
+	Sending messages from 13
+	Sending messages from 14
+Step 96
+	Moving node 0 now at (488.683502, 121.679153)
+	Moving node 1 now at (641.263672, 763.286682)
+	Moving node 2 now at (902.324463, 860.938721)
+	Moving node 3 now at (436.728882, 807.711487)
+	Moving node 4 now at (753.364258, 995.234741)
+	Moving node 5 now at (316.813477, 666.835999)
+	Moving node 6 now at (967.442749, 882.505188)
+	Moving node 7 now at (966.012817, 680.179810)
+	Moving node 8 now at (673.937378, 863.454285)
+	Moving node 9 now at (400.445557, 644.021851)
+	Moving node 10 now at (123.944832, 955.459656)
+	Moving node 11 now at (583.573364, 252.320221)
+	Moving node 12 now at (900.734863, 981.933472)
+	Moving node 13 now at (918.600769, 602.583862)
+	Moving node 14 now at (141.276764, 156.129379)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 97
+	Moving node 0 now at (443.275360, 82.460541)
+	Moving node 1 now at (691.751953, 795.704834)
+	Moving node 2 now at (902.324463, 920.938721)
+	Moving node 3 now at (445.196075, 748.311951)
+	Moving node 4 now at (761.831482, 935.835205)
+	Moving node 5 now at (333.833221, 609.300537)
+	Moving node 6 now at (967.442749, 942.505188)
+	Moving node 7 now at (1000.000000, 712.597961)
+	Moving node 8 now at (690.957092, 805.918823)
+	Moving node 9 now at (375.476746, 698.579712)
+	Moving node 10 now at (98.976021, 1000.000000)
+	Moving node 11 now at (634.061646, 284.738342)
+	Moving node 12 now at (917.754578, 924.398010)
+	Moving node 13 now at (893.631958, 657.141724)
+	Moving node 14 now at (173.694901, 206.617645)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+		to 1
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+		to 2
+	Sending messages from 13
+	Sending messages from 14
+Step 98
+	Moving node 0 now at (451.742554, 23.060989)
+	Moving node 1 now at (708.771667, 738.169373)
+	Moving node 2 now at (919.344177, 863.403259)
+	Moving node 3 now at (477.614197, 798.800232)
+	Moving node 4 now at (736.862671, 990.393066)
+	Moving node 5 now at (308.864410, 663.858398)
+	Moving node 6 now at (967.442749, 1000.000000)
+	Moving node 7 now at (1000.000000, 745.016113)
+	Moving node 8 now at (699.424316, 746.519287)
+	Moving node 9 now at (375.476746, 758.579712)
+	Moving node 10 now at (53.567871, 960.781372)
+	Moving node 11 now at (588.653503, 245.519730)
+	Moving node 12 now at (934.774292, 866.862549)
+	Moving node 13 now at (902.099182, 597.742188)
+	Moving node 14 now at (173.694901, 266.617645)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+		to 8
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+	Sending messages from 8
+		to 1
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+	Sending messages from 13
+	Sending messages from 14
+Step 99
+	Moving node 0 now at (412.523926, 0.000000)
+	Moving node 1 now at (663.363525, 698.950745)
+	Moving node 2 now at (880.125549, 817.995117)
+	Moving node 3 now at (477.614197, 858.800232)
+	Moving node 4 now at (736.862671, 1000.000000)
+	Moving node 5 now at (317.331604, 604.458862)
+	Moving node 6 now at (922.034607, 960.781372)
+	Moving node 7 now at (975.031189, 799.573975)
+	Moving node 8 now at (749.912598, 778.937439)
+	Moving node 9 now at (350.507935, 813.137573)
+	Moving node 10 now at (70.587601, 903.245911)
+	Moving node 11 now at (588.653503, 305.519714)
+	Moving node 12 now at (951.794006, 809.327087)
+	Moving node 13 now at (902.099182, 657.742188)
+	Moving node 14 now at (128.286743, 227.399033)
+	Generating messages at node 0
+	Generating messages at node 1
+	Generating messages at node 2
+	Generating messages at node 3
+	Generating messages at node 4
+	Generating messages at node 5
+	Generating messages at node 6
+	Generating messages at node 7
+	Generating messages at node 8
+	Generating messages at node 9
+	Generating messages at node 10
+	Generating messages at node 11
+	Generating messages at node 12
+	Generating messages at node 13
+	Generating messages at node 14
+	Sending messages from 0
+	Sending messages from 1
+	Sending messages from 2
+	Sending messages from 3
+	Sending messages from 4
+	Sending messages from 5
+	Sending messages from 6
+	Sending messages from 7
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+		to 12
+	Sending messages from 8
+	Sending messages from 9
+	Sending messages from 10
+	Sending messages from 11
+	Sending messages from 12
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+		to 7
+	Sending messages from 13
+	Sending messages from 14
+Results:
+	Fraction of messages which reached destination: 0.179333
+	Broadcasts required: 2403
+
