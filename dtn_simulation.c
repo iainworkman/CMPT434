@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 #include "dtn.h"
+#include "policies.h"
 
 
 #define TIMESTEP_COUNT      100    /* K */
@@ -16,15 +17,6 @@
 #define NODE_BUFFER_SIZE    50      /* B */
 #define BROADCAST_RANGE     50      /* R */
 #define MOVE_DISTANCE       60      /* M */
-
-int always_send(dtn_node *self,
-                dtn_node *other,
-                dtn_message *message,
-                int *should_remove) {
-
-    *should_remove = 1;
-    return 1;
-}
 
 /* Input parameters:
  * move_distance ~ Distance each node should move in a given period
@@ -63,14 +55,5 @@ int main(int argc, char** argv) {
     printf("Broadcasts required: %d\n", statistics.total_broadcasts);
     printf("Messages in flight: %d\n", statistics.messages_in_flight);
     printf("Messages lost: %d\n", statistics.total_messages_lost);
-
-    /* Repeat K Times: */
-    /* Generate data packet at each node, add it to the buffer */
-    /* For each node: */
-    /* Move move_distance in random direction */
-    /* Check if in range of all other nodes */
-    /* Transmit based on policy and node_range */
-    /* end For each node */
-    /* end repeat K times */
 
 }

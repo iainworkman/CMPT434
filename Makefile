@@ -17,11 +17,15 @@ all: $(TARGETS)
 
 # DTN Build - Delay Tolerant Network
 ####################################
-dtn_simulation: dtn_simulation$(ARCH).o dtn$(ARCH).o libList$(ARCH).a
+dtn_simulation: dtn_simulation$(ARCH).o dtn$(ARCH).o  policies$(ARCH).o \
+								libList$(ARCH).a
 	$(CC) $(CFLAGS) -I. -L. -o $@ $^ -lList$(ARCH) -lm
 
 dtn_simulation$(ARCH).o: dtn_simulation.c
 	$(CC) $(CFLAGS) -c dtn_simulation.c -o $@
+
+policies$(ARCH).o: policies.c
+	$(CC) $(CFLAGS) -c policies.c -o $@
 
 dtn$(ARCH).o: dtn.c
 	$(CC) $(CFLAGS) -c dtn.c -o $@
