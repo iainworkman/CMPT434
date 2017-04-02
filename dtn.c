@@ -87,8 +87,8 @@ int run_simulation(dtn_grid *grid,
         if (verbose_mode) printf("Step %d\n", i_step);
         /* 1. Move Nodes */
         for (i_current = 0; i_current < grid->node_count; i_current++) {
-            if (verbose_mode) printf("\tMoving node %d", i_current);
             dtn_node *self = &grid->nodes[i_current];
+            if (verbose_mode) printf("\tMoving node %d", i_current);
 
             node_move(self, settings.move_distance);
             if (verbose_mode)
@@ -98,9 +98,10 @@ int run_simulation(dtn_grid *grid,
 
         /* 2. Generate 1 Message at each node */
         for (i_current = 0; i_current < grid->node_count; i_current++) {
-            if (verbose_mode)
-                printf("\tGenerating messages at node %d\n", i_current);
             int destination_id;
+            if (verbose_mode) {
+                printf("\tGenerating messages at node %d\n", i_current);
+            }
             dtn_node *self = &grid->nodes[i_current];
             dtn_message *new_message = malloc(sizeof(dtn_message));
 
